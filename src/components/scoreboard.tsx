@@ -25,7 +25,7 @@ export function Scoreboard({ scores, subtitle, meRole }: ScoreboardProps) {
       <div className="score-inline">
         {cards.map((card) => (
           <article
-            key={card.role}
+            key={`${card.role}-${card.points}`}
             className={`score-inline__item ${card.lead ? "is-leading" : ""}`}
             data-testid={`score-${card.role}`}
           >
@@ -33,14 +33,14 @@ export function Scoreboard({ scores, subtitle, meRole }: ScoreboardProps) {
               <strong>{card.role}</strong>
               <small>{meRole === card.role ? "Ty" : "Partner"}</small>
             </header>
-            <p className="score-inline__value">{card.points}</p>
+            <p className="score-inline__value score-inline__value--animated">{card.points}</p>
             <small>{card.delta === 0 ? "Równo" : `Przewaga: ${card.delta}`}</small>
           </article>
         ))}
       </div>
 
       <div className="score-progress" aria-hidden="true">
-        <span style={{ width: `${progress}%` }} />
+        <span className="score-progress__bar" style={{ width: `${progress}%` }} />
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import { gamesRegistry } from "../games/registry";
 import { getGameCatalogItem } from "../lib/game-catalog";
+import { AppIcon } from "./app-icon";
 import type {
   GameConfigPayload,
   GameId,
@@ -52,7 +53,7 @@ export function GameReadyPanel({
             >
               <div className="game-row__title">
                 <h3>
-                  <img src={catalog.iconPath} alt="" aria-hidden="true" className="inline-icon" />
+                  <AppIcon src={catalog.iconPath} className="inline-icon" />
                   {game.title}
                 </h3>
                 <span className="status-pill">{thisGameActive ? "Aktywna" : "Lobby"}</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ThemeMode } from "../lib/types";
+import { AppIcon } from "./app-icon";
 
 type ThemeToggleProps = {
   value: ThemeMode;
@@ -15,7 +16,13 @@ const modes: Array<{ id: ThemeMode; label: string; icon: string }> = [
 
 export function ThemeToggle({ value, onChange }: ThemeToggleProps) {
   return (
-    <div className="theme-toggle" role="group" aria-label="Tryb kolorystyczny" data-testid="theme-toggle">
+    <div
+      className="theme-toggle"
+      role="group"
+      aria-label="Tryb kolorystyczny"
+      data-testid="theme-toggle"
+      data-mode={value}
+    >
       {modes.map((mode) => (
         <button
           key={mode.id}
@@ -26,7 +33,7 @@ export function ThemeToggle({ value, onChange }: ThemeToggleProps) {
           aria-label={mode.label}
           title={mode.label}
         >
-          <img className="theme-toggle__icon" src={mode.icon} alt="" aria-hidden="true" />
+          <AppIcon className="theme-toggle__icon" src={mode.icon} />
           <span className="sr-only">{mode.label}</span>
         </button>
       ))}

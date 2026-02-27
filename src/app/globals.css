@@ -948,9 +948,9 @@ a:focus-visible {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 80ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 80ms !important;
     scroll-behavior: auto !important;
   }
 }
@@ -1488,5 +1488,581 @@ a:focus-visible {
   .top-status {
     margin-left: 6px;
     margin-right: 6px;
+  }
+}
+
+/* v1.9.1 icon contrast + smooth motion */
+:root {
+  --icon-strong: #2f3f62;
+  --icon-muted: #64789f;
+  --icon-active: #4e7cff;
+
+  --motion-fast: 140ms;
+  --motion-base: 220ms;
+  --motion-slow: 320ms;
+  --motion-xl: 520ms;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emph: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:root[data-theme="dark"] {
+  --icon-strong: #dce8ff;
+  --icon-muted: #a9bddf;
+  --icon-active: #9ac0ff;
+}
+
+.app-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  color: currentColor;
+  background: currentColor;
+  -webkit-mask-image: var(--icon-url);
+  mask-image: var(--icon-url);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  flex: 0 0 auto;
+}
+
+.top-status .app-icon,
+.inline-icon {
+  color: var(--icon-strong);
+}
+
+.bottom-nav__icon {
+  color: var(--icon-muted);
+}
+
+.bottom-nav__item.is-active .bottom-nav__icon {
+  color: var(--icon-active);
+}
+
+.theme-toggle__icon {
+  color: var(--icon-muted);
+}
+
+.theme-toggle__option.is-active .theme-toggle__icon {
+  color: var(--icon-active);
+}
+
+.motion-app-enter {
+  animation: appEnter var(--motion-slow) var(--ease-out);
+}
+
+.motion-tab-switch {
+  animation: tabSwitch var(--motion-base) var(--ease-smooth);
+}
+
+.tab-section {
+  animation: tabSwitch var(--motion-base) var(--ease-smooth);
+}
+
+.status-dot {
+  transition: background-color var(--motion-base) var(--ease-smooth), transform var(--motion-fast) var(--ease-smooth);
+}
+
+.status-dot--connecting,
+.status-dot--reconnecting {
+  animation: connectPulse 900ms var(--ease-smooth) infinite;
+}
+
+.theme-toggle {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 30px;
+  height: calc(100% - 4px);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  transition: transform var(--motion-base) var(--ease-smooth);
+  z-index: 0;
+}
+
+.theme-toggle[data-mode="system"]::before {
+  transform: translateX(0);
+}
+
+.theme-toggle[data-mode="light"]::before {
+  transform: translateX(30px);
+}
+
+.theme-toggle[data-mode="dark"]::before {
+  transform: translateX(60px);
+}
+
+.theme-toggle__option {
+  position: relative;
+  z-index: 1;
+  transition: color var(--motion-fast) var(--ease-smooth), transform var(--motion-fast) var(--ease-smooth);
+}
+
+.theme-toggle__option.is-active {
+  transform: translateY(-1px);
+  background: transparent;
+}
+
+.bottom-nav__item {
+  transition:
+    color var(--motion-base) var(--ease-smooth),
+    border-color var(--motion-base) var(--ease-smooth),
+    background-color var(--motion-base) var(--ease-smooth),
+    transform var(--motion-fast) var(--ease-smooth);
+}
+
+.bottom-nav__item:active {
+  transform: scale(0.98);
+}
+
+.bottom-nav__item::after {
+  transition: background-color var(--motion-base) var(--ease-smooth), opacity var(--motion-fast) var(--ease-smooth);
+}
+
+.btn {
+  transition:
+    transform var(--motion-fast) var(--ease-smooth),
+    filter var(--motion-fast) var(--ease-smooth),
+    background-color var(--motion-base) var(--ease-smooth),
+    border-color var(--motion-base) var(--ease-smooth);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--loading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 15%,
+    color-mix(in srgb, #fff 34%, transparent) 45%,
+    transparent 75%
+  );
+  transform: translateX(-120%);
+  animation: loadingSweep 900ms linear infinite;
+}
+
+.chip,
+.result-chip,
+.status-pill {
+  transition:
+    background-color var(--motion-base) var(--ease-smooth),
+    border-color var(--motion-base) var(--ease-smooth),
+    color var(--motion-base) var(--ease-smooth),
+    transform var(--motion-fast) var(--ease-smooth);
+}
+
+.feedback-inline {
+  animation: feedbackEnter var(--motion-base) var(--ease-out);
+}
+
+.feedback-inline.is-leaving {
+  animation: feedbackExit 180ms var(--ease-smooth) forwards;
+}
+
+.game-headline {
+  animation: gameHeadlineEnter var(--motion-base) var(--ease-out);
+}
+
+.game-hero-illustration {
+  animation: heroReveal 300ms var(--ease-out);
+}
+
+.phase-panel {
+  animation: phaseCrossFade var(--motion-base) var(--ease-out);
+}
+
+.phase-panel--reveal {
+  animation-duration: 260ms;
+}
+
+.phase-panel--finished {
+  animation-duration: 280ms;
+}
+
+.decision-grid .decision-card {
+  animation: decisionEnter var(--motion-base) var(--ease-out) both;
+}
+
+.decision-grid .decision-card:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.decision-grid .decision-card:nth-child(2) {
+  animation-delay: 40ms;
+}
+
+.decision-grid .decision-card:nth-child(3) {
+  animation-delay: 80ms;
+}
+
+.decision-grid .decision-card:nth-child(4) {
+  animation-delay: 120ms;
+}
+
+.decision-grid .decision-card:nth-child(5) {
+  animation-delay: 160ms;
+}
+
+.decision-grid .decision-card:nth-child(6) {
+  animation-delay: 200ms;
+}
+
+.decision-card--success,
+.decision-card--danger,
+.decision-card--warning {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--line-subtle) 30%, transparent);
+  animation-name: decisionEnter, decisionHighlight;
+  animation-duration: var(--motion-base), 260ms;
+  animation-timing-function: var(--ease-out), var(--ease-emph);
+  animation-fill-mode: both, both;
+}
+
+.point-breakdown {
+  animation: pointBreakdownEnter var(--motion-base) var(--ease-out);
+}
+
+.point-breakdown__item {
+  animation: pointItemEnter var(--motion-base) var(--ease-out) both;
+  animation-delay: var(--pb-delay, 0ms);
+}
+
+.point-breakdown__value {
+  animation: pointValuePop 180ms var(--ease-emph);
+}
+
+.score-inline__value--animated {
+  animation: scoreNumberUpdate 180ms var(--ease-emph);
+}
+
+.score-progress__bar {
+  transition: width var(--motion-slow) var(--ease-out);
+}
+
+.round-timeline__item {
+  animation: timelineEnter var(--motion-fast) var(--ease-out) both;
+  animation-delay: var(--rt-delay, 0ms);
+}
+
+.end-request-banner {
+  animation: endRequestEnter var(--motion-base) var(--ease-out);
+}
+
+.result-hero {
+  animation: resultHeroEnter 280ms var(--ease-out);
+}
+
+.win-celebration {
+  animation: celebrationFadeIn 180ms var(--ease-out);
+}
+
+.win-celebration__inner {
+  animation: celebrationPop var(--motion-slow) var(--ease-emph);
+}
+
+.history-list-wrap {
+  overflow: hidden;
+  transition: max-height var(--motion-slow) var(--ease-smooth);
+}
+
+.history-list-wrap.is-collapsed {
+  max-height: 430px;
+}
+
+.history-list-wrap.is-expanded {
+  max-height: 3000px;
+}
+
+.history-row {
+  animation: historyRowEnter var(--motion-fast) var(--ease-out) both;
+  animation-delay: var(--row-delay, 0ms);
+}
+
+.board-cell.is-hit::after {
+  animation: hitRipple var(--motion-base) var(--ease-out);
+}
+
+.board-cell.is-miss::after {
+  animation: missWave var(--motion-base) var(--ease-out);
+}
+
+@keyframes appEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tabSwitch {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes connectPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.72;
+  }
+}
+
+@keyframes loadingSweep {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes feedbackEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes feedbackExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes gameHeadlineEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+
+  to {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
+@keyframes phaseCrossFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes decisionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes decisionHighlight {
+  from {
+    filter: brightness(1.14);
+  }
+
+  to {
+    filter: brightness(1);
+  }
+}
+
+@keyframes pointBreakdownEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pointItemEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pointValuePop {
+  from {
+    transform: scale(0.92);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scoreNumberUpdate {
+  from {
+    transform: scale(0.9);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes timelineEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes endRequestEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes resultHeroEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes celebrationFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes celebrationPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes historyRowEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hitRipple {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes missWave {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

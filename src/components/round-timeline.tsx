@@ -13,8 +13,12 @@ export function RoundTimeline({ items }: RoundTimelineProps) {
     <section className="round-timeline" data-testid="round-timeline" aria-label="Historia rund">
       <h4>Przebieg rund</h4>
       <div className="round-timeline__row">
-        {items.map((item) => (
-          <article key={item.round} className={`round-timeline__item round-timeline__item--${item.tone}`}>
+        {items.map((item, index) => (
+          <article
+            key={item.round}
+            className={`round-timeline__item round-timeline__item--${item.tone}`}
+            style={{ ["--rt-delay" as string]: `${index * 40}ms` }}
+          >
             <span className="round-timeline__dot" aria-hidden="true" />
             <small>{`R${item.round}`}</small>
             <span>{item.label}</span>

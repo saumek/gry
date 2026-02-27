@@ -40,7 +40,10 @@ export function ScienceQuizGame({ state, meRole, onAction }: ScienceQuizGameProp
         </div>
 
         {state.phase === "in_round" && state.currentQuestion ? (
-          <div className="stack motion-fade-up" key={`science-round-${state.round}`}>
+          <div
+            className="stack motion-fade-up phase-panel phase-panel--in-round"
+            key={`science-round-${state.round}`}
+          >
             <h3>{state.currentQuestion.text}</h3>
             <div className="option-grid">
               {state.currentQuestion.options.map((option, index) => (
@@ -73,7 +76,10 @@ export function ScienceQuizGame({ state, meRole, onAction }: ScienceQuizGameProp
         ) : null}
 
         {state.phase === "reveal" && state.reveal ? (
-          <div className="stack motion-fade-up" key={`science-reveal-${state.reveal.round}`}>
+          <div
+            className="stack motion-fade-up phase-panel phase-panel--reveal"
+            key={`science-reveal-${state.reveal.round}`}
+          >
             {roundVisual ? (
               <ResultHero
                 model={{
@@ -120,7 +126,7 @@ export function ScienceQuizGame({ state, meRole, onAction }: ScienceQuizGameProp
         ) : null}
 
         {state.phase === "finished" ? (
-          <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
+          <div className="stack motion-fade-up phase-panel phase-panel--finished" id="game-result-section" data-testid="game-result-section">
             <ResultHero model={resultHero} />
             <RoundTimeline items={timeline} />
 

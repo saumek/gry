@@ -56,7 +56,10 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
         </div>
 
         {state.phase === "in_round" && state.currentPrompt ? (
-          <div className="stack motion-fade-up" key={`cp-round-${state.round}`}>
+          <div
+            className="stack motion-fade-up phase-panel phase-panel--in-round"
+            key={`cp-round-${state.round}`}
+          >
             <h3>{state.currentPrompt.text}</h3>
 
             <div className="stack">
@@ -142,7 +145,10 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
         ) : null}
 
         {state.phase === "reveal" && state.reveal ? (
-          <div className="stack motion-fade-up" key={`cp-reveal-${state.reveal.round}`}>
+          <div
+            className="stack motion-fade-up phase-panel phase-panel--reveal"
+            key={`cp-reveal-${state.reveal.round}`}
+          >
             {roundVisual ? (
               <ResultHero
                 model={{
@@ -190,7 +196,7 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
         ) : null}
 
         {state.phase === "finished" ? (
-          <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
+          <div className="stack motion-fade-up phase-panel phase-panel--finished" id="game-result-section" data-testid="game-result-section">
             <ResultHero model={resultHero} />
             <RoundTimeline items={timeline} />
 

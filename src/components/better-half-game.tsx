@@ -55,7 +55,10 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
         </div>
 
         {state.phase === "in_round" && state.currentQuestion ? (
-          <div className="stack motion-fade-up" key={`bh-round-${state.round}`}>
+          <div
+            className="stack motion-fade-up phase-panel phase-panel--in-round"
+            key={`bh-round-${state.round}`}
+          >
             <h3>{state.currentQuestion.text}</h3>
 
             <div className="stack">
@@ -123,7 +126,10 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
         ) : null}
 
         {state.phase === "reveal" && state.reveal ? (
-          <div className="stack motion-fade-up" key={`bh-reveal-${state.reveal.round}`}>
+          <div
+            className="stack motion-fade-up phase-panel phase-panel--reveal"
+            key={`bh-reveal-${state.reveal.round}`}
+          >
             {roundVisual ? (
               <ResultHero
                 model={{
@@ -168,7 +174,7 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
         ) : null}
 
         {state.phase === "finished" ? (
-          <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
+          <div className="stack motion-fade-up phase-panel phase-panel--finished" id="game-result-section" data-testid="game-result-section">
             <ResultHero model={resultHero} />
             <RoundTimeline items={timeline} />
 

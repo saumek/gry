@@ -5,6 +5,7 @@ import { useState } from "react";
 import { getGameCatalogItem } from "../lib/game-catalog";
 import { winnerBadge } from "../lib/score-visuals";
 import type { GameHistoryEntry } from "../lib/types";
+import { AppIcon } from "./app-icon";
 import { ResultChip } from "./result-chip";
 
 type GameHistoryCardsProps = {
@@ -31,7 +32,7 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
   }
 
   const [expanded, setExpanded] = useState(false);
-  const visibleHistory = expanded ? history : history.slice(0, 6);
+  const canToggle = history.length > 6;
 
   return (
     <section className="section-block" data-testid="history-list">
@@ -40,8 +41,9 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
         <span className="chip chip--soft">{history.length} zapisów</span>
       </div>
 
-      <div className="history-list">
-        {visibleHistory.map((entry) => {
+      <div className={`history-list-wrap ${expanded ? "is-expanded" : "is-collapsed"}`}>
+        <div className="history-list">
+          {history.map((entry, index) => {
           const catalog = getGameCatalogItem(entry.gameId);
           const badge =
             entry.status === "aborted"
@@ -49,10 +51,15 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
               : winnerBadge(entry.scores, entry.winnerRole);
 
           return (
-            <article className="history-row" key={entry.sessionId} data-testid={`history-row-${entry.sessionId}`}>
+            <article
+              className="history-row"
+              key={entry.sessionId}
+              data-testid={`history-row-${entry.sessionId}`}
+              style={{ ["--row-delay" as string]: `${index * 25}ms` }}
+            >
               <div className="history-row__head history-row__head--compact">
                 <h3>
-                  <img src={catalog.iconPath} alt="" aria-hidden="true" className="inline-icon" />
+                  <AppIcon src={catalog.iconPath} className="inline-icon" />
                   {gameLabel(entry.gameId)}
                 </h3>
                 <p className="history-row__score">{`${entry.scores.Sami}:${entry.scores.Patryk}`}</p>
@@ -64,10 +71,11 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
               </div>
             </article>
           );
-        })}
+          })}
+        </div>
       </div>
 
-      {history.length > 6 ? (
+      {canToggle ? (
         <div className="row-actions">
           <button
             className="btn btn--ghost btn--small"

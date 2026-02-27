@@ -155,7 +155,7 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
         </div>
 
         {state.phase === "setup" ? (
-          <div className="stack motion-fade-up">
+          <div className="stack motion-fade-up phase-panel phase-panel--setup">
             <div className="result-chip-row">
               <ResultChip
                 tone={mySetupDone ? "success" : "warning"}
@@ -218,7 +218,7 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
         ) : null}
 
         {state.phase === "in_round" ? (
-          <div className="stack motion-fade-up">
+          <div className="stack motion-fade-up phase-panel phase-panel--in-round">
             <div className="result-chip-row">
               <ResultChip
                 tone={myTurn ? "success" : "info"}
@@ -272,7 +272,11 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
         ) : null}
 
         {state.phase === "finished" ? (
-          <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
+          <div
+            className="stack motion-fade-up phase-panel phase-panel--finished"
+            id="game-result-section"
+            data-testid="game-result-section"
+          >
             <ResultHero model={resultHero} />
 
             <div className="result-actions">

@@ -78,6 +78,7 @@ export default function HomePage() {
   const [presence, setPresence] = useState<PresenceState>(initialPresence);
   const [gameState, setGameState] = useState<GameStatusPayload | null>(null);
   const [feedback, setFeedback] = useState<UiMessage | undefined>();
+  const [isFeedbackLeaving, setIsFeedbackLeaving] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>("offline");
   const [sessionConfig, setSessionConfig] = useState<SessionConfigPayload>(defaultSessionConfig);
@@ -87,10 +88,12 @@ export default function HomePage() {
   const [activeTab, setActiveTab] = useState<AppTab>("lobby");
 
   const pushFeedback = useCallback((text: string, tone: UiMessageTone): void => {
+    setIsFeedbackLeaving(false);
     setFeedback({ text, tone });
   }, []);
 
   const clearFeedback = useCallback((): void => {
+    setIsFeedbackLeaving(false);
     setFeedback(undefined);
   }, []);
 
@@ -318,14 +321,21 @@ export default function HomePage() {
       return;
     }
 
+    let exitTimeout: number | null = null;
     const timeout = window.setTimeout(() => {
-      clearFeedback();
+      setIsFeedbackLeaving(true);
+      exitTimeout = window.setTimeout(() => {
+        clearFeedback();
+      }, 180);
     }, 4500);
 
     return () => {
       window.clearTimeout(timeout);
+      if (exitTimeout !== null) {
+        window.clearTimeout(exitTimeout);
+      }
     };
-  }, [feedback]);
+  }, [feedback, clearFeedback]);
 
   const joinRoom = useCallback((roomPin: string, desiredRole?: Role): void => {
     const socket = socketRef.current;
@@ -427,7 +437,7 @@ export default function HomePage() {
   }, [connectionStatus]);
 
   return (
-    <main className="app-shell" data-phase={phase}>
+    <main className="app-shell motion-app-enter" data-phase={phase}>
       <TopStatusBar
         meRole={meRole}
         activeGame={gameState?.activeGame ?? null}
@@ -479,13 +489,19 @@ export default function HomePage() {
           {phase === "lobby" && meRole ? (
             <>
               {feedback ? (
-                <p className={`feedback-inline feedback-inline--${feedback.tone}`} role="status" data-testid="feedback">
+                <p
+                  className={`feedback-inline feedback-inline--${feedback.tone} ${
+                    isFeedbackLeaving ? "is-leaving" : "is-entering"
+                  }`}
+                  role="status"
+                  data-testid="feedback"
+                >
                   {feedback.text}
                 </p>
               ) : null}
 
               {activeTab === "game" ? (
-                <section className="tab-section" data-testid="tab-panel-game">
+                <section className="tab-section motion-tab-switch" data-testid="tab-panel-game">
                   {gameState?.activeGame ? (
                     <GameShell
                       meRole={meRole}
@@ -510,7 +526,7 @@ export default function HomePage() {
               ) : null}
 
               {activeTab === "lobby" ? (
-                <section className="tab-section" data-testid="tab-panel-lobby">
+                <section className="tab-section motion-tab-switch" data-testid="tab-panel-lobby">
                   <section className="screen-title">
                     <h1>Lobby</h1>
                     <p>Status osób i start gry.</p>
@@ -529,7 +545,7 @@ export default function HomePage() {
               ) : null}
 
               {activeTab === "history" ? (
-                <section className="tab-section" data-testid="tab-panel-history">
+                <section className="tab-section motion-tab-switch" data-testid="tab-panel-history">
                   <section className="screen-title">
                     <h1>Historia</h1>
                     <p>Poprzednie mecze i wyniki.</p>

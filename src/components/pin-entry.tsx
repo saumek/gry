@@ -39,7 +39,7 @@ export function PinEntry({ pin, onPinChange, onSubmit, isBusy, message }: PinEnt
           required
         />
 
-        <button className="btn" type="submit" disabled={isBusy}>
+        <button className={`btn ${isBusy ? "btn--loading" : ""}`} type="submit" disabled={isBusy}>
           {isBusy ? "Łączenie..." : "Wejdź do pokoju"}
         </button>
       </form>

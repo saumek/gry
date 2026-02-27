@@ -14,10 +14,11 @@ export function PointBreakdown({ title = "Punktacja", items }: PointBreakdownPro
     <section className="point-breakdown" aria-label={title} data-testid="point-breakdown">
       <h4>{title}</h4>
       <div className="point-breakdown__list">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <article
             key={`${item.label}-${item.value}`}
             className={`point-breakdown__item point-breakdown__item--${item.tone}`}
+            style={{ ["--pb-delay" as string]: `${index * 50}ms` }}
           >
             <span className="point-breakdown__icon" aria-hidden="true">
               {item.icon}

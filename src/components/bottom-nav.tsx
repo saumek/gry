@@ -1,4 +1,5 @@
 import type { AppTab, NavItemModel } from "../lib/types";
+import { AppIcon } from "./app-icon";
 
 type BottomNavProps = {
   activeTab: AppTab;
@@ -30,7 +31,7 @@ export function BottomNav({ activeTab, onChange, historyCount, gameActive }: Bot
             data-testid={`tab-${item.id}`}
           >
             <span className="bottom-nav__icon" aria-hidden="true">
-              <img src={item.icon} alt="" />
+              <AppIcon src={item.icon} />
             </span>
             <span>{item.label}</span>
             {badge > 0 ? <span className="bottom-nav__badge" data-testid={`tab-badge-${item.id}`}>{badge}</span> : null}
