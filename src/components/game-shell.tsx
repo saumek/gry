@@ -6,6 +6,7 @@ import { BetterHalfGame } from "./better-half-game";
 import { BattleshipGame } from "./battleship-game";
 import { QaGame } from "./qa-game";
 import { WinCelebration } from "./win-celebration";
+import { phaseShortLabel } from "../lib/ui-state";
 import type {
   ActiveGameState,
   GameActionPayload,
@@ -95,19 +96,19 @@ export function GameShell({
         scores={activeGame.scores}
       />
 
-      <section className="game-headline sticky-game-header">
+      <section className="game-headline sticky-game-header" data-testid="game-headline">
         <div className="section-header">
           <h2>{label(activeGame.gameId)}</h2>
-          <span className="chip chip--phase">{phaseLabel(activeGame.phase)}</span>
+          <span className="chip chip--phase">{phaseShortLabel(activeGame.phase)}</span>
         </div>
 
         {activeGame.phase !== "finished" && !endRequest ? (
           <button
-            className="btn btn--ghost btn--small"
+            className="btn btn--ghost btn--small btn--inline"
             type="button"
             onClick={() => onAction({ gameId: activeGame.gameId, type: "request_end" })}
           >
-            Zakończ grę za zgodą obu osób
+            Zakończ za zgodą
           </button>
         ) : null}
 
@@ -116,7 +117,7 @@ export function GameShell({
             {isEndRequester ? (
               <>
                 <p>
-                  Czekamy na zgodę drugiej osoby. Pozostało około <strong>{remainingSeconds}s</strong>.
+                  Czekamy na zgodę partnera. <strong>{remainingSeconds}s</strong>.
                 </p>
                 <button
                   className="btn btn--ghost btn--small"
@@ -129,8 +130,7 @@ export function GameShell({
             ) : (
               <>
                 <p>
-                  {endRequest.requestedBy} prosi o zakończenie gry. Pozostało około{" "}
-                  <strong>{remainingSeconds}s</strong>.
+                  {endRequest.requestedBy} chce zakończyć grę. <strong>{remainingSeconds}s</strong>.
                 </p>
                 {!meApprovedEnd ? (
                   <div className="row-actions">
@@ -193,24 +193,4 @@ function label(gameId: ActiveGameState["gameId"]): string {
   }
 
   return "Mini Statki 5x5";
-}
-
-function phaseLabel(phase: ActiveGameState["phase"]): string {
-  if (phase === "in_round") {
-    return "W trakcie";
-  }
-
-  if (phase === "reveal") {
-    return "Reveal";
-  }
-
-  if (phase === "finished") {
-    return "Koniec";
-  }
-
-  if (phase === "setup") {
-    return "Setup";
-  }
-
-  return phase;
 }

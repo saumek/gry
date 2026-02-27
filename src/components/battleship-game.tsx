@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { winnerBadge } from "../lib/score-visuals";
+import { phaseShortLabel } from "../lib/ui-state";
 import type {
   BattleshipGameState,
   GameActionPayload,
@@ -138,8 +139,8 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
 
       <section className="section-block">
         <div className="section-header">
-          <h2>Mini Statki 5x5</h2>
-          <span className="chip">{state.phase === "setup" ? "Setup" : state.phase}</span>
+          <h2>Przebieg bitwy</h2>
+          <span className="chip">{phaseShortLabel(state.phase)}</span>
         </div>
 
         {state.phase === "setup" ? (
@@ -226,7 +227,7 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
             </div>
 
             <div className="board-pair">
-              <div>
+              <section className="board-section">
                 <h3>Twoja plansza</h3>
                 <BoardGrid
                   size={state.boardSize}
@@ -234,8 +235,8 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
                   shipCells={new Set(state.myShips.map((coord) => `${coord.x}:${coord.y}`))}
                   enemyShotMap={enemyShotMap}
                 />
-              </div>
-              <div>
+              </section>
+              <section className="board-section">
                 <h3>Plansza przeciwnika</h3>
                 <BoardGrid
                   size={state.boardSize}
@@ -254,7 +255,7 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
                     });
                   }}
                 />
-              </div>
+              </section>
             </div>
           </div>
         ) : null}

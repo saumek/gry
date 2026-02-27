@@ -20,6 +20,7 @@ export function TopStatusBar({
   onThemeChange
 }: TopStatusBarProps) {
   const model = createTopBarModel(meRole, activeGame, connectionStatus, connectionLabel);
+  const hasActiveGame = Boolean(activeGame);
 
   return (
     <header className="top-status" data-testid="top-status-bar">
@@ -33,18 +34,21 @@ export function TopStatusBar({
         <ThemeToggle value={themeMode} onChange={onThemeChange} />
       </div>
 
-      <div className="top-status__line top-status__line--sub">
-        <p className="top-status__summary">
-          <strong>{model.gameLabel}</strong>
-          {model.phaseLabel ? <span> · {model.phaseLabel}</span> : null}
-          {model.scoreLabel ? <span> · {model.scoreLabel}</span> : null}
-        </p>
-        {model.jumpToResult ? (
-          <a className="jump-link" href="#game-result-section">
-            Wynik
-          </a>
-        ) : null}
-      </div>
+      {hasActiveGame ? (
+        <div className="top-status__line top-status__line--sub">
+          <p className="top-status__summary">
+            <strong>Gra</strong>
+            <span> · {model.gameLabel}</span>
+            {model.phaseLabel ? <span> · {model.phaseLabel}</span> : null}
+            {model.scoreLabel ? <span> · {model.scoreLabel}</span> : null}
+          </p>
+          {model.jumpToResult ? (
+            <a className="jump-link" href="#game-result-section">
+              Wynik
+            </a>
+          ) : null}
+        </div>
+      ) : null}
     </header>
   );
 }

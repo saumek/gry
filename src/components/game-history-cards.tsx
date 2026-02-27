@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import { winnerBadge } from "../lib/score-visuals";
 import type { GameHistoryEntry } from "../lib/types";
 import { ResultChip } from "./result-chip";
@@ -33,6 +37,9 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
     return null;
   }
 
+  const [expanded, setExpanded] = useState(false);
+  const visibleHistory = expanded ? history : history.slice(0, 6);
+
   return (
     <section className="section-block" data-testid="history-list">
       <div className="section-header">
@@ -41,7 +48,7 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
       </div>
 
       <div className="history-list">
-        {history.slice(0, 8).map((entry) => {
+        {visibleHistory.map((entry) => {
           const badge =
             entry.status === "aborted"
               ? { tone: "warning" as const, icon: "•", label: "Przerwana" }
@@ -51,17 +58,30 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
             <article className="history-row" key={entry.sessionId} data-testid={`history-row-${entry.sessionId}`}>
               <div className="history-row__head">
                 <h3>{gameLabel(entry.gameId)}</h3>
-                <small>#{entry.sessionId}</small>
+                <p className="history-row__score">{`Sami ${entry.scores.Sami} : ${entry.scores.Patryk} Patryk`}</p>
               </div>
-              <p className="history-row__score">{`Sami ${entry.scores.Sami} : ${entry.scores.Patryk} Patryk`}</p>
+
               <div className="history-row__meta">
                 <ResultChip tone={badge.tone} icon={badge.icon} label={badge.label} />
-                <small className="muted">{formatDate(entry.startedAt)}</small>
+                <small className="muted">{`${formatDate(entry.startedAt)} · #${entry.sessionId}`}</small>
               </div>
             </article>
           );
         })}
       </div>
+
+      {history.length > 6 ? (
+        <div className="row-actions">
+          <button
+            className="btn btn--ghost btn--small"
+            type="button"
+            onClick={() => setExpanded((prev) => !prev)}
+            data-testid="history-toggle"
+          >
+            {expanded ? "Pokaż mniej" : "Pokaż więcej"}
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

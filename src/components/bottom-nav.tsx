@@ -18,8 +18,7 @@ export function BottomNav({ activeTab, onChange, historyCount, gameActive }: Bot
     <nav className="bottom-nav" aria-label="Nawigacja aplikacji" data-testid="bottom-nav">
       {navItems.map((item) => {
         const isActive = item.id === activeTab;
-        const badge =
-          item.id === "history" ? Math.min(99, historyCount) : item.id === "game" && gameActive ? 1 : 0;
+        const badge = item.id === "history" ? Math.min(99, historyCount) : 0;
 
         return (
           <button
@@ -34,7 +33,8 @@ export function BottomNav({ activeTab, onChange, historyCount, gameActive }: Bot
               {item.icon}
             </span>
             <span>{item.label}</span>
-            {badge > 0 ? <span className="bottom-nav__badge">{badge}</span> : null}
+            {badge > 0 ? <span className="bottom-nav__badge" data-testid={`tab-badge-${item.id}`}>{badge}</span> : null}
+            {gameActive && item.id === "game" ? <span className="sr-only">Aktywna gra</span> : null}
           </button>
         );
       })}

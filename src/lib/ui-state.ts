@@ -18,15 +18,19 @@ export function phaseShortLabel(phase: ActiveGameState["phase"]): string {
   }
 
   if (phase === "reveal") {
-    return "Reveal";
+    return "Odkrycie";
   }
 
   if (phase === "finished") {
-    return "Wynik";
+    return "Koniec";
   }
 
   if (phase === "setup") {
-    return "Setup";
+    return "Ustawienie";
+  }
+
+  if (phase === "ready") {
+    return "Gotowość";
   }
 
   return "Lobby";

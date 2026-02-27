@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { betterHalfRevealBadges, winnerBadge } from "../lib/score-visuals";
+import { phaseShortLabel } from "../lib/ui-state";
 import type {
   BetterHalfGameState,
   GameActionPayload,
@@ -40,8 +41,8 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
 
       <section className="section-block">
         <div className="section-header">
-          <h2>Jak odpowie druga połówka</h2>
-          <span className="chip">{state.phase}</span>
+          <h2>Runda dopasowania</h2>
+          <span className="chip">{phaseShortLabel(state.phase)}</span>
         </div>
 
         {state.phase === "in_round" && state.currentQuestion ? (

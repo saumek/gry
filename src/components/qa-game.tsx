@@ -1,6 +1,7 @@
 "use client";
 
 import { qaRevealBadges, winnerBadge } from "../lib/score-visuals";
+import { phaseShortLabel } from "../lib/ui-state";
 import type { GameActionPayload, QaGameState, QuestionAddPayload } from "../lib/types";
 import { QuestionCreateForm } from "./question-create-form";
 import { ResultChip } from "./result-chip";
@@ -27,8 +28,8 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
 
       <section className="section-block">
         <div className="section-header">
-          <h2>Pytania i odpowiedzi</h2>
-          <span className="chip">{state.phase}</span>
+          <h2>Runda pytań</h2>
+          <span className="chip">{phaseShortLabel(state.phase)}</span>
         </div>
 
         {state.phase === "in_round" && state.currentQuestion ? (

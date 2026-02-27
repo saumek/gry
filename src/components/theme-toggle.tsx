@@ -8,9 +8,9 @@ type ThemeToggleProps = {
 };
 
 const modes: Array<{ id: ThemeMode; label: string; icon: string }> = [
-  { id: "system", label: "Auto", icon: "A" },
-  { id: "light", label: "Jasny", icon: "L" },
-  { id: "dark", label: "Ciemny", icon: "D" }
+  { id: "system", label: "Auto", icon: "/assets/icons/trophy.svg" },
+  { id: "light", label: "Jasny", icon: "/assets/icons/sun.svg" },
+  { id: "dark", label: "Ciemny", icon: "/assets/icons/moon.svg" }
 ];
 
 export function ThemeToggle({ value, onChange }: ThemeToggleProps) {
@@ -26,9 +26,7 @@ export function ThemeToggle({ value, onChange }: ThemeToggleProps) {
           aria-label={mode.label}
           title={mode.label}
         >
-          <span className="theme-toggle__icon" aria-hidden="true">
-            {mode.icon}
-          </span>
+          <img className="theme-toggle__icon" src={mode.icon} alt="" aria-hidden="true" />
           <span className="sr-only">{mode.label}</span>
         </button>
       ))}

@@ -332,3 +332,10 @@ export type NavItemModel = {
   icon: string;
   badge?: number;
 };
+
+export type UiMessageTone = "error" | "warning" | "success" | "info";
+
+export type UiMessage = {
+  text: string;
+  tone: UiMessageTone;
+};

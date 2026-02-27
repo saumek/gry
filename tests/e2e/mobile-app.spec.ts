@@ -8,22 +8,35 @@ async function joinRoom(page: Page): Promise<void> {
   await page.getByLabel("Kod pokoju").fill("1234");
   await page.getByRole("button", { name: "Wejdź do pokoju" }).click();
 
-  const isRoomFull = await page.getByTestId("room-full").isVisible({ timeout: 1500 }).catch(() => false);
-  if (isRoomFull) {
-    throw new Error("Pokój pełny przy próbie dołączenia klienta testowego.");
-  }
-
-  const rolePicker = page.getByTestId("role-picker");
-  if (await rolePicker.isVisible({ timeout: 5000 }).catch(() => false)) {
-    const samiButton = page.getByRole("button", { name: "Sami" });
-    if (await samiButton.isVisible().catch(() => false)) {
-      await samiButton.click();
-    } else {
-      await page.getByRole("button", { name: "Patryk" }).click();
+  for (let attempt = 0; attempt < 24; attempt += 1) {
+    const isRoomFull = await page.getByTestId("room-full").isVisible({ timeout: 300 }).catch(() => false);
+    if (isRoomFull) {
+      throw new Error("Pokój pełny przy próbie dołączenia klienta testowego.");
     }
+
+    const isJoined = await page
+      .getByTestId("top-status-bar")
+      .getByText("Ty:")
+      .isVisible({ timeout: 300 })
+      .catch(() => false);
+    if (isJoined) {
+      return;
+    }
+
+    const rolePicker = page.getByTestId("role-picker");
+    if (await rolePicker.isVisible({ timeout: 300 }).catch(() => false)) {
+      const samiButton = page.getByRole("button", { name: "Sami" });
+      if (await samiButton.isVisible().catch(() => false)) {
+        await samiButton.click();
+      } else {
+        await page.getByRole("button", { name: "Patryk" }).click();
+      }
+    }
+
+    await page.waitForTimeout(250);
   }
 
-  await expect(page.getByTestId("top-status-bar")).toContainText("Ty:", { timeout: 8000 });
+  throw new Error("Nie udało się przypisać roli klientowi testowemu.");
 }
 
 test("dwie osoby łączą się, trzecia widzi pełny pokój i działa zakończenie gry za zgodą", async ({ browser }) => {
@@ -37,6 +50,7 @@ test("dwie osoby łączą się, trzecia widzi pełny pokój i działa zakończen
 
   await joinRoom(pageA);
   await expect(pageA.getByTestId("bottom-nav")).toBeVisible();
+  await expect(pageA.getByTestId("tab-badge-game")).toHaveCount(0);
 
   await joinRoom(pageB);
   await expect(pageA.getByText("Mini-czat")).toHaveCount(0);
@@ -52,21 +66,45 @@ test("dwie osoby łączą się, trzecia widzi pełny pokój i działa zakończen
   await pageA.getByTestId("tab-lobby").click();
   await pageB.getByTestId("tab-lobby").click();
 
-  const qaCardA = pageA.getByTestId("game-row-qa-lightning");
-  const qaCardB = pageB.getByTestId("game-row-qa-lightning");
+  const battleshipA = pageA.getByTestId("game-row-mini-battleship");
+  const battleshipB = pageB.getByTestId("game-row-mini-battleship");
 
-  await qaCardA.getByTestId("ready-qa-lightning").click();
-  await qaCardB.getByTestId("ready-qa-lightning").click();
-  await qaCardA.getByTestId("start-qa-lightning").click();
+  await battleshipA.getByTestId("ready-mini-battleship").click();
+  await battleshipB.getByTestId("ready-mini-battleship").click();
+  await battleshipA.getByTestId("start-mini-battleship").click();
 
-  await expect(pageA.getByRole("button", { name: "Zakończ grę za zgodą obu osób" })).toBeVisible();
-  await pageA.getByRole("button", { name: "Zakończ grę za zgodą obu osób" }).click();
+  await expect(pageA.getByTestId("battleship-game")).toBeVisible();
+  await expect(pageA.getByTestId("board-setup-0-0")).toBeVisible();
+  await expect(pageA.getByTestId("board-setup-4-0")).toBeVisible();
+  await expect(pageA.getByRole("heading", { name: "Mini Statki 5x5" })).toHaveCount(1);
+
+  const stickyTop = await pageA.getByTestId("top-status-bar").evaluate((el) => getComputedStyle(el).position);
+  const stickyGameHeader = await pageA
+    .getByTestId("game-headline")
+    .evaluate((el) => getComputedStyle(el).position);
+  const stickyScoreboard = await pageA
+    .getByTestId("scoreboard")
+    .evaluate((el) => getComputedStyle(el).position);
+
+  expect(stickyTop).toBe("sticky");
+  expect(stickyGameHeader).toBe("static");
+  expect(stickyScoreboard).toBe("static");
+
+  await expect(pageA.getByRole("button", { name: "Zakończ za zgodą" })).toBeVisible();
+  await pageA.getByRole("button", { name: "Zakończ za zgodą" }).click();
   await expect(pageB.getByRole("button", { name: "Potwierdź" })).toBeVisible();
   await pageB.getByRole("button", { name: "Potwierdź" }).click();
 
   await expect(pageA.getByText("Gra przerwana za zgodą obu osób")).toBeVisible();
   await expect(pageA.getByText("Koniec gry")).toBeVisible();
   await expect(pageB.getByText("Koniec gry")).toBeVisible();
+  await expect(pageA.getByText("finished")).toHaveCount(0);
+
+  await pageA.getByRole("button", { name: "Powrót do lobby" }).click();
+  const feedback = pageA.getByTestId("feedback");
+  await expect(feedback).toBeVisible();
+  await expect(feedback).toHaveClass(/feedback-inline--info/);
+  await expect(pageA.getByTestId("tab-badge-history")).toBeVisible();
 
   await contextA.close();
   await contextB.close();

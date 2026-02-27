@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { createTopBarModel, resolveTab } from "../../src/lib/ui-state";
+import { createTopBarModel, phaseShortLabel, resolveTab } from "../../src/lib/ui-state";
 import type { QaGameState } from "../../src/lib/types";
 
 function createQaState(phase: QaGameState["phase"]): QaGameState {
@@ -36,8 +36,17 @@ describe("ui-state", () => {
     expect(inRound.jumpToResult).toBe(false);
 
     const finished = createTopBarModel("Patryk", createQaState("finished"), "online", "Online");
-    expect(finished.phaseLabel).toBe("Wynik");
+    expect(finished.phaseLabel).toBe("Koniec");
     expect(finished.jumpToResult).toBe(true);
+  });
+
+  it("mapuje wszystkie fazy na etykiety PL bez surowych enumów", () => {
+    expect(phaseShortLabel("idle")).toBe("Lobby");
+    expect(phaseShortLabel("ready")).toBe("Gotowość");
+    expect(phaseShortLabel("setup")).toBe("Ustawienie");
+    expect(phaseShortLabel("in_round")).toBe("Runda");
+    expect(phaseShortLabel("reveal")).toBe("Odkrycie");
+    expect(phaseShortLabel("finished")).toBe("Koniec");
   });
 
   it("przełącza aktywną zakładkę zgodnie ze stanem gry", () => {

@@ -13,6 +13,7 @@ import { RolePicker } from "../components/role-picker";
 import { RoomFull } from "../components/room-full";
 import { TopStatusBar } from "../components/top-status-bar";
 import { getOrCreateDeviceId } from "../lib/device";
+import { resolveFeedbackTone, shouldAutoDismiss } from "../lib/ui-feedback";
 import { readThemeMode, resolveTheme, saveThemeMode } from "../lib/theme";
 import { resolveTab } from "../lib/ui-state";
 import type {
@@ -28,7 +29,9 @@ import type {
   ResolvedTheme,
   Role,
   SessionConfigPayload,
-  ThemeMode
+  ThemeMode,
+  UiMessage,
+  UiMessageTone
 } from "../lib/types";
 
 const SAVED_PIN_KEY = "duoplay_pin";
@@ -60,7 +63,7 @@ export default function HomePage() {
   const [meRole, setMeRole] = useState<Role | undefined>();
   const [presence, setPresence] = useState<PresenceState>(initialPresence);
   const [gameState, setGameState] = useState<GameStatusPayload | null>(null);
-  const [feedback, setFeedback] = useState<string | undefined>();
+  const [feedback, setFeedback] = useState<UiMessage | undefined>();
   const [isBusy, setIsBusy] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>("offline");
   const [sessionConfig, setSessionConfig] = useState<SessionConfigPayload>(defaultSessionConfig);
@@ -68,6 +71,14 @@ export default function HomePage() {
   const [prefersDark, setPrefersDark] = useState(false);
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
   const [activeTab, setActiveTab] = useState<AppTab>("lobby");
+
+  const pushFeedback = (text: string, tone: UiMessageTone): void => {
+    setFeedback({ text, tone });
+  };
+
+  const clearFeedback = (): void => {
+    setFeedback(undefined);
+  };
 
   useEffect(() => {
     activePinRef.current = activePin;
@@ -134,7 +145,7 @@ export default function HomePage() {
       if (!state.ok) {
         if (state.roomFull) {
           setPhase("room-full");
-          setFeedback("Pokój jest aktualnie pełny.");
+          pushFeedback("Pokój jest aktualnie pełny.", "warning");
           return;
         }
 
@@ -145,7 +156,7 @@ export default function HomePage() {
       if (state.requiresChoice) {
         setPhase("choose-role");
         setAvailableRoles(state.availableRoles);
-        setFeedback(undefined);
+        clearFeedback();
         return;
       }
 
@@ -153,7 +164,7 @@ export default function HomePage() {
         setMeRole(state.meRole);
         setPhase("lobby");
         setActiveTab("lobby");
-        setFeedback(undefined);
+        clearFeedback();
 
         const pinValue = lastAuthPayloadRef.current?.pin ?? activePinRef.current;
         if (pinValue) {
@@ -188,28 +199,28 @@ export default function HomePage() {
 
     socket.on("game:event", (payload: { message?: string }) => {
       if (payload?.message) {
-        setFeedback(payload.message);
+        pushFeedback(payload.message, resolveFeedbackTone("event"));
       }
     });
 
     socket.on("game:result", (payload: { summary?: string }) => {
       if (payload?.summary) {
-        setFeedback(payload.summary);
+        pushFeedback(payload.summary, resolveFeedbackTone("result"));
       }
     });
 
     socket.on("question:added", () => {
-      setFeedback("Nowe pytanie zostało dodane do puli.");
+      pushFeedback("Nowe pytanie zostało dodane do puli.", resolveFeedbackTone("question_added"));
     });
 
     socket.on("error", (payload: { message?: string } | string) => {
       if (typeof payload === "string") {
-        setFeedback(payload);
+        pushFeedback(payload, resolveFeedbackTone("error"));
         return;
       }
 
       if (payload?.message) {
-        setFeedback(payload.message);
+        pushFeedback(payload.message, resolveFeedbackTone("error"));
       }
     });
 
@@ -259,21 +270,35 @@ export default function HomePage() {
     }
   }, [phase, gameState?.activeGame, activeTab]);
 
+  useEffect(() => {
+    if (!feedback || !shouldAutoDismiss(feedback.tone)) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      clearFeedback();
+    }, 4500);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [feedback]);
+
   const joinRoom = (roomPin: string, desiredRole?: Role): void => {
     const socket = socketRef.current;
     if (!socket) {
-      setFeedback("Socket nie jest gotowy. Odśwież stronę.");
+      pushFeedback("Socket nie jest gotowy. Odśwież stronę.", "error");
       return;
     }
 
     const normalizedPin = roomPin.trim();
     if (normalizedPin.length < 4) {
-      setFeedback("Kod pokoju powinien mieć minimum 4 znaki.");
+      pushFeedback("Kod pokoju powinien mieć minimum 4 znaki.", "error");
       return;
     }
 
     setIsBusy(true);
-    setFeedback(undefined);
+    clearFeedback();
     setConnectionStatus(socket.connected ? "online" : "connecting");
 
     const payload: AuthJoinPayload = {
@@ -373,7 +398,7 @@ export default function HomePage() {
                 onPinChange={setPin}
                 onSubmit={onSubmitPin}
                 isBusy={isBusy}
-                message={feedback}
+                message={feedback?.text}
               />
             </>
           ) : null}
@@ -401,17 +426,13 @@ export default function HomePage() {
           {phase === "lobby" && meRole ? (
             <>
               {feedback ? (
-                <p className="feedback-inline" role="status" data-testid="feedback">
-                  {feedback}
+                <p className={`feedback-inline feedback-inline--${feedback.tone}`} role="status" data-testid="feedback">
+                  {feedback.text}
                 </p>
               ) : null}
 
               {activeTab === "game" ? (
                 <section className="tab-section" data-testid="tab-panel-game">
-                  <section className="screen-title">
-                    <h1>Gra</h1>
-                    <p>Aktywna sesja i wynik na żywo.</p>
-                  </section>
                   {gameState?.activeGame ? (
                     <GameShell
                       meRole={meRole}
@@ -421,10 +442,16 @@ export default function HomePage() {
                       onAddQuestion={onAddQuestion}
                     />
                   ) : (
-                    <section className="empty-state">
-                      <h2>Brak aktywnej gry</h2>
-                      <p>Przejdź do Lobby i kliknij gotowość, aby wystartować.</p>
-                    </section>
+                    <>
+                      <section className="screen-title">
+                        <h1>Gra</h1>
+                        <p>Aktywna sesja i wynik na żywo.</p>
+                      </section>
+                      <section className="empty-state">
+                        <h2>Brak aktywnej gry</h2>
+                        <p>Przejdź do Lobby i kliknij gotowość, aby wystartować.</p>
+                      </section>
+                    </>
                   )}
                 </section>
               ) : null}
