@@ -6,8 +6,7 @@ const gameIdSchema = z.enum([
   "better-half",
   "mini-battleship",
   "science-quiz",
-  "couple-priorities",
-  "fire-water-coop"
+  "couple-priorities"
 ]);
 const questionGameSchema = z.enum(["qa-lightning", "better-half"]);
 const quizCategorySchema = z.enum(["matma", "geografia", "nauka", "wiedza-ogolna"]);
@@ -37,7 +36,7 @@ const scienceQuizStartSchema = z.object({
 });
 
 const defaultStartSchema = z.object({
-  gameId: z.enum(["qa-lightning", "better-half", "mini-battleship", "couple-priorities", "fire-water-coop"])
+  gameId: z.enum(["qa-lightning", "better-half", "mini-battleship", "couple-priorities"])
 });
 
 export const gameStartSchema = z.union([scienceQuizStartSchema, defaultStartSchema]);
@@ -108,12 +107,6 @@ const couplePrioritiesActionSchema = z.object({
   guessPartnerTop: z.number().int().min(0).max(3)
 });
 
-const fireWaterActionSchema = z.object({
-  gameId: z.literal("fire-water-coop"),
-  type: z.literal("move"),
-  direction: z.enum(["up", "down", "left", "right"])
-});
-
 const battleshipPlaceSchema = z.object({
   gameId: z.literal("mini-battleship"),
   type: z.literal("place_ships"),
@@ -162,7 +155,6 @@ export const gameActionSchema = z.union([
   betterHalfActionSchema,
   scienceQuizActionSchema,
   couplePrioritiesActionSchema,
-  fireWaterActionSchema,
   battleshipPlaceSchema,
   battleshipFireSchema,
   gameAdvanceSchema,

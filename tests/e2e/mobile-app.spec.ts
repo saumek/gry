@@ -65,6 +65,8 @@ test("dwie osoby łączą się, trzecia widzi pełny pokój i działa zakończen
 
   await pageA.getByTestId("tab-lobby").click();
   await pageB.getByTestId("tab-lobby").click();
+  await expect(pageA.getByTestId("game-row-fire-water-coop")).toHaveCount(0);
+  await expect(pageA.getByTestId("lobby-games").locator(".game-row")).toHaveCount(5);
 
   const battleshipA = pageA.getByTestId("game-row-mini-battleship");
   const battleshipB = pageB.getByTestId("game-row-mini-battleship");
@@ -143,6 +145,57 @@ test("science-quiz: wybór kategorii i reveal po 2 odpowiedziach", async ({ brow
 
   await expect(pageA.getByText("Poprawna")).toBeVisible();
   await expect(pageB.getByText("Poprawna")).toBeVisible();
+
+  await contextA.close();
+  await contextB.close();
+});
+
+test("quick smoke: QA, Better Half i Priorytety uruchamiają się i dają się przerwać za zgodą", async ({ browser }) => {
+  test.setTimeout(60000);
+  const contextA = await browser.newContext();
+  const contextB = await browser.newContext();
+
+  const pageA = await contextA.newPage();
+  const pageB = await contextB.newPage();
+
+  await pageA.waitForTimeout(3000);
+  await joinRoom(pageA);
+  await joinRoom(pageB);
+
+  await pageA.getByTestId("tab-lobby").click();
+  await pageB.getByTestId("tab-lobby").click();
+
+  const hasActiveGame = await pageA.getByTestId("game-shell").isVisible({ timeout: 600 }).catch(() => false);
+  if (hasActiveGame) {
+    await pageA.getByRole("button", { name: "Zakończ za zgodą" }).click();
+    await pageB.getByRole("button", { name: "Potwierdź" }).click();
+    await expect(pageA.getByText("Gra przerwana za zgodą obu osób")).toBeVisible();
+    await pageA.getByRole("button", { name: "Powrót do lobby" }).click();
+    await expect(pageA.getByTestId("tab-panel-lobby")).toBeVisible();
+    await pageB.getByTestId("tab-lobby").click();
+  }
+
+  await expect(pageA.getByTestId("ready-qa-lightning")).toBeVisible();
+
+  const smokeGames = [
+    { id: "qa-lightning", gameTestId: "qa-game" },
+    { id: "better-half", gameTestId: "better-half-game" },
+    { id: "couple-priorities", gameTestId: "couple-priorities-game" }
+  ] as const;
+
+  for (const game of smokeGames) {
+    await pageA.getByTestId(`ready-${game.id}`).click();
+    await pageB.getByTestId(`ready-${game.id}`).click();
+    await pageA.getByTestId(`start-${game.id}`).click();
+
+    await expect(pageA.getByTestId(game.gameTestId)).toBeVisible();
+    await expect(pageA.getByRole("button", { name: "Zakończ za zgodą" })).toBeVisible();
+    await pageA.getByRole("button", { name: "Zakończ za zgodą" }).click();
+    await pageB.getByRole("button", { name: "Potwierdź" }).click();
+    await expect(pageA.getByText("Gra przerwana za zgodą obu osób")).toBeVisible();
+    await pageA.getByRole("button", { name: "Powrót do lobby" }).click();
+    await expect(pageA.getByTestId("tab-panel-lobby")).toBeVisible();
+  }
 
   await contextA.close();
   await contextB.close();

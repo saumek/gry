@@ -26,16 +26,23 @@ type ActiveSession = {
 export class SessionManager {
   private readonly roleSessions = new Map<Role, ActiveSession>();
   private readonly socketToRole = new Map<string, Role>();
+  private presenceRevision = 0;
 
   constructor(private readonly ttlMs: number) {}
+
+  getPresenceRevision(): number {
+    return this.presenceRevision;
+  }
 
   join(input: JoinRequest): JoinResult {
     const now = input.now ?? Date.now();
     this.cleanupExpired(now);
+    const before = this.createPresenceKey();
 
     const existingRole = this.findRoleByDevice(input.deviceId);
     if (existingRole) {
       this.attachSocket(existingRole, input.socketId, now);
+      this.bumpPresenceRevisionIfChanged(before);
       return {
         ok: true,
         meRole: existingRole,
@@ -47,6 +54,7 @@ export class SessionManager {
 
     const availableRoles = this.getAvailableRoles(now);
     if (availableRoles.length === 0) {
+      this.bumpPresenceRevisionIfChanged(before);
       return {
         ok: false,
         requiresChoice: false,
@@ -56,6 +64,7 @@ export class SessionManager {
     }
 
     if (availableRoles.length === 2 && !input.desiredRole) {
+      this.bumpPresenceRevisionIfChanged(before);
       return {
         ok: true,
         requiresChoice: true,
@@ -77,6 +86,7 @@ export class SessionManager {
       connected: true
     });
     this.socketToRole.set(input.socketId, targetRole);
+    this.bumpPresenceRevisionIfChanged(before);
 
     return {
       ok: true,
@@ -89,6 +99,7 @@ export class SessionManager {
 
   ping(socketId: string, now = Date.now()): void {
     this.cleanupExpired(now);
+    const before = this.createPresenceKey();
     const role = this.socketToRole.get(socketId);
     if (!role) {
       return;
@@ -103,10 +114,12 @@ export class SessionManager {
     session.connected = true;
     session.socketId = socketId;
     this.socketToRole.set(socketId, role);
+    this.bumpPresenceRevisionIfChanged(before);
   }
 
   disconnect(socketId: string, now = Date.now()): void {
     this.cleanupExpired(now);
+    const before = this.createPresenceKey();
     const role = this.socketToRole.get(socketId);
     if (!role) {
       return;
@@ -122,9 +135,13 @@ export class SessionManager {
       session.connected = false;
       session.lastSeen = now;
     }
+    this.bumpPresenceRevisionIfChanged(before);
   }
 
   cleanupExpired(now = Date.now()): void {
+    const before = this.createPresenceKey();
+    let changed = false;
+
     for (const role of ROLES) {
       const session = this.roleSessions.get(role);
       if (!session) {
@@ -137,6 +154,11 @@ export class SessionManager {
 
       this.socketToRole.delete(session.socketId);
       this.roleSessions.delete(role);
+      changed = true;
+    }
+
+    if (changed) {
+      this.bumpPresenceRevisionIfChanged(before);
     }
   }
 
@@ -193,5 +215,25 @@ export class SessionManager {
     session.lastSeen = now;
     session.connected = true;
     this.socketToRole.set(socketId, role);
+  }
+
+  private bumpPresenceRevisionIfChanged(before: string): void {
+    if (before === this.createPresenceKey()) {
+      return;
+    }
+
+    this.presenceRevision += 1;
+  }
+
+  private createPresenceKey(): string {
+    const sami = this.roleSessions.get("Sami");
+    const patryk = this.roleSessions.get("Patryk");
+
+    return [
+      sami ? 1 : 0,
+      sami?.connected ? 1 : 0,
+      patryk ? 1 : 0,
+      patryk?.connected ? 1 : 0
+    ].join(":");
   }
 }

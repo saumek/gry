@@ -75,6 +75,17 @@ Dodaj dokładny host telefonu/laptopa do `ALLOWED_DEV_ORIGINS` (bez wildcardów 
 - Wznowienie sesji po reconnect
 - Historia gier i wyników w SQLite
 - Podstawowe PWA (manifest + service worker)
+- 5 aktywnych gier:
+  - `Pytania i odpowiedzi`
+  - `Jak odpowie druga połówka`
+  - `Mini Statki 5x5`
+  - `Quiz naukowy`
+  - `Priorytety pary`
+
+## Breaking change v1.8
+
+- Gra `Ogień i Woda Co-op` została usunięta z UI, socket API i historii.
+- Migracja przy starcie czyści historyczne sesje `fire-water-coop` z bazy.
 
 ## Uwaga bezpieczeństwa
 

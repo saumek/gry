@@ -71,6 +71,7 @@ export class AppDatabase {
     this.db = new Database(resolved);
     this.db.pragma("journal_mode = WAL");
     this.runMigrations();
+    this.db.pragma("optimize");
   }
 
   seedBuiltinQuestions(
@@ -478,6 +479,18 @@ export class AppDatabase {
         created_at TEXT NOT NULL,
         FOREIGN KEY(session_id) REFERENCES game_sessions(id)
       );
+
+      DELETE FROM game_rounds
+      WHERE session_id IN (SELECT id FROM game_sessions WHERE game_id = 'fire-water-coop');
+
+      DELETE FROM game_scores
+      WHERE session_id IN (SELECT id FROM game_sessions WHERE game_id = 'fire-water-coop');
+
+      DELETE FROM battleship_shots
+      WHERE session_id IN (SELECT id FROM game_sessions WHERE game_id = 'fire-water-coop');
+
+      DELETE FROM game_sessions
+      WHERE game_id = 'fire-water-coop';
 
       CREATE INDEX IF NOT EXISTS idx_questions_game_id ON questions(game_id);
       CREATE INDEX IF NOT EXISTS idx_science_questions_category ON science_questions(category);

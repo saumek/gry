@@ -39,10 +39,8 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
   const sessionManager = new SessionManager(config.sessionTtlMs);
   const db = new AppDatabase(config.dbPath);
   const gameManager = new GameManager(db);
-
-  const emitPresence = (): void => {
-    io.emit("presence:update", sessionManager.getPresence());
-  };
+  let lastPresenceRevisionEmitted = -1;
+  let lastGameRevisionEmitted = -1;
 
   const emitGameStateToAll = (): void => {
     for (const socket of io.sockets.sockets.values()) {
@@ -53,6 +51,26 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
 
       socket.emit("game:state", gameManager.getStateFor(role));
     }
+  };
+
+  const flushPresenceIfChanged = (): void => {
+    const revision = sessionManager.getPresenceRevision();
+    if (revision === lastPresenceRevisionEmitted) {
+      return;
+    }
+
+    lastPresenceRevisionEmitted = revision;
+    io.emit("presence:update", sessionManager.getPresence());
+  };
+
+  const flushStateIfChanged = (): void => {
+    const revision = gameManager.getStateRevision();
+    if (revision === lastGameRevisionEmitted) {
+      return;
+    }
+
+    lastGameRevisionEmitted = revision;
+    emitGameStateToAll();
   };
 
   io.on("connection", (socket) => {
@@ -105,8 +123,8 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
             message: "Pokój jest pełny."
           });
         }
-        emitPresence();
-        emitGameStateToAll();
+        flushPresenceIfChanged();
+        flushStateIfChanged();
         return;
       }
 
@@ -115,8 +133,8 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
           heartbeatIntervalMs: config.heartbeatIntervalMs,
           sessionTtlMs: config.sessionTtlMs
         });
-        emitPresence();
-        emitGameStateToAll();
+        flushPresenceIfChanged();
+        flushStateIfChanged();
         return;
       }
 
@@ -131,8 +149,8 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         sessionTtlMs: config.sessionTtlMs
       });
 
-      emitPresence();
-      emitGameStateToAll();
+      flushPresenceIfChanged();
+      flushStateIfChanged();
     });
 
     socket.on("presence:ping", (payload) => {
@@ -142,8 +160,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
       }
 
       sessionManager.ping(socket.id);
-      emitPresence();
-      emitGameStateToAll();
+      flushPresenceIfChanged();
     });
 
     socket.on("game:ready", (payload) => {
@@ -178,7 +195,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
       if (outcome.event) {
         io.emit("game:event", outcome.event);
       }
-      emitGameStateToAll();
+      flushStateIfChanged();
     });
 
     socket.on("game:start", (payload) => {
@@ -218,7 +235,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         io.emit("game:result", outcome.result);
       }
 
-      emitGameStateToAll();
+      flushStateIfChanged();
     });
 
     socket.on("game:config", (payload) => {
@@ -254,7 +271,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         io.emit("game:event", outcome.event);
       }
 
-      emitGameStateToAll();
+      flushStateIfChanged();
     });
 
     socket.on("question:add", (payload) => {
@@ -294,7 +311,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         io.emit("game:event", outcome.event);
       }
 
-      emitGameStateToAll();
+      flushStateIfChanged();
     });
 
     socket.on("game:action", (payload) => {
@@ -334,13 +351,12 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         io.emit("game:result", outcome.result);
       }
 
-      emitGameStateToAll();
+      flushStateIfChanged();
     });
 
     socket.on("disconnect", () => {
       sessionManager.disconnect(socket.id);
-      emitPresence();
-      emitGameStateToAll();
+      flushPresenceIfChanged();
     });
   });
 
@@ -350,8 +366,8 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
     if (expiredEndRequestEvent) {
       io.emit("game:event", expiredEndRequestEvent);
     }
-    emitPresence();
-    emitGameStateToAll();
+    flushPresenceIfChanged();
+    flushStateIfChanged();
   }, Math.max(1000, config.heartbeatIntervalMs));
 
   sweeper.unref();

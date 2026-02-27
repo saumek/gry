@@ -1,53 +1,4 @@
-import {
-  advanceBetterHalfState,
-  createBetterHalfState,
-  submitBetterHalfAnswer,
-  toPublicBetterHalfState,
-  type BetterHalfInternalState
-} from "./better-half-engine";
-import {
-  createBattleshipState,
-  fireShot,
-  placeShips,
-  toPublicBattleshipState,
-  type BattleshipInternalState
-} from "./battleship-engine";
-import {
-  advanceCouplePrioritiesState,
-  createCouplePrioritiesState,
-  submitCouplePriorities,
-  toPublicCouplePrioritiesState,
-  type CouplePrioritiesInternalState
-} from "./couple-priorities-engine";
-import {
-  createFireWaterState,
-  moveFireWater,
-  toPublicFireWaterState,
-  type FireWaterInternalState
-} from "./fire-water-coop-engine";
-import {
-  pickPriorityPrompts,
-  pickQuestions,
-  pickScienceQuestions,
-  seedBuiltinQuestions
-} from "./question-pool";
-import {
-  advanceQaState,
-  createQaState,
-  submitQaAnswer,
-  toPublicQaState,
-  type QaInternalState
-} from "./qa-engine";
-import {
-  advanceScienceQuizState,
-  createScienceQuizState,
-  submitScienceAnswer,
-  toPublicScienceQuizState,
-  type ScienceQuizInternalState
-} from "./science-quiz-engine";
-
 import type {
-  ActiveGameState,
   EndRequest,
   GameActionPayload,
   GameConfigByGame,
@@ -63,14 +14,9 @@ import type {
   Role
 } from "../../lib/types";
 import { AppDatabase } from "../db";
-
-type AnyInternalGame =
-  | QaInternalState
-  | BetterHalfInternalState
-  | BattleshipInternalState
-  | ScienceQuizInternalState
-  | CouplePrioritiesInternalState
-  | FireWaterInternalState;
+import { activeGameIds, engineRegistry } from "./engines/registry";
+import type { AnyInternalGame } from "./engines/types";
+import { seedBuiltinQuestions } from "./question-pool";
 
 type EndRequestInternal = {
   requestedBy: Role;
@@ -92,19 +38,16 @@ export class GameManager {
   private activeGame: AnyInternalGame | null = null;
   private activeEndRequest: EndRequestInternal | null = null;
   private latestResult: GameResultPayload | null = null;
-  private readyByGame: Record<GameId, Record<Role, boolean>> = {
-    "qa-lightning": { Sami: false, Patryk: false },
-    "better-half": { Sami: false, Patryk: false },
-    "mini-battleship": { Sami: false, Patryk: false },
-    "science-quiz": { Sami: false, Patryk: false },
-    "couple-priorities": { Sami: false, Patryk: false },
-    "fire-water-coop": { Sami: false, Patryk: false }
-  };
-
+  private stateRevision = 0;
+  private readyByGame = this.createInitialReadyByGame();
   private configByGame: Partial<GameConfigByGame> = {};
 
   constructor(private readonly db: AppDatabase) {
     seedBuiltinQuestions(this.db);
+  }
+
+  getStateRevision(): number {
+    return this.stateRevision;
   }
 
   setReady(role: Role, gameId: GameId, ready: boolean): GameActionResult {
@@ -115,7 +58,13 @@ export class GameManager {
       };
     }
 
+    if (this.readyByGame[gameId][role] === ready) {
+      return { ok: true };
+    }
+
     this.readyByGame[gameId][role] = ready;
+    this.bumpStateRevision();
+
     return {
       ok: true,
       event: {
@@ -127,24 +76,29 @@ export class GameManager {
   }
 
   setConfig(role: Role, payload: GameConfigPayload): GameActionResult {
-    if (payload.gameId === "science-quiz") {
-      this.configByGame["science-quiz"] = {
-        category: payload.category
-      };
-
+    if (payload.gameId !== "science-quiz") {
       return {
-        ok: true,
-        event: {
-          kind: "config_changed",
-          gameId: payload.gameId,
-          message: `${role} ustawił kategorię quizu: ${payload.category}.`
-        }
+        ok: false,
+        errorMessage: "Nieobsługiwana konfiguracja gry."
       };
     }
 
+    if (this.configByGame["science-quiz"]?.category === payload.category) {
+      return { ok: true };
+    }
+
+    this.configByGame["science-quiz"] = {
+      category: payload.category
+    };
+    this.bumpStateRevision();
+
     return {
-      ok: false,
-      errorMessage: "Nieobsługiwana konfiguracja gry."
+      ok: true,
+      event: {
+        kind: "config_changed",
+        gameId: payload.gameId,
+        message: `${role} ustawił kategorię quizu: ${payload.category}.`
+      }
     };
   }
 
@@ -173,57 +127,38 @@ export class GameManager {
       };
     }
 
-    if (gameId === "qa-lightning") {
-      const questions = pickQuestions(this.db, "qa-lightning", 10);
-      if (questions.length === 0) {
-        return { ok: false, errorMessage: "Brak pytań dla tej gry." };
-      }
-
-      const sessionId = this.db.createGameSession(gameId, "in_round", "{}");
-      this.activeGame = createQaState(sessionId, questions);
-    } else if (gameId === "better-half") {
-      const questions = pickQuestions(this.db, "better-half", 10);
-      if (questions.length === 0) {
-        return { ok: false, errorMessage: "Brak pytań dla tej gry." };
-      }
-
-      const sessionId = this.db.createGameSession(gameId, "in_round", "{}");
-      this.activeGame = createBetterHalfState(sessionId, questions);
-    } else if (gameId === "mini-battleship") {
-      const sessionId = this.db.createGameSession(gameId, "setup", "{}");
-      this.activeGame = createBattleshipState(sessionId);
-    } else if (gameId === "science-quiz") {
-      const category = payload.config?.category ?? this.configByGame["science-quiz"]?.category;
-      if (!category) {
-        return {
-          ok: false,
-          errorMessage: "Wybierz kategorię quizu przed startem."
-        };
-      }
-
-      const questions = pickScienceQuestions(this.db, category, 10);
-      if (questions.length === 0) {
-        return { ok: false, errorMessage: "Brak pytań dla wybranej kategorii." };
-      }
-
-      this.configByGame["science-quiz"] = { category };
-      const sessionId = this.db.createGameSession(gameId, "in_round", "{}");
-      this.activeGame = createScienceQuizState(sessionId, category, questions);
-    } else if (gameId === "couple-priorities") {
-      const prompts = pickPriorityPrompts(this.db, 8);
-      if (prompts.length === 0) {
-        return { ok: false, errorMessage: "Brak promptów dla tej gry." };
-      }
-
-      const sessionId = this.db.createGameSession(gameId, "in_round", "{}");
-      this.activeGame = createCouplePrioritiesState(sessionId, prompts);
-    } else {
-      const sessionId = this.db.createGameSession(gameId, "in_round", "{}");
-      this.activeGame = createFireWaterState(sessionId);
+    const engine = engineRegistry.get(gameId);
+    if (!engine) {
+      return {
+        ok: false,
+        errorMessage: "Nieobsługiwana gra."
+      };
     }
 
+    const startResult = engine.start({
+      db: this.db,
+      payload,
+      configByGame: this.configByGame
+    });
+
+    if (!startResult.ok) {
+      return {
+        ok: false,
+        errorMessage: startResult.errorMessage
+      };
+    }
+
+    this.activeGame = startResult.state;
     this.activeEndRequest = null;
+
+    if (startResult.state.gameId === "science-quiz") {
+      this.configByGame["science-quiz"] = {
+        category: startResult.state.category
+      };
+    }
+
     this.persistActiveGame();
+    this.bumpStateRevision();
 
     return {
       ok: true,
@@ -286,6 +221,8 @@ export class GameManager {
       this.activeGame = null;
       this.activeEndRequest = null;
       this.readyByGame[endedGameId] = { Sami: false, Patryk: false };
+      this.bumpStateRevision();
+
       return {
         ok: true,
         event: {
@@ -310,6 +247,7 @@ export class GameManager {
         this.readyByGame[gameId] = { Sami: true, Patryk: true };
         this.activeGame = null;
         this.activeEndRequest = null;
+        this.bumpStateRevision();
         return this.startGame(
           role,
           { gameId } as GameStartPayload,
@@ -321,6 +259,7 @@ export class GameManager {
       }
 
       this.persistActiveGame();
+      this.bumpStateRevision();
       return {
         ok: true,
         event: {
@@ -331,27 +270,71 @@ export class GameManager {
       };
     }
 
-    if (this.activeGame.gameId === "qa-lightning") {
-      return this.handleQaAction(role, payload);
+    const engine = engineRegistry.get(this.activeGame.gameId);
+    if (!engine || !engine.isState(this.activeGame)) {
+      return {
+        ok: false,
+        errorMessage: "Nie udało się dopasować silnika gry."
+      };
     }
 
-    if (this.activeGame.gameId === "better-half") {
-      return this.handleBetterHalfAction(role, payload);
+    const outcome = engine.handleAction({
+      db: this.db,
+      state: this.activeGame,
+      role,
+      payload
+    });
+
+    if (!outcome.ok) {
+      return {
+        ok: false,
+        errorMessage: outcome.errorMessage
+      };
     }
 
-    if (this.activeGame.gameId === "mini-battleship") {
-      return this.handleBattleshipAction(role, payload);
+    if (outcome.roundRecord) {
+      this.db.insertGameRound(
+        this.activeGame.sessionId,
+        outcome.roundRecord.roundNo,
+        outcome.roundRecord.payload
+      );
     }
 
-    if (this.activeGame.gameId === "science-quiz") {
-      return this.handleScienceQuizAction(role, payload);
+    if (outcome.battleshipShot) {
+      this.db.insertBattleshipShot(
+        this.activeGame.sessionId,
+        outcome.battleshipShot.turnNo,
+        outcome.battleshipShot.shooterRole,
+        outcome.battleshipShot.x,
+        outcome.battleshipShot.y,
+        outcome.battleshipShot.result
+      );
     }
 
-    if (this.activeGame.gameId === "couple-priorities") {
-      return this.handleCouplePrioritiesAction(role, payload);
+    if (outcome.scoreSnapshot) {
+      this.persistScores(this.activeGame.sessionId, outcome.scoreSnapshot);
     }
 
-    return this.handleFireWaterAction(role, payload);
+    let result: GameResultPayload | undefined;
+    if (
+      this.activeGame.phase === "finished" &&
+      this.latestResult?.sessionId !== this.activeGame.sessionId
+    ) {
+      result = this.finishGame(this.activeGame);
+    }
+
+    this.persistActiveGame();
+    this.bumpStateRevision();
+
+    return {
+      ok: true,
+      result,
+      event: {
+        kind: outcome.eventKind,
+        gameId: this.activeGame.gameId,
+        message: outcome.eventMessage
+      }
+    };
   }
 
   getStateFor(role: Role): GameStatusPayload {
@@ -364,435 +347,6 @@ export class GameManager {
       latestResult: this.latestResult,
       history: this.db.listGameHistory(100),
       configByGame: this.configByGame
-    };
-  }
-
-  private handleQaAction(role: Role, payload: GameActionPayload): GameActionResult {
-    const state = this.activeGame;
-    if (!state || state.gameId !== "qa-lightning") {
-      return { ok: false, errorMessage: "Ta akcja nie pasuje do aktywnej gry." };
-    }
-
-    if (payload.type === "submit" && payload.gameId === "qa-lightning") {
-      const outcome = submitQaAnswer(state, role, payload.answerIndex);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: "Nie udało się zapisać odpowiedzi." };
-      }
-
-      if (outcome.roundReveal) {
-        this.db.insertGameRound(state.sessionId, outcome.roundReveal.round, outcome.roundReveal);
-        this.persistScores(state.sessionId, outcome.roundReveal.scores);
-      }
-
-      this.persistActiveGame();
-
-      return {
-        ok: true,
-        event: {
-          kind: outcome.roundReveal ? "round_revealed" : "ready_changed",
-          gameId: state.gameId,
-          message: outcome.roundReveal
-            ? `Runda ${outcome.roundReveal.round} odsłonięta.`
-            : `${role} udzielił odpowiedzi.`
-        }
-      };
-    }
-
-    if (payload.type === "advance") {
-      const outcome = advanceQaState(state);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: "Nie można przejść dalej." };
-      }
-
-      const result = outcome.finished ? this.finishGame(state) : undefined;
-      this.persistActiveGame();
-      return {
-        ok: true,
-        result,
-        event: {
-          kind: outcome.finished ? "game_finished" : "round_advanced",
-          gameId: state.gameId,
-          message: outcome.finished ? "Gra zakończona." : "Przejście do kolejnej rundy."
-        }
-      };
-    }
-
-    return { ok: false, errorMessage: "Nieobsługiwana akcja dla Q&A." };
-  }
-
-  private handleBetterHalfAction(role: Role, payload: GameActionPayload): GameActionResult {
-    const state = this.activeGame;
-    if (!state || state.gameId !== "better-half") {
-      return { ok: false, errorMessage: "Ta akcja nie pasuje do aktywnej gry." };
-    }
-
-    if (payload.type === "submit" && payload.gameId === "better-half") {
-      const outcome = submitBetterHalfAnswer(
-        state,
-        role,
-        payload.selfAnswerIndex,
-        payload.guessPartnerIndex
-      );
-
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: "Nie udało się zapisać odpowiedzi." };
-      }
-
-      if (outcome.roundReveal) {
-        this.db.insertGameRound(state.sessionId, outcome.roundReveal.round, outcome.roundReveal);
-        this.persistScores(state.sessionId, outcome.roundReveal.scores);
-      }
-
-      this.persistActiveGame();
-      return {
-        ok: true,
-        event: {
-          kind: outcome.roundReveal ? "round_revealed" : "ready_changed",
-          gameId: state.gameId,
-          message: outcome.roundReveal
-            ? `Runda ${outcome.roundReveal.round} odsłonięta.`
-            : `${role} odpowiedział.`
-        }
-      };
-    }
-
-    if (payload.type === "advance") {
-      const outcome = advanceBetterHalfState(state);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: "Nie można przejść dalej." };
-      }
-
-      const result = outcome.finished ? this.finishGame(state) : undefined;
-      this.persistActiveGame();
-      return {
-        ok: true,
-        result,
-        event: {
-          kind: outcome.finished ? "game_finished" : "round_advanced",
-          gameId: state.gameId,
-          message: outcome.finished ? "Gra zakończona." : "Przejście do kolejnej rundy."
-        }
-      };
-    }
-
-    return { ok: false, errorMessage: "Nieobsługiwana akcja dla tej gry." };
-  }
-
-  private handleBattleshipAction(role: Role, payload: GameActionPayload): GameActionResult {
-    const state = this.activeGame;
-    if (!state || state.gameId !== "mini-battleship") {
-      return { ok: false, errorMessage: "Ta akcja nie pasuje do aktywnej gry." };
-    }
-
-    if (payload.type === "place_ships") {
-      const outcome = placeShips(state, role, payload.placements);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: outcome.message };
-      }
-
-      this.persistActiveGame();
-      return {
-        ok: true,
-        event: {
-          kind: "ships_placed",
-          gameId: state.gameId,
-          message: `${role} ustawił statki.`
-        }
-      };
-    }
-
-    if (payload.type === "fire") {
-      const outcome = fireShot(state, role, payload.x, payload.y);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: outcome.message };
-      }
-
-      const turnNo = state.history.length;
-      this.db.insertBattleshipShot(state.sessionId, turnNo, role, payload.x, payload.y, outcome.result ?? "miss");
-
-      const result = state.phase === "finished" ? this.finishGame(state) : undefined;
-      this.persistActiveGame();
-      return {
-        ok: true,
-        result,
-        event: {
-          kind: state.phase === "finished" ? "game_finished" : "shot",
-          gameId: state.gameId,
-          message: `${role} oddał strzał (${payload.x + 1}, ${payload.y + 1}).`
-        }
-      };
-    }
-
-    return { ok: false, errorMessage: "Nieobsługiwana akcja dla Statków." };
-  }
-
-  private handleScienceQuizAction(role: Role, payload: GameActionPayload): GameActionResult {
-    const state = this.activeGame;
-    if (!state || state.gameId !== "science-quiz") {
-      return { ok: false, errorMessage: "Ta akcja nie pasuje do aktywnej gry." };
-    }
-
-    if (payload.type === "submit" && payload.gameId === "science-quiz") {
-      const outcome = submitScienceAnswer(state, role, payload.answerIndex);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: "Nie udało się zapisać odpowiedzi." };
-      }
-
-      if (outcome.roundReveal) {
-        this.db.insertGameRound(state.sessionId, outcome.roundReveal.round, outcome.roundReveal);
-        this.persistScores(state.sessionId, outcome.roundReveal.scores);
-      }
-
-      this.persistActiveGame();
-
-      return {
-        ok: true,
-        event: {
-          kind: outcome.roundReveal ? "round_revealed" : "ready_changed",
-          gameId: state.gameId,
-          message: outcome.roundReveal
-            ? `Runda ${outcome.roundReveal.round} odsłonięta.`
-            : `${role} udzielił odpowiedzi.`
-        }
-      };
-    }
-
-    if (payload.type === "advance") {
-      const outcome = advanceScienceQuizState(state);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: "Nie można przejść dalej." };
-      }
-
-      const result = outcome.finished ? this.finishGame(state) : undefined;
-      this.persistActiveGame();
-      return {
-        ok: true,
-        result,
-        event: {
-          kind: outcome.finished ? "game_finished" : "round_advanced",
-          gameId: state.gameId,
-          message: outcome.finished ? "Quiz zakończony." : "Przejście do kolejnej rundy."
-        }
-      };
-    }
-
-    return { ok: false, errorMessage: "Nieobsługiwana akcja dla quizu." };
-  }
-
-  private handleCouplePrioritiesAction(role: Role, payload: GameActionPayload): GameActionResult {
-    const state = this.activeGame;
-    if (!state || state.gameId !== "couple-priorities") {
-      return { ok: false, errorMessage: "Ta akcja nie pasuje do aktywnej gry." };
-    }
-
-    if (payload.type === "submit" && payload.gameId === "couple-priorities") {
-      const outcome = submitCouplePriorities(state, role, payload.ranking, payload.guessPartnerTop);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: "Nie udało się zapisać rankingu." };
-      }
-
-      if (outcome.roundReveal) {
-        this.db.insertGameRound(state.sessionId, outcome.roundReveal.round, outcome.roundReveal);
-        this.persistScores(state.sessionId, outcome.roundReveal.scores);
-      }
-
-      this.persistActiveGame();
-
-      return {
-        ok: true,
-        event: {
-          kind: outcome.roundReveal ? "round_revealed" : "ready_changed",
-          gameId: state.gameId,
-          message: outcome.roundReveal
-            ? `Runda ${outcome.roundReveal.round} odsłonięta.`
-            : `${role} wysłał ranking.`
-        }
-      };
-    }
-
-    if (payload.type === "advance") {
-      const outcome = advanceCouplePrioritiesState(state);
-      if (!outcome.changed) {
-        return { ok: false, errorMessage: "Nie można przejść dalej." };
-      }
-
-      const result = outcome.finished ? this.finishGame(state) : undefined;
-      this.persistActiveGame();
-      return {
-        ok: true,
-        result,
-        event: {
-          kind: outcome.finished ? "game_finished" : "round_advanced",
-          gameId: state.gameId,
-          message: outcome.finished ? "Gra zakończona." : "Przejście do kolejnej rundy."
-        }
-      };
-    }
-
-    return { ok: false, errorMessage: "Nieobsługiwana akcja dla Priorytetów." };
-  }
-
-  private handleFireWaterAction(role: Role, payload: GameActionPayload): GameActionResult {
-    const state = this.activeGame;
-    if (!state || state.gameId !== "fire-water-coop") {
-      return { ok: false, errorMessage: "Ta akcja nie pasuje do aktywnej gry." };
-    }
-
-    if (payload.type !== "move") {
-      return { ok: false, errorMessage: "Nieobsługiwana akcja dla Ogień i Woda." };
-    }
-
-    const outcome = moveFireWater(state, role, payload.direction);
-    if (!outcome.changed) {
-      return { ok: false, errorMessage: outcome.message };
-    }
-
-    const turnNo = state.history.length;
-    this.db.insertGameRound(state.sessionId, turnNo, state.history[state.history.length - 1]);
-    this.persistScores(state.sessionId, state.scores);
-
-    const finished = state.phase === "finished";
-    const result = finished ? this.finishGame(state) : undefined;
-    this.persistActiveGame();
-
-    return {
-      ok: true,
-      result,
-      event: {
-        kind: finished ? "level_finished" : "level_progress",
-        gameId: state.gameId,
-        message: finished
-          ? state.outcome === "win"
-            ? "Poziom ukończony!"
-            : "Limit ruchów wykorzystany."
-          : `${role} wykonał ruch (${payload.direction}).`
-      }
-    };
-  }
-
-  private finishGame(state: AnyInternalGame): GameResultPayload {
-    this.activeEndRequest = null;
-
-    const scores = {
-      Sami: state.scores.Sami,
-      Patryk: state.scores.Patryk
-    };
-
-    let status = "finished";
-    let winnerRole = state.winnerRole;
-    let summary = winnerRole
-      ? `Wygrał ${winnerRole}. Wynik ${scores.Sami}:${scores.Patryk}`
-      : `Remis. Wynik ${scores.Sami}:${scores.Patryk}`;
-
-    if (state.gameId === "fire-water-coop") {
-      winnerRole = undefined;
-      if (state.outcome === "win") {
-        status = "coop_won";
-        summary = `Ukończona współpraca. Wynik ${scores.Sami}:${scores.Patryk}`;
-      } else {
-        status = "coop_failed";
-        summary = `Nieudana współpraca. Wynik ${scores.Sami}:${scores.Patryk}`;
-      }
-    }
-
-    this.db.updateGameSessionState(
-      state.sessionId,
-      status,
-      JSON.stringify(this.toPublicState(state, "Sami")),
-      winnerRole,
-      true
-    );
-
-    this.persistScores(state.sessionId, scores);
-
-    const result: GameResultPayload = {
-      gameId: state.gameId,
-      sessionId: state.sessionId,
-      winnerRole,
-      scores,
-      summary,
-      endReason: "normal"
-    };
-
-    this.latestResult = result;
-    return result;
-  }
-
-  private persistScores(sessionId: number, scores: { Sami: number; Patryk: number }): void {
-    this.db.upsertGameScore(sessionId, "Sami", scores.Sami);
-    this.db.upsertGameScore(sessionId, "Patryk", scores.Patryk);
-  }
-
-  private persistActiveGame(): void {
-    if (!this.activeGame) {
-      return;
-    }
-
-    let status: string = this.activeGame.phase;
-    if (this.activeGame.phase === "finished") {
-      const aborted =
-        this.latestResult?.sessionId === this.activeGame.sessionId &&
-        this.latestResult.endReason === "aborted";
-
-      if (aborted) {
-        status = "aborted";
-      } else if (this.activeGame.gameId === "fire-water-coop") {
-        status = this.activeGame.outcome === "win" ? "coop_won" : "coop_failed";
-      } else {
-        status = "finished";
-      }
-    }
-
-    this.db.updateGameSessionState(
-      this.activeGame.sessionId,
-      status,
-      JSON.stringify(this.toPublicState(this.activeGame, "Sami")),
-      this.activeGame.winnerRole,
-      this.activeGame.phase === "finished"
-    );
-  }
-
-  private toPublicState(state: AnyInternalGame, role: Role): ActiveGameState {
-    const endRequest = this.toPublicEndRequest();
-
-    if (state.gameId === "qa-lightning") {
-      return {
-        ...toPublicQaState(state),
-        endRequest
-      };
-    }
-
-    if (state.gameId === "better-half") {
-      return {
-        ...toPublicBetterHalfState(state),
-        endRequest
-      };
-    }
-
-    if (state.gameId === "mini-battleship") {
-      return {
-        ...toPublicBattleshipState(state, role),
-        endRequest
-      };
-    }
-
-    if (state.gameId === "science-quiz") {
-      return {
-        ...toPublicScienceQuizState(state),
-        endRequest
-      };
-    }
-
-    if (state.gameId === "couple-priorities") {
-      return {
-        ...toPublicCouplePrioritiesState(state),
-        endRequest
-      };
-    }
-
-    return {
-      ...toPublicFireWaterState(state),
-      endRequest
     };
   }
 
@@ -813,6 +367,7 @@ export class GameManager {
     const gameId = this.activeGame.gameId;
     this.activeEndRequest = null;
     this.persistActiveGame();
+    this.bumpStateRevision();
 
     return {
       kind: "end_request_cancelled",
@@ -850,6 +405,7 @@ export class GameManager {
         expiresAtMs: now + END_REQUEST_TTL_MS
       };
       this.persistActiveGame();
+      this.bumpStateRevision();
 
       return {
         ok: true,
@@ -871,6 +427,7 @@ export class GameManager {
     if (actionType === "reject_end") {
       this.activeEndRequest = null;
       this.persistActiveGame();
+      this.bumpStateRevision();
       return {
         ok: true,
         event: {
@@ -891,6 +448,7 @@ export class GameManager {
     this.activeEndRequest.approvals.add(role);
     if (this.activeEndRequest.approvals.size < 2) {
       this.persistActiveGame();
+      this.bumpStateRevision();
       return {
         ok: true,
         event: {
@@ -912,6 +470,93 @@ export class GameManager {
         gameId,
         message: "Gra przerwana za zgodą obu osób."
       }
+    };
+  }
+
+  private finishGame(state: AnyInternalGame): GameResultPayload {
+    this.activeEndRequest = null;
+
+    const engine = engineRegistry.get(state.gameId);
+    if (!engine || !engine.isState(state)) {
+      throw new Error(`Brak adaptera dla gry ${state.gameId}.`);
+    }
+
+    const finish = engine.deriveFinish(state);
+    const scores = {
+      Sami: state.scores.Sami,
+      Patryk: state.scores.Patryk
+    };
+
+    this.db.updateGameSessionState(
+      state.sessionId,
+      finish.status,
+      JSON.stringify(this.toPublicState(state, "Sami")),
+      finish.winnerRole,
+      true
+    );
+
+    this.persistScores(state.sessionId, scores);
+
+    const result: GameResultPayload = {
+      gameId: state.gameId,
+      sessionId: state.sessionId,
+      winnerRole: finish.winnerRole,
+      scores,
+      summary: finish.summary,
+      endReason: "normal"
+    };
+
+    this.latestResult = result;
+    this.bumpStateRevision();
+    return result;
+  }
+
+  private persistScores(sessionId: number, scores: { Sami: number; Patryk: number }): void {
+    this.db.upsertGameScore(sessionId, "Sami", scores.Sami);
+    this.db.upsertGameScore(sessionId, "Patryk", scores.Patryk);
+  }
+
+  private persistActiveGame(): void {
+    if (!this.activeGame) {
+      return;
+    }
+
+    let status: string = this.activeGame.phase;
+    if (this.activeGame.phase === "finished") {
+      const aborted =
+        this.latestResult?.sessionId === this.activeGame.sessionId &&
+        this.latestResult.endReason === "aborted";
+
+      if (aborted) {
+        status = "aborted";
+      } else {
+        const engine = engineRegistry.get(this.activeGame.gameId);
+        if (engine && engine.isState(this.activeGame)) {
+          status = engine.deriveFinish(this.activeGame).status;
+        } else {
+          status = "finished";
+        }
+      }
+    }
+
+    this.db.updateGameSessionState(
+      this.activeGame.sessionId,
+      status,
+      JSON.stringify(this.toPublicState(this.activeGame, "Sami")),
+      this.activeGame.winnerRole,
+      this.activeGame.phase === "finished"
+    );
+  }
+
+  private toPublicState(state: AnyInternalGame, role: Role): ReturnType<GameManager["getStateFor"]>["activeGame"] {
+    const engine = engineRegistry.get(state.gameId);
+    if (!engine || !engine.isState(state)) {
+      return null;
+    }
+
+    return {
+      ...engine.toPublicState(state, role),
+      endRequest: this.toPublicEndRequest()
     };
   }
 
@@ -944,6 +589,7 @@ export class GameManager {
     };
 
     this.latestResult = result;
+    this.bumpStateRevision();
     return result;
   }
 
@@ -957,5 +603,21 @@ export class GameManager {
       approvals: Array.from(this.activeEndRequest.approvals),
       expiresAt: new Date(this.activeEndRequest.expiresAtMs).toISOString()
     };
+  }
+
+  private createInitialReadyByGame(): Record<GameId, Record<Role, boolean>> {
+    const initial = {} as Record<GameId, Record<Role, boolean>>;
+    for (const gameId of activeGameIds) {
+      initial[gameId] = {
+        Sami: false,
+        Patryk: false
+      };
+    }
+
+    return initial;
+  }
+
+  private bumpStateRevision(): void {
+    this.stateRevision += 1;
   }
 }

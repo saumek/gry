@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
 import { BottomNav } from "../components/bottom-nav";
@@ -53,10 +53,21 @@ const defaultSessionConfig: SessionConfigPayload = {
 
 type Phase = "pin" | "choose-role" | "room-full" | "lobby";
 
+function isPresenceEqual(a: PresenceState, b: PresenceState): boolean {
+  return (
+    a.online.Sami === b.online.Sami &&
+    a.online.Patryk === b.online.Patryk &&
+    a.occupiedRoles.length === b.occupiedRoles.length &&
+    a.occupiedRoles.every((role, index) => role === b.occupiedRoles[index])
+  );
+}
+
 export default function HomePage() {
   const socketRef = useRef<Socket | null>(null);
   const activePinRef = useRef("");
   const lastAuthPayloadRef = useRef<AuthJoinPayload | null>(null);
+  const lastPresenceRef = useRef<PresenceState>(initialPresence);
+  const lastGameStateSignatureRef = useRef("");
 
   const [phase, setPhase] = useState<Phase>("pin");
   const [pin, setPin] = useState("");
@@ -74,13 +85,32 @@ export default function HomePage() {
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
   const [activeTab, setActiveTab] = useState<AppTab>("lobby");
 
-  const pushFeedback = (text: string, tone: UiMessageTone): void => {
+  const pushFeedback = useCallback((text: string, tone: UiMessageTone): void => {
     setFeedback({ text, tone });
-  };
+  }, []);
 
-  const clearFeedback = (): void => {
+  const clearFeedback = useCallback((): void => {
     setFeedback(undefined);
-  };
+  }, []);
+
+  const applyPresenceUpdate = useCallback((nextPresence: PresenceState): void => {
+    if (isPresenceEqual(lastPresenceRef.current, nextPresence)) {
+      return;
+    }
+
+    lastPresenceRef.current = nextPresence;
+    setPresence(nextPresence);
+  }, []);
+
+  const applyGameState = useCallback((nextState: GameStatusPayload): void => {
+    const signature = JSON.stringify(nextState);
+    if (signature === lastGameStateSignatureRef.current) {
+      return;
+    }
+
+    lastGameStateSignatureRef.current = signature;
+    setGameState(nextState);
+  }, []);
 
   useEffect(() => {
     activePinRef.current = activePin;
@@ -187,16 +217,14 @@ export default function HomePage() {
       setSessionConfig(payload);
     });
 
-    socket.on("presence:update", (nextPresence: PresenceState) => {
-      setPresence(nextPresence);
-    });
+    socket.on("presence:update", applyPresenceUpdate);
 
     socket.on("game:resume", (payload: { state: GameStatusPayload }) => {
-      setGameState(payload.state);
+      applyGameState(payload.state);
     });
 
     socket.on("game:state", (payload: GameStatusPayload) => {
-      setGameState(payload);
+      applyGameState(payload);
     });
 
     socket.on("game:event", (payload: { message?: string }) => {
@@ -231,7 +259,7 @@ export default function HomePage() {
       socket.removeAllListeners();
       socketRef.current = null;
     };
-  }, []);
+  }, [applyGameState, applyPresenceUpdate, clearFeedback, pushFeedback]);
 
   useEffect(() => {
     if (phase !== "lobby" || !meRole) {
@@ -286,7 +314,7 @@ export default function HomePage() {
     };
   }, [feedback]);
 
-  const joinRoom = (roomPin: string, desiredRole?: Role): void => {
+  const joinRoom = useCallback((roomPin: string, desiredRole?: Role): void => {
     const socket = socketRef.current;
     if (!socket) {
       pushFeedback("Socket nie jest gotowy. Odśwież stronę.", "error");
@@ -317,43 +345,43 @@ export default function HomePage() {
     }
 
     socket.emit("auth:join", payload);
-  };
+  }, [clearFeedback, pushFeedback]);
 
-  const onSubmitPin = (): void => {
+  const onSubmitPin = useCallback((): void => {
     const normalizedPin = pin.trim();
     setActivePin(normalizedPin);
     activePinRef.current = normalizedPin;
     window.localStorage.setItem(SAVED_PIN_KEY, normalizedPin);
     joinRoom(normalizedPin);
-  };
+  }, [joinRoom, pin]);
 
-  const onPickRole = (role: Role): void => {
+  const onPickRole = useCallback((role: Role): void => {
     joinRoom(activePin || pin, role);
-  };
+  }, [activePin, joinRoom, pin]);
 
-  const onReadyChange = (gameId: GameId, ready: boolean): void => {
+  const onReadyChange = useCallback((gameId: GameId, ready: boolean): void => {
     socketRef.current?.emit("game:ready", { gameId, ready });
-  };
+  }, []);
 
-  const onStartGame = (payload: GameStartPayload): void => {
+  const onStartGame = useCallback((payload: GameStartPayload): void => {
     if (gameState?.activeGameId === payload.gameId && gameState.activeGame) {
       return;
     }
 
     socketRef.current?.emit("game:start", payload);
-  };
+  }, [gameState?.activeGame, gameState?.activeGameId]);
 
-  const onGameAction = (payload: GameActionPayload): void => {
+  const onGameAction = useCallback((payload: GameActionPayload): void => {
     socketRef.current?.emit("game:action", payload);
-  };
+  }, []);
 
-  const onConfigureGame = (payload: GameConfigPayload): void => {
+  const onConfigureGame = useCallback((payload: GameConfigPayload): void => {
     socketRef.current?.emit("game:config", payload);
-  };
+  }, []);
 
-  const onAddQuestion = (payload: QuestionAddPayload): void => {
+  const onAddQuestion = useCallback((payload: QuestionAddPayload): void => {
     socketRef.current?.emit("question:add", payload);
-  };
+  }, []);
 
   const headerTitle = useMemo(() => {
     if (!meRole) {

@@ -1,27 +1,8 @@
+import { getGameCatalogItem } from "./game-catalog";
 import type { ActiveGameState, AppTab, ConnectionStatus, Role, TopBarModel } from "./types";
 
 export function gameShortLabel(gameId: ActiveGameState["gameId"]): string {
-  if (gameId === "qa-lightning") {
-    return "Q&A";
-  }
-
-  if (gameId === "better-half") {
-    return "Druga połówka";
-  }
-
-  if (gameId === "science-quiz") {
-    return "Quiz";
-  }
-
-  if (gameId === "couple-priorities") {
-    return "Priorytety";
-  }
-
-  if (gameId === "fire-water-coop") {
-    return "Ogień i Woda";
-  }
-
-  return "Statki";
+  return getGameCatalogItem(gameId).shortTitle;
 }
 
 export function phaseShortLabel(phase: ActiveGameState["phase"]): string {

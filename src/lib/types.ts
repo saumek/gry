@@ -26,8 +26,7 @@ export type GameId =
   | "better-half"
   | "mini-battleship"
   | "science-quiz"
-  | "couple-priorities"
-  | "fire-water-coop";
+  | "couple-priorities";
 
 export type GamePhase =
   | "idle"
@@ -144,27 +143,6 @@ export type BattleshipShotPublic = {
   result: BattleshipShotResult;
 };
 
-export type FireWaterTile = "empty" | "wall" | "lava" | "water" | "key_fire" | "key_water" | "exit";
-
-export type FireWaterDirection = "up" | "down" | "left" | "right";
-
-export type FireWaterMoveResult =
-  | "moved"
-  | "blocked"
-  | "hazard_blocked"
-  | "collected_key"
-  | "exit_wait"
-  | "win"
-  | "loss";
-
-export type FireWaterMoveHistory = {
-  turn: number;
-  role: Role;
-  direction: FireWaterDirection;
-  to: Coord;
-  result: FireWaterMoveResult;
-};
-
 export type QaGameState = {
   gameId: "qa-lightning";
   sessionId: number;
@@ -253,33 +231,12 @@ export type CouplePrioritiesGameState = {
   endRequest?: EndRequest;
 };
 
-export type FireWaterCoopState = {
-  gameId: "fire-water-coop";
-  sessionId: number;
-  phase: GamePhase;
-  ready: Record<Role, boolean>;
-  boardSize: number;
-  board: FireWaterTile[][];
-  positions: Record<Role, Coord>;
-  turnRole?: Role;
-  movesUsed: number;
-  movesLimit: number;
-  keysCollected: Record<Role, boolean>;
-  scores: GameScore;
-  history: FireWaterMoveHistory[];
-  rematchVotes: Role[];
-  winnerRole?: Role;
-  outcome?: "win" | "loss";
-  endRequest?: EndRequest;
-};
-
 export type ActiveGameState =
   | QaGameState
   | BetterHalfGameState
   | BattleshipGameState
   | ScienceQuizGameState
-  | CouplePrioritiesGameState
-  | FireWaterCoopState;
+  | CouplePrioritiesGameState;
 
 export type GameHistoryEntry = {
   sessionId: number;
@@ -388,12 +345,6 @@ export type CouplePrioritiesSubmitPayload = {
   guessPartnerTop: number;
 };
 
-export type FireWaterMovePayload = {
-  gameId: "fire-water-coop";
-  type: "move";
-  direction: FireWaterDirection;
-};
-
 export type AdvancePayload = {
   gameId: GameId;
   type: "advance";
@@ -431,7 +382,6 @@ export type GameActionPayload =
   | BattleshipFirePayload
   | ScienceQuizSubmitPayload
   | CouplePrioritiesSubmitPayload
-  | FireWaterMovePayload
   | AdvancePayload
   | RematchPayload
   | ReturnLobbyPayload
@@ -453,9 +403,7 @@ export type GameEventPayload = {
     | "end_request_cancelled"
     | "returned_to_lobby"
     | "rematch_vote"
-    | "config_changed"
-    | "level_progress"
-    | "level_finished";
+    | "config_changed";
   gameId: GameId;
   message: string;
 };

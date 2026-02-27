@@ -110,4 +110,36 @@ describe("SessionManager", () => {
     expect(reconnect.meRole).toBe("Patryk");
     expect(reconnect.requiresChoice).toBe(false);
   });
+
+  it("revision presence rośnie tylko przy realnej zmianie online/occupied", () => {
+    const manager = new SessionManager(100);
+    expect(manager.getPresenceRevision()).toBe(0);
+
+    manager.join({
+      deviceId: "device-a",
+      socketId: "socket-a",
+      now: 1000
+    });
+    expect(manager.getPresenceRevision()).toBe(0);
+
+    manager.join({
+      deviceId: "device-a",
+      socketId: "socket-a",
+      desiredRole: "Sami",
+      now: 1001
+    });
+    expect(manager.getPresenceRevision()).toBe(1);
+
+    manager.ping("socket-a", 1010);
+    expect(manager.getPresenceRevision()).toBe(1);
+
+    manager.disconnect("socket-a", 1020);
+    expect(manager.getPresenceRevision()).toBe(2);
+
+    manager.cleanupExpired(1050);
+    expect(manager.getPresenceRevision()).toBe(2);
+
+    manager.cleanupExpired(1201);
+    expect(manager.getPresenceRevision()).toBe(3);
+  });
 });

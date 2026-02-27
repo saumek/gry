@@ -4,6 +4,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { AppDatabase } from "../../src/server/db";
+import type { GameId } from "../../src/lib/types";
 import { GameManager } from "../../src/server/game/game-manager";
 
 function createManager(prefix: string): { manager: GameManager; db: AppDatabase } {
@@ -80,5 +81,79 @@ describe("game-manager early end", () => {
     const stateAfter = manager.getStateFor("Sami");
     expect(stateAfter.activeGame?.endRequest).toBeUndefined();
     expect(stateAfter.activeGame?.phase).toBe("in_round");
+  });
+
+  it("obsługuje dokładnie 5 gier z registry (bez fire-water-coop)", () => {
+    const { manager, db } = createManager("duoplay-manager-registry");
+    closers.push(() => db.close());
+
+    const state = manager.getStateFor("Sami");
+    const gameIds = Object.keys(state.readyByGame).sort();
+    expect(gameIds).toEqual([
+      "better-half",
+      "couple-priorities",
+      "mini-battleship",
+      "qa-lightning",
+      "science-quiz"
+    ]);
+
+    const orderedGameIds: GameId[] = [
+      "qa-lightning",
+      "better-half",
+      "mini-battleship",
+      "science-quiz",
+      "couple-priorities"
+    ];
+
+    for (const gameId of orderedGameIds) {
+      manager.setReady("Sami", gameId, true);
+      manager.setReady("Patryk", gameId, true);
+
+      if (gameId === "science-quiz") {
+        manager.setConfig("Sami", { gameId: "science-quiz", category: "matma" });
+      }
+
+      const started = manager.startGame(
+        "Sami",
+        gameId === "science-quiz"
+          ? { gameId: "science-quiz", config: { category: "matma" } }
+          : { gameId },
+        {
+          online: { Sami: true, Patryk: true },
+          occupiedRoles: ["Sami", "Patryk"]
+        }
+      );
+
+      expect(started.ok).toBe(true);
+      expect(manager.getStateFor("Sami").activeGameId).toBe(gameId);
+
+      const request = manager.handleAction("Sami", { gameId, type: "request_end" });
+      expect(request.ok).toBe(true);
+      const approve = manager.handleAction("Patryk", { gameId, type: "approve_end" });
+      expect(approve.ok).toBe(true);
+      expect(approve.result?.endReason).toBe("aborted");
+
+      const back = manager.handleAction("Sami", { gameId, type: "return_lobby" });
+      expect(back.ok).toBe(true);
+    }
+  });
+
+  it("stateRevision rośnie tylko przy realnej zmianie stanu", () => {
+    const { manager, db } = createManager("duoplay-manager-revision");
+    closers.push(() => db.close());
+
+    expect(manager.getStateRevision()).toBe(0);
+
+    manager.setReady("Sami", "qa-lightning", true);
+    expect(manager.getStateRevision()).toBe(1);
+
+    manager.setReady("Sami", "qa-lightning", true);
+    expect(manager.getStateRevision()).toBe(1);
+
+    manager.setConfig("Sami", { gameId: "science-quiz", category: "matma" });
+    expect(manager.getStateRevision()).toBe(2);
+
+    manager.setConfig("Sami", { gameId: "science-quiz", category: "matma" });
+    expect(manager.getStateRevision()).toBe(2);
   });
 });

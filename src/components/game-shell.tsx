@@ -1,14 +1,10 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { BetterHalfGame } from "./better-half-game";
-import { BattleshipGame } from "./battleship-game";
-import { CouplePrioritiesGame } from "./couple-priorities-game";
-import { FireWaterCoopGame } from "./fire-water-coop-game";
-import { QaGame } from "./qa-game";
-import { ScienceQuizGame } from "./science-quiz-game";
 import { WinCelebration } from "./win-celebration";
+import { getGameCatalogItem } from "../lib/game-catalog";
 import { phaseShortLabel } from "../lib/ui-state";
 import type {
   ActiveGameState,
@@ -25,6 +21,23 @@ type GameShellProps = {
   onAction: (payload: GameActionPayload) => void;
   onAddQuestion: (payload: QuestionAddPayload) => void;
 };
+
+const QaGame = dynamic(() => import("./qa-game").then((mod) => mod.QaGame), {
+  ssr: false
+});
+const BetterHalfGame = dynamic(() => import("./better-half-game").then((mod) => mod.BetterHalfGame), {
+  ssr: false
+});
+const BattleshipGame = dynamic(() => import("./battleship-game").then((mod) => mod.BattleshipGame), {
+  ssr: false
+});
+const ScienceQuizGame = dynamic(() => import("./science-quiz-game").then((mod) => mod.ScienceQuizGame), {
+  ssr: false
+});
+const CouplePrioritiesGame = dynamic(
+  () => import("./couple-priorities-game").then((mod) => mod.CouplePrioritiesGame),
+  { ssr: false }
+);
 
 export function GameShell({
   meRole,
@@ -101,7 +114,7 @@ export function GameShell({
 
       <section className="game-headline sticky-game-header" data-testid="game-headline">
         <div className="section-header">
-          <h2>{label(activeGame.gameId)}</h2>
+          <h2>{getGameCatalogItem(activeGame.gameId).title}</h2>
           <span className="chip chip--phase">{phaseShortLabel(activeGame.phase)}</span>
         </div>
 
@@ -190,34 +203,6 @@ export function GameShell({
       {activeGame.gameId === "couple-priorities" ? (
         <CouplePrioritiesGame state={activeGame} meRole={meRole} onAction={onAction} />
       ) : null}
-
-      {activeGame.gameId === "fire-water-coop" ? (
-        <FireWaterCoopGame state={activeGame} meRole={meRole} onAction={onAction} />
-      ) : null}
     </section>
   );
-}
-
-function label(gameId: ActiveGameState["gameId"]): string {
-  if (gameId === "qa-lightning") {
-    return "Pytania i odpowiedzi";
-  }
-
-  if (gameId === "better-half") {
-    return "Jak odpowie druga połówka";
-  }
-
-  if (gameId === "science-quiz") {
-    return "Quiz naukowy";
-  }
-
-  if (gameId === "couple-priorities") {
-    return "Priorytety pary";
-  }
-
-  if (gameId === "fire-water-coop") {
-    return "Ogień i Woda Co-op";
-  }
-
-  return "Mini Statki 5x5";
 }

@@ -15,7 +15,6 @@ import {
   fireShot,
   placeShips
 } from "../../src/server/game/battleship-engine";
-import { createFireWaterState, moveFireWater } from "../../src/server/game/fire-water-coop-engine";
 import { createQaState, submitQaAnswer, advanceQaState } from "../../src/server/game/qa-engine";
 import {
   advanceScienceQuizState,
@@ -176,38 +175,4 @@ describe("game engines", () => {
     expect(state.winnerRole).toBe("Sami");
   });
 
-  it("Ogień i Woda: blokuje hazard i kończy level jako win/loss", () => {
-    const state = createFireWaterState(7);
-    state.turnRole = "Patryk";
-
-    // Patryk nie może wejść na lawę (2,2).
-    state.positions.Patryk = { x: 2, y: 1 };
-    const hazardBlocked = moveFireWater(state, "Patryk", "down");
-    expect(hazardBlocked.changed).toBe(true);
-    expect(hazardBlocked.result).toBe("hazard_blocked");
-
-    // Wymuś warunek zwycięstwa: oba klucze zebrane, Sami na wyjściu, Patryk dochodzi na wyjście.
-    state.phase = "in_round";
-    state.keysCollected.Sami = true;
-    state.keysCollected.Patryk = true;
-    state.positions.Sami = { x: 4, y: 2 };
-    state.positions.Patryk = { x: 3, y: 2 };
-    state.turnRole = "Patryk";
-
-    const winMove = moveFireWater(state, "Patryk", "right");
-    expect(winMove.changed).toBe(true);
-    expect(winMove.result).toBe("win");
-    expect(state.phase).toBe("finished");
-    expect(state.outcome).toBe("win");
-
-    // Osobny stan na porażkę limitem ruchów.
-    const lossState = createFireWaterState(8);
-    lossState.movesLimit = 1;
-    lossState.turnRole = "Sami";
-    lossState.positions.Sami = { x: 0, y: 4 };
-    const lossMove = moveFireWater(lossState, "Sami", "left");
-    expect(lossMove.changed).toBe(true);
-    expect(lossState.phase).toBe("finished");
-    expect(lossState.outcome).toBe("loss");
-  });
 });

@@ -130,6 +130,62 @@ describe("socket runtime", () => {
     expect(chatEvents).toBe(0);
   });
 
+  it("presence:ping bez zmiany stanu nie emituje presence:update ani game:state", async () => {
+    const dbPath = path.join(os.tmpdir(), `duoplay-test-${Date.now()}-ping.db`);
+    const httpServer = http.createServer();
+
+    const runtime: SocketRuntime = createSocketRuntime({
+      httpServer,
+      roomPin: "1234",
+      heartbeatIntervalMs: 10000,
+      sessionTtlMs: 30000,
+      dbPath
+    });
+
+    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    const address = httpServer.address();
+    if (!address || typeof address === "string") {
+      throw new Error("Nie udało się odczytać portu testowego");
+    }
+    const baseUrl = `http://127.0.0.1:${address.port}`;
+
+    resources.push(async () => runtime.close());
+    resources.push(async () => {
+      await closeHttpServer(httpServer);
+    });
+
+    const client = createClient(baseUrl, { transports: ["websocket"] });
+    resources.push(async () => {
+      client.disconnect();
+    });
+
+    await waitForConnect(client);
+    const authPromise = waitForEvent<{ ok: boolean }>(client, "auth:state");
+    client.emit("auth:join", { pin: "1234", deviceId: "device-ping-a", desiredRole: "Sami" });
+    await authPromise;
+
+    let presenceUpdates = 0;
+    let gameStateUpdates = 0;
+    client.on("presence:update", () => {
+      presenceUpdates += 1;
+    });
+    client.on("game:state", () => {
+      gameStateUpdates += 1;
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    presenceUpdates = 0;
+    gameStateUpdates = 0;
+
+    client.emit("presence:ping", { ts: Date.now() });
+    client.emit("presence:ping", { ts: Date.now() + 1 });
+    client.emit("presence:ping", { ts: Date.now() + 2 });
+
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    expect(presenceUpdates).toBe(0);
+    expect(gameStateUpdates).toBe(0);
+  });
+
   it("zwraca roomFull dla trzeciego klienta", async () => {
     const dbPath = path.join(os.tmpdir(), `duoplay-test-${Date.now()}-2.db`);
     const httpServer = http.createServer();
@@ -187,6 +243,46 @@ describe("socket runtime", () => {
 
     expect(stateC.ok).toBe(false);
     expect(stateC.roomFull).toBe(true);
+  });
+
+  it("odrzuca stary payload z gameId fire-water-coop", async () => {
+    const dbPath = path.join(os.tmpdir(), `duoplay-test-${Date.now()}-legacy.db`);
+    const httpServer = http.createServer();
+
+    const runtime: SocketRuntime = createSocketRuntime({
+      httpServer,
+      roomPin: "1234",
+      heartbeatIntervalMs: 10000,
+      sessionTtlMs: 30000,
+      dbPath
+    });
+
+    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    const address = httpServer.address();
+    if (!address || typeof address === "string") {
+      throw new Error("Nie udało się odczytać portu testowego");
+    }
+
+    const baseUrl = `http://127.0.0.1:${address.port}`;
+    resources.push(async () => runtime.close());
+    resources.push(async () => {
+      await closeHttpServer(httpServer);
+    });
+
+    const client = createClient(baseUrl, { transports: ["websocket"] });
+    resources.push(async () => {
+      client.disconnect();
+    });
+
+    await waitForConnect(client);
+    const authPromise = waitForEvent(client, "auth:state");
+    client.emit("auth:join", { pin: "1234", deviceId: "device-legacy-a", desiredRole: "Sami" });
+    await authPromise;
+
+    const errorPromise = waitForEvent<{ code: string }>(client, "error");
+    client.emit("game:start", { gameId: "fire-water-coop" });
+    const error = await errorPromise;
+    expect(error.code).toBe("INVALID_GAME_START");
   });
 
   it("aktywność game odświeża sesję i zapobiega przedwczesnemu timeoutowi roli", async () => {
