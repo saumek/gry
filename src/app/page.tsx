@@ -22,7 +22,9 @@ import type {
   AuthStatePayload,
   ConnectionStatus,
   GameActionPayload,
+  GameConfigPayload,
   GameId,
+  GameStartPayload,
   GameStatusPayload,
   PresenceState,
   QuestionAddPayload,
@@ -333,16 +335,20 @@ export default function HomePage() {
     socketRef.current?.emit("game:ready", { gameId, ready });
   };
 
-  const onStartGame = (gameId: GameId): void => {
-    if (gameState?.activeGameId === gameId && gameState.activeGame) {
+  const onStartGame = (payload: GameStartPayload): void => {
+    if (gameState?.activeGameId === payload.gameId && gameState.activeGame) {
       return;
     }
 
-    socketRef.current?.emit("game:start", { gameId });
+    socketRef.current?.emit("game:start", payload);
   };
 
   const onGameAction = (payload: GameActionPayload): void => {
     socketRef.current?.emit("game:action", payload);
+  };
+
+  const onConfigureGame = (payload: GameConfigPayload): void => {
+    socketRef.current?.emit("game:config", payload);
   };
 
   const onAddQuestion = (payload: QuestionAddPayload): void => {
@@ -469,6 +475,7 @@ export default function HomePage() {
                       state={gameState}
                       onReadyChange={onReadyChange}
                       onStart={onStartGame}
+                      onConfigure={onConfigureGame}
                     />
                   ) : null}
                 </section>

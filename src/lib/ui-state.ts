@@ -9,6 +9,18 @@ export function gameShortLabel(gameId: ActiveGameState["gameId"]): string {
     return "Druga połówka";
   }
 
+  if (gameId === "science-quiz") {
+    return "Quiz";
+  }
+
+  if (gameId === "couple-priorities") {
+    return "Priorytety";
+  }
+
+  if (gameId === "fire-water-coop") {
+    return "Ogień i Woda";
+  }
+
   return "Statki";
 }
 

@@ -14,7 +14,8 @@ export default defineConfig({
     }
   ],
   webServer: {
-    command: "ROOM_PIN=1234 npx tsx server.ts",
+    command:
+      "ROOM_PIN=1234 SESSION_TTL_MS=2500 HEARTBEAT_INTERVAL_MS=800 npx tsx server.ts",
     port: 3000,
     reuseExistingServer: false,
     timeout: 120000

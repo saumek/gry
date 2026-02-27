@@ -600,6 +600,18 @@ small {
   gap: 4px;
 }
 
+.science-config-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 6px;
+}
+
+.science-config-row .input {
+  min-height: 40px;
+  font-size: 0.9rem;
+}
+
 .history-row__score {
   font-family: var(--font-heading);
   font-size: 0.92rem;
@@ -836,6 +848,52 @@ small {
 .board-cell.is-miss::after {
   background: radial-gradient(circle, color-mix(in srgb, var(--info) 40%, transparent), transparent 72%);
   animation: impact 240ms ease;
+}
+
+.board-cell--coop {
+  font-size: 0.64rem;
+  font-family: var(--font-heading);
+  padding: 0;
+}
+
+.board-cell--coop.tile-wall {
+  background: color-mix(in srgb, var(--text-1) 38%, var(--surface-1));
+}
+
+.board-cell--coop.tile-lava {
+  background: color-mix(in srgb, var(--danger) 24%, var(--surface-1));
+}
+
+.board-cell--coop.tile-water {
+  background: color-mix(in srgb, var(--info) 22%, var(--surface-1));
+}
+
+.board-cell--coop.tile-key_fire,
+.board-cell--coop.tile-key_water {
+  background: color-mix(in srgb, var(--warning) 22%, var(--surface-1));
+}
+
+.board-cell--coop.tile-exit {
+  background: color-mix(in srgb, var(--success) 20%, var(--surface-1));
+}
+
+.board-cell--coop.has-sami {
+  border-color: color-mix(in srgb, var(--danger) 58%, var(--line-subtle));
+}
+
+.board-cell--coop.has-patryk {
+  border-color: color-mix(in srgb, var(--info) 58%, var(--line-subtle));
+}
+
+.board-cell--coop.has-sami.has-patryk {
+  border-color: color-mix(in srgb, var(--accent) 64%, var(--line-subtle));
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface-1));
+}
+
+.direction-pad {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
 }
 
 .win-celebration {

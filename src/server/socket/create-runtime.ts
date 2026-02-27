@@ -9,6 +9,7 @@ import { SessionManager } from "../session/session-manager";
 import {
   authJoinSchema,
   gameActionSchema,
+  gameConfigSchema,
   gameReadySchema,
   gameStartSchema,
   pingSchema,
@@ -200,7 +201,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         return;
       }
 
-      const outcome = gameManager.startGame(role, parsed.data.gameId, sessionManager.getPresence());
+      const outcome = gameManager.startGame(role, parsed.data, sessionManager.getPresence());
       if (!outcome.ok) {
         socket.emit("error", {
           code: "GAME_START_REJECTED",
@@ -215,6 +216,42 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
 
       if (outcome.result) {
         io.emit("game:result", outcome.result);
+      }
+
+      emitGameStateToAll();
+    });
+
+    socket.on("game:config", (payload) => {
+      const role = socket.data.role as Role | undefined;
+      if (!role) {
+        socket.emit("error", {
+          code: "UNAUTHORIZED",
+          message: "Najpierw dołącz do pokoju."
+        });
+        return;
+      }
+      sessionManager.ping(socket.id);
+
+      const parsed = gameConfigSchema.safeParse(payload);
+      if (!parsed.success) {
+        socket.emit("error", {
+          code: "INVALID_GAME_CONFIG",
+          message: "Niepoprawna konfiguracja gry."
+        });
+        return;
+      }
+
+      const outcome = gameManager.setConfig(role, parsed.data);
+      if (!outcome.ok) {
+        socket.emit("error", {
+          code: "GAME_CONFIG_REJECTED",
+          message: outcome.errorMessage
+        });
+        return;
+      }
+
+      if (outcome.event) {
+        io.emit("game:event", outcome.event);
       }
 
       emitGameStateToAll();

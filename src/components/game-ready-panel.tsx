@@ -1,14 +1,30 @@
 import { gamesRegistry } from "../games/registry";
-import type { GameId, GameStatusPayload, Role } from "../lib/types";
+import type {
+  GameConfigPayload,
+  GameId,
+  GameStartPayload,
+  GameStatusPayload,
+  QuizCategory,
+  Role
+} from "../lib/types";
 
 type GameReadyPanelProps = {
   meRole: Role;
   state: GameStatusPayload;
   onReadyChange: (gameId: GameId, ready: boolean) => void;
-  onStart: (gameId: GameId) => void;
+  onStart: (payload: GameStartPayload) => void;
+  onConfigure: (payload: GameConfigPayload) => void;
 };
 
-export function GameReadyPanel({ meRole, state, onReadyChange, onStart }: GameReadyPanelProps) {
+export function GameReadyPanel({
+  meRole,
+  state,
+  onReadyChange,
+  onStart,
+  onConfigure
+}: GameReadyPanelProps) {
+  const selectedCategory = state.configByGame["science-quiz"]?.category ?? "matma";
+
   return (
     <section className="section-block" data-testid="lobby-games">
       <header className="section-header">
@@ -38,6 +54,33 @@ export function GameReadyPanel({ meRole, state, onReadyChange, onStart }: GameRe
               </div>
               <p className="muted">{game.description}</p>
               <p className="muted">{`Gotowi: ${readyCount}/2`}</p>
+
+              {game.id === "science-quiz" ? (
+                <div className="science-config-row">
+                  <label className="label" htmlFor="science-category-select">
+                    Kategoria
+                  </label>
+                  <select
+                    id="science-category-select"
+                    className="input"
+                    value={selectedCategory}
+                    disabled={activeElsewhere}
+                    onChange={(event) => {
+                      onConfigure({
+                        gameId: "science-quiz",
+                        category: event.target.value as QuizCategory
+                      });
+                    }}
+                    data-testid="science-category-select"
+                  >
+                    <option value="matma">Matma</option>
+                    <option value="geografia">Geografia</option>
+                    <option value="nauka">Nauka</option>
+                    <option value="wiedza-ogolna">Wiedza ogólna</option>
+                  </select>
+                </div>
+              ) : null}
+
               <div className="row-actions">
                 <button
                   className="btn btn--ghost btn--small"
@@ -53,7 +96,7 @@ export function GameReadyPanel({ meRole, state, onReadyChange, onStart }: GameRe
                   className="btn btn--small"
                   type="button"
                   disabled={activeElsewhere || !ready.Sami || !ready.Patryk}
-                  onClick={() => onStart(game.id)}
+                  onClick={() => onStart(toStartPayload(game.id, selectedCategory))}
                   data-testid={`start-${game.id}`}
                 >
                   {thisGameActive ? "Wznów" : "Start"}
@@ -65,4 +108,17 @@ export function GameReadyPanel({ meRole, state, onReadyChange, onStart }: GameRe
       </div>
     </section>
   );
+}
+
+function toStartPayload(gameId: GameId, selectedCategory: QuizCategory): GameStartPayload {
+  if (gameId === "science-quiz") {
+    return {
+      gameId,
+      config: {
+        category: selectedCategory
+      }
+    };
+  }
+
+  return { gameId } as GameStartPayload;
 }

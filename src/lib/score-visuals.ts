@@ -1,9 +1,11 @@
 import type {
   BetterHalfRoundReveal,
+  CouplePrioritiesRoundReveal,
   GameScore,
   QaRoundReveal,
   Role,
   RoundBadgeModel,
+  ScienceQuizRoundReveal,
   ScoreCardModel
 } from "./types";
 
@@ -69,6 +71,53 @@ export function betterHalfRevealBadges(reveal: BetterHalfRoundReveal): RoundBadg
       icon: reveal.hits.Patryk ? "✓" : "✕",
       label: `Patryk: ${reveal.hits.Patryk ? "trafione" : "nietrafione"}`,
       tone: reveal.hits.Patryk ? "success" : "danger"
+    }
+  ];
+}
+
+export function scienceQuizRevealBadges(reveal: ScienceQuizRoundReveal): RoundBadgeModel[] {
+  const badges: RoundBadgeModel[] = [
+    {
+      icon: reveal.correctByRole.Sami ? "✓" : "✕",
+      label: `Sami: ${reveal.correctByRole.Sami ? "poprawnie" : "błędnie"}`,
+      tone: reveal.correctByRole.Sami ? "success" : "danger"
+    },
+    {
+      icon: reveal.correctByRole.Patryk ? "✓" : "✕",
+      label: `Patryk: ${reveal.correctByRole.Patryk ? "poprawnie" : "błędnie"}`,
+      tone: reveal.correctByRole.Patryk ? "success" : "danger"
+    }
+  ];
+
+  if (reveal.bothCorrect) {
+    badges.push({
+      icon: "★",
+      label: "Bonus: obie poprawne",
+      tone: "info"
+    });
+  }
+
+  return badges;
+}
+
+export function couplePrioritiesRevealBadges(
+  reveal: CouplePrioritiesRoundReveal
+): RoundBadgeModel[] {
+  return [
+    {
+      icon: "≈",
+      label: `Zgodność pozycji: ${reveal.alignmentPoints}/4`,
+      tone: reveal.alignmentPoints >= 2 ? "success" : "warning"
+    },
+    {
+      icon: reveal.guessHits.Sami ? "✓" : "✕",
+      label: `Sami top-1: ${reveal.guessHits.Sami ? "trafione" : "nietrafione"}`,
+      tone: reveal.guessHits.Sami ? "success" : "danger"
+    },
+    {
+      icon: reveal.guessHits.Patryk ? "✓" : "✕",
+      label: `Patryk top-1: ${reveal.guessHits.Patryk ? "trafione" : "nietrafione"}`,
+      tone: reveal.guessHits.Patryk ? "success" : "danger"
     }
   ];
 }

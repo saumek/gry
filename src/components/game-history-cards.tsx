@@ -19,7 +19,19 @@ function gameLabel(id: GameHistoryEntry["gameId"]): string {
     return "Jak odpowie druga połówka";
   }
 
-  return "Mini Statki 5x5";
+  if (id === "mini-battleship") {
+    return "Mini Statki 5x5";
+  }
+
+  if (id === "science-quiz") {
+    return "Quiz naukowy";
+  }
+
+  if (id === "couple-priorities") {
+    return "Priorytety pary";
+  }
+
+  return "Ogień i Woda Co-op";
 }
 
 function formatDate(iso: string): string {
@@ -52,6 +64,10 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
           const badge =
             entry.status === "aborted"
               ? { tone: "warning" as const, icon: "•", label: "Przerwana" }
+              : entry.status === "coop_won"
+                ? { tone: "success" as const, icon: "★", label: "Ukończona współpraca" }
+                : entry.status === "coop_failed"
+                  ? { tone: "danger" as const, icon: "✕", label: "Nieudana współpraca" }
               : winnerBadge(entry.scores, entry.winnerRole);
 
           return (

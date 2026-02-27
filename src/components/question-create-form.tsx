@@ -21,7 +21,7 @@ export function QuestionCreateForm({ gameId, disabled, onAddQuestion }: Question
   const [text, setText] = useState("");
   const [options, setOptions] = useState<[string, string, string, string]>(initialOptions);
 
-  if (gameId === "mini-battleship") {
+  if (gameId !== "qa-lightning" && gameId !== "better-half") {
     return null;
   }
 

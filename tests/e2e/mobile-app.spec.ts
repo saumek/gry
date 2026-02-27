@@ -109,3 +109,41 @@ test("dwie osoby łączą się, trzecia widzi pełny pokój i działa zakończen
   await contextA.close();
   await contextB.close();
 });
+
+test("science-quiz: wybór kategorii i reveal po 2 odpowiedziach", async ({ browser }) => {
+  const contextA = await browser.newContext();
+  const contextB = await browser.newContext();
+
+  const pageA = await contextA.newPage();
+  const pageB = await contextB.newPage();
+
+  // Poprzedni test zamyka sockets; krótka pauza pozwala wygasić role po TTL.
+  await pageA.waitForTimeout(3000);
+
+  await joinRoom(pageA);
+  await joinRoom(pageB);
+
+  await pageA.getByTestId("tab-lobby").click();
+  await pageB.getByTestId("tab-lobby").click();
+
+  await pageA.getByTestId("science-category-select").selectOption("geografia");
+
+  const scienceRowA = pageA.getByTestId("game-row-science-quiz");
+  const scienceRowB = pageB.getByTestId("game-row-science-quiz");
+
+  await scienceRowA.getByTestId("ready-science-quiz").click();
+  await scienceRowB.getByTestId("ready-science-quiz").click();
+  await scienceRowA.getByTestId("start-science-quiz").click();
+
+  await expect(pageA.getByTestId("science-quiz-game")).toBeVisible();
+  await expect(pageB.getByTestId("science-quiz-game")).toBeVisible();
+
+  await pageA.locator("[data-testid='science-quiz-game'] .option-grid button").first().click();
+  await pageB.locator("[data-testid='science-quiz-game'] .option-grid button").first().click();
+
+  await expect(pageA.getByText("Poprawna")).toBeVisible();
+  await expect(pageB.getByText("Poprawna")).toBeVisible();
+
+  await contextA.close();
+  await contextB.close();
+});

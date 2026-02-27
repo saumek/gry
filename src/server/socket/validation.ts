@@ -1,8 +1,16 @@
 import { z } from "zod";
 
 const roleSchema = z.enum(["Sami", "Patryk"]);
-const gameIdSchema = z.enum(["qa-lightning", "better-half", "mini-battleship"]);
+const gameIdSchema = z.enum([
+  "qa-lightning",
+  "better-half",
+  "mini-battleship",
+  "science-quiz",
+  "couple-priorities",
+  "fire-water-coop"
+]);
 const questionGameSchema = z.enum(["qa-lightning", "better-half"]);
+const quizCategorySchema = z.enum(["matma", "geografia", "nauka", "wiedza-ogolna"]);
 
 export const authJoinSchema = z.object({
   pin: z.string().trim().min(1),
@@ -19,8 +27,24 @@ export const gameReadySchema = z.object({
   ready: z.boolean()
 });
 
-export const gameStartSchema = z.object({
-  gameId: gameIdSchema
+const scienceQuizStartSchema = z.object({
+  gameId: z.literal("science-quiz"),
+  config: z
+    .object({
+      category: quizCategorySchema
+    })
+    .optional()
+});
+
+const defaultStartSchema = z.object({
+  gameId: z.enum(["qa-lightning", "better-half", "mini-battleship", "couple-priorities", "fire-water-coop"])
+});
+
+export const gameStartSchema = z.union([scienceQuizStartSchema, defaultStartSchema]);
+
+export const gameConfigSchema = z.object({
+  gameId: z.literal("science-quiz"),
+  category: quizCategorySchema
 });
 
 const questionOptionsSchema = z
@@ -58,6 +82,36 @@ const betterHalfActionSchema = z.object({
   type: z.literal("submit"),
   selfAnswerIndex: z.number().int().min(0).max(3),
   guessPartnerIndex: z.number().int().min(0).max(3)
+});
+
+const scienceQuizActionSchema = z.object({
+  gameId: z.literal("science-quiz"),
+  type: z.literal("submit"),
+  answerIndex: z.number().int().min(0).max(3)
+});
+
+const rankingSchema = z
+  .tuple([
+    z.number().int().min(0).max(3),
+    z.number().int().min(0).max(3),
+    z.number().int().min(0).max(3),
+    z.number().int().min(0).max(3)
+  ])
+  .refine((ranking) => new Set(ranking).size === 4, {
+    message: "Ranking musi zawierać 4 unikalne opcje"
+  });
+
+const couplePrioritiesActionSchema = z.object({
+  gameId: z.literal("couple-priorities"),
+  type: z.literal("submit"),
+  ranking: rankingSchema,
+  guessPartnerTop: z.number().int().min(0).max(3)
+});
+
+const fireWaterActionSchema = z.object({
+  gameId: z.literal("fire-water-coop"),
+  type: z.literal("move"),
+  direction: z.enum(["up", "down", "left", "right"])
 });
 
 const battleshipPlaceSchema = z.object({
@@ -106,6 +160,9 @@ const gameRejectEndSchema = z.object({
 export const gameActionSchema = z.union([
   qaActionSchema,
   betterHalfActionSchema,
+  scienceQuizActionSchema,
+  couplePrioritiesActionSchema,
+  fireWaterActionSchema,
   battleshipPlaceSchema,
   battleshipFireSchema,
   gameAdvanceSchema,

@@ -334,4 +334,79 @@ describe("game runtime", () => {
     },
     15000
   );
+
+  it(
+    "obsługuje konfigurację quizu kategorii i start science-quiz",
+    async () => {
+      const dbPath = path.join(os.tmpdir(), `duoplay-game-${Date.now()}-science.db`);
+      const httpServer = http.createServer();
+
+      const runtime: SocketRuntime = createSocketRuntime({
+        httpServer,
+        roomPin: "1234",
+        heartbeatIntervalMs: 10000,
+        sessionTtlMs: 30000,
+        dbPath
+      });
+
+      await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+      const address = httpServer.address();
+      if (!address || typeof address === "string") {
+        throw new Error("Brak portu testowego");
+      }
+
+      const baseUrl = `http://127.0.0.1:${address.port}`;
+      resources.push(async () => runtime.close());
+      resources.push(async () => closeHttpServer(httpServer));
+
+      const a = createClient(baseUrl, { transports: ["websocket"] });
+      const b = createClient(baseUrl, { transports: ["websocket"] });
+
+      resources.push(async () => {
+        a.disconnect();
+      });
+      resources.push(async () => {
+        b.disconnect();
+      });
+
+      await waitForConnect(a);
+      await waitForConnect(b);
+
+      const authAPromise = waitForEvent(a, "auth:state");
+      a.emit("auth:join", { pin: "1234", deviceId: "device-science-a", desiredRole: "Sami" });
+      await authAPromise;
+
+      const authBPromise = waitForEvent(b, "auth:state");
+      b.emit("auth:join", { pin: "1234", deviceId: "device-science-b", desiredRole: "Patryk" });
+      await authBPromise;
+
+      a.emit("game:ready", { gameId: "science-quiz", ready: true });
+      b.emit("game:ready", { gameId: "science-quiz", ready: true });
+
+      await waitForState(
+        a,
+        (payload) =>
+          payload.readyByGame["science-quiz"].Sami && payload.readyByGame["science-quiz"].Patryk
+      );
+
+      const rejectPromise = waitForEvent<{ code?: string }>(a, "error");
+      a.emit("game:start", { gameId: "science-quiz" });
+      const rejected = await rejectPromise;
+      expect(rejected.code).toBe("GAME_START_REJECTED");
+
+      a.emit("game:config", { gameId: "science-quiz", category: "geografia" });
+      await waitForState(
+        a,
+        (payload) => payload.configByGame["science-quiz"]?.category === "geografia"
+      );
+
+      const startedPromise = waitForState(
+        a,
+        (payload) => payload.activeGameId === "science-quiz" && payload.activeGame?.phase === "in_round"
+      );
+      a.emit("game:start", { gameId: "science-quiz" });
+      await startedPromise;
+    },
+    15000
+  );
 });

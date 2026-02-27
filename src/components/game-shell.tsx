@@ -4,7 +4,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { BetterHalfGame } from "./better-half-game";
 import { BattleshipGame } from "./battleship-game";
+import { CouplePrioritiesGame } from "./couple-priorities-game";
+import { FireWaterCoopGame } from "./fire-water-coop-game";
 import { QaGame } from "./qa-game";
+import { ScienceQuizGame } from "./science-quiz-game";
 import { WinCelebration } from "./win-celebration";
 import { phaseShortLabel } from "../lib/ui-state";
 import type {
@@ -179,6 +182,18 @@ export function GameShell({
       {activeGame.gameId === "mini-battleship" ? (
         <BattleshipGame state={activeGame} meRole={meRole} onAction={onAction} />
       ) : null}
+
+      {activeGame.gameId === "science-quiz" ? (
+        <ScienceQuizGame state={activeGame} meRole={meRole} onAction={onAction} />
+      ) : null}
+
+      {activeGame.gameId === "couple-priorities" ? (
+        <CouplePrioritiesGame state={activeGame} meRole={meRole} onAction={onAction} />
+      ) : null}
+
+      {activeGame.gameId === "fire-water-coop" ? (
+        <FireWaterCoopGame state={activeGame} meRole={meRole} onAction={onAction} />
+      ) : null}
     </section>
   );
 }
@@ -190,6 +205,18 @@ function label(gameId: ActiveGameState["gameId"]): string {
 
   if (gameId === "better-half") {
     return "Jak odpowie druga połówka";
+  }
+
+  if (gameId === "science-quiz") {
+    return "Quiz naukowy";
+  }
+
+  if (gameId === "couple-priorities") {
+    return "Priorytety pary";
+  }
+
+  if (gameId === "fire-water-coop") {
+    return "Ogień i Woda Co-op";
   }
 
   return "Mini Statki 5x5";

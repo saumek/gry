@@ -21,7 +21,13 @@ export type AuthStatePayload = {
   roomFull: boolean;
 };
 
-export type GameId = "qa-lightning" | "better-half" | "mini-battleship";
+export type GameId =
+  | "qa-lightning"
+  | "better-half"
+  | "mini-battleship"
+  | "science-quiz"
+  | "couple-priorities"
+  | "fire-water-coop";
 
 export type GamePhase =
   | "idle"
@@ -33,6 +39,8 @@ export type GamePhase =
 
 export type QuestionSource = "builtin" | "custom";
 
+export type QuizCategory = "matma" | "geografia" | "nauka" | "wiedza-ogolna";
+
 export type QuestionCard = {
   id: number;
   gameId: Extract<GameId, "qa-lightning" | "better-half">;
@@ -40,6 +48,23 @@ export type QuestionCard = {
   options: [string, string, string, string];
   source: QuestionSource;
   authorRole?: Role;
+};
+
+export type ScienceQuestionPrompt = {
+  id: number;
+  gameId: "science-quiz";
+  category: QuizCategory;
+  text: string;
+  options: [string, string, string, string];
+  source: QuestionSource;
+};
+
+export type CouplePromptCard = {
+  id: number;
+  gameId: "couple-priorities";
+  text: string;
+  options: [string, string, string, string];
+  source: QuestionSource;
 };
 
 export type GameScore = Record<Role, number>;
@@ -77,6 +102,26 @@ export type BetterHalfRoundReveal = {
   scores: GameScore;
 };
 
+export type ScienceQuizRoundReveal = {
+  round: number;
+  question: ScienceQuestionPrompt;
+  answers: Record<Role, number>;
+  correctIndex: number;
+  correctByRole: Record<Role, boolean>;
+  bothCorrect: boolean;
+  scores: GameScore;
+};
+
+export type CouplePrioritiesRoundReveal = {
+  round: number;
+  prompt: CouplePromptCard;
+  submissions: Record<Role, { ranking: [number, number, number, number]; guessPartnerTop: number }>;
+  alignmentPoints: number;
+  guessHits: Record<Role, boolean>;
+  roundPoints: Record<Role, number>;
+  scores: GameScore;
+};
+
 export type Coord = {
   x: number;
   y: number;
@@ -97,6 +142,27 @@ export type BattleshipShotPublic = {
   x: number;
   y: number;
   result: BattleshipShotResult;
+};
+
+export type FireWaterTile = "empty" | "wall" | "lava" | "water" | "key_fire" | "key_water" | "exit";
+
+export type FireWaterDirection = "up" | "down" | "left" | "right";
+
+export type FireWaterMoveResult =
+  | "moved"
+  | "blocked"
+  | "hazard_blocked"
+  | "collected_key"
+  | "exit_wait"
+  | "win"
+  | "loss";
+
+export type FireWaterMoveHistory = {
+  turn: number;
+  role: Role;
+  direction: FireWaterDirection;
+  to: Coord;
+  result: FireWaterMoveResult;
 };
 
 export type QaGameState = {
@@ -152,7 +218,68 @@ export type BattleshipGameState = {
   endRequest?: EndRequest;
 };
 
-export type ActiveGameState = QaGameState | BetterHalfGameState | BattleshipGameState;
+export type ScienceQuizGameState = {
+  gameId: "science-quiz";
+  sessionId: number;
+  phase: GamePhase;
+  ready: Record<Role, boolean>;
+  totalRounds: number;
+  round: number;
+  category: QuizCategory;
+  scores: GameScore;
+  submittedRoles: Role[];
+  currentQuestion?: ScienceQuestionPrompt;
+  reveal?: ScienceQuizRoundReveal;
+  history: ScienceQuizRoundReveal[];
+  rematchVotes: Role[];
+  winnerRole?: Role;
+  endRequest?: EndRequest;
+};
+
+export type CouplePrioritiesGameState = {
+  gameId: "couple-priorities";
+  sessionId: number;
+  phase: GamePhase;
+  ready: Record<Role, boolean>;
+  totalRounds: number;
+  round: number;
+  scores: GameScore;
+  submittedRoles: Role[];
+  currentPrompt?: CouplePromptCard;
+  reveal?: CouplePrioritiesRoundReveal;
+  history: CouplePrioritiesRoundReveal[];
+  rematchVotes: Role[];
+  winnerRole?: Role;
+  endRequest?: EndRequest;
+};
+
+export type FireWaterCoopState = {
+  gameId: "fire-water-coop";
+  sessionId: number;
+  phase: GamePhase;
+  ready: Record<Role, boolean>;
+  boardSize: number;
+  board: FireWaterTile[][];
+  positions: Record<Role, Coord>;
+  turnRole?: Role;
+  movesUsed: number;
+  movesLimit: number;
+  keysCollected: Record<Role, boolean>;
+  scores: GameScore;
+  history: FireWaterMoveHistory[];
+  rematchVotes: Role[];
+  winnerRole?: Role;
+  outcome?: "win" | "loss";
+  endRequest?: EndRequest;
+};
+
+export type ActiveGameState =
+  | QaGameState
+  | BetterHalfGameState
+  | BattleshipGameState
+  | ScienceQuizGameState
+  | CouplePrioritiesGameState
+  | FireWaterCoopState;
 
 export type GameHistoryEntry = {
   sessionId: number;
@@ -164,12 +291,19 @@ export type GameHistoryEntry = {
   finishedAt?: string;
 };
 
+export type GameConfigByGame = {
+  "science-quiz": {
+    category: QuizCategory;
+  };
+};
+
 export type GameStatusPayload = {
   activeGameId: GameId | null;
   readyByGame: Record<GameId, Record<Role, boolean>>;
   activeGame: ActiveGameState | null;
   latestResult: GameResultPayload | null;
   history: GameHistoryEntry[];
+  configByGame: Partial<GameConfigByGame>;
 };
 
 export type GameResultPayload = {
@@ -195,8 +329,18 @@ export type GameReadyPayload = {
   ready: boolean;
 };
 
-export type GameStartPayload = {
-  gameId: GameId;
+export type GameStartPayload =
+  | {
+      gameId: "science-quiz";
+      config?: { category: QuizCategory };
+    }
+  | {
+      gameId: Exclude<GameId, "science-quiz">;
+    };
+
+export type GameConfigPayload = {
+  gameId: "science-quiz";
+  category: QuizCategory;
 };
 
 export type QuestionAddPayload = {
@@ -229,6 +373,25 @@ export type BattleshipFirePayload = {
   type: "fire";
   x: number;
   y: number;
+};
+
+export type ScienceQuizSubmitPayload = {
+  gameId: "science-quiz";
+  type: "submit";
+  answerIndex: number;
+};
+
+export type CouplePrioritiesSubmitPayload = {
+  gameId: "couple-priorities";
+  type: "submit";
+  ranking: [number, number, number, number];
+  guessPartnerTop: number;
+};
+
+export type FireWaterMovePayload = {
+  gameId: "fire-water-coop";
+  type: "move";
+  direction: FireWaterDirection;
 };
 
 export type AdvancePayload = {
@@ -266,6 +429,9 @@ export type GameActionPayload =
   | BetterHalfSubmitPayload
   | BattleshipPlaceShipsPayload
   | BattleshipFirePayload
+  | ScienceQuizSubmitPayload
+  | CouplePrioritiesSubmitPayload
+  | FireWaterMovePayload
   | AdvancePayload
   | RematchPayload
   | ReturnLobbyPayload
@@ -286,7 +452,10 @@ export type GameEventPayload = {
     | "end_requested"
     | "end_request_cancelled"
     | "returned_to_lobby"
-    | "rematch_vote";
+    | "rematch_vote"
+    | "config_changed"
+    | "level_progress"
+    | "level_finished";
   gameId: GameId;
   message: string;
 };

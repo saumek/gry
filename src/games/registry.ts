@@ -20,5 +20,23 @@ export const gamesRegistry: GameDefinition[] = [
     description:
       "Statki 3,2,2. Manualne lub losowe ustawienie, potem naprzemienne strzały.",
     status: "beta"
+  },
+  {
+    id: "science-quiz",
+    title: "Quiz naukowy",
+    description: "10 pytań wiedzy z kategorii: matma, geo, nauka, ogólna.",
+    status: "aktywna"
+  },
+  {
+    id: "couple-priorities",
+    title: "Priorytety pary",
+    description: "Ułóż ranking i zgadnij top-1 partnera. Punkty za zgodność i trafienie.",
+    status: "aktywna"
+  },
+  {
+    id: "fire-water-coop",
+    title: "Ogień i Woda Co-op",
+    description: "Wspólna plansza 5x5, klucze i wyjście w 24 ruchach.",
+    status: "beta"
   }
 ];

@@ -29,7 +29,7 @@ describe("game-manager early end", () => {
     manager.setReady("Sami", "qa-lightning", true);
     manager.setReady("Patryk", "qa-lightning", true);
 
-    const start = manager.startGame("Sami", "qa-lightning", {
+    const start = manager.startGame("Sami", { gameId: "qa-lightning" }, {
       online: { Sami: true, Patryk: true },
       occupiedRoles: ["Sami", "Patryk"]
     });
@@ -61,7 +61,7 @@ describe("game-manager early end", () => {
     manager.setReady("Sami", "qa-lightning", true);
     manager.setReady("Patryk", "qa-lightning", true);
 
-    const start = manager.startGame("Sami", "qa-lightning", {
+    const start = manager.startGame("Sami", { gameId: "qa-lightning" }, {
       online: { Sami: true, Patryk: true },
       occupiedRoles: ["Sami", "Patryk"]
     });
