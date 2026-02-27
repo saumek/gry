@@ -1,0 +1,8 @@
+node_modules
+.next
+coverage
+playwright-report
+test-results
+data/app.db
+.DS_Store
+.env
