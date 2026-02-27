@@ -143,8 +143,8 @@ test("science-quiz: wybór kategorii i reveal po 2 odpowiedziach", async ({ brow
   await pageA.locator("[data-testid='science-quiz-game'] .option-grid button").first().click();
   await pageB.locator("[data-testid='science-quiz-game'] .option-grid button").first().click();
 
-  await expect(pageA.getByText("Poprawna")).toBeVisible();
-  await expect(pageB.getByText("Poprawna")).toBeVisible();
+  await expect(pageA.getByRole("heading", { name: /Poprawna odpowiedź/ })).toBeVisible();
+  await expect(pageB.getByRole("heading", { name: /Poprawna odpowiedź/ })).toBeVisible();
 
   await contextA.close();
   await contextB.close();

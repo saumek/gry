@@ -2,16 +2,16 @@
 
 import { useMemo, useState } from "react";
 
-import { winnerBadge } from "../lib/score-visuals";
 import { phaseShortLabel } from "../lib/ui-state";
 import type {
   BattleshipGameState,
   GameActionPayload,
+  ResultHeroModel,
   ShipOrientation,
   ShipPlacement
 } from "../lib/types";
 import { ResultChip } from "./result-chip";
-import { RoundResultStrip } from "./round-result-strip";
+import { ResultHero } from "./result-hero";
 import { Scoreboard } from "./scoreboard";
 
 type BattleshipGameProps = {
@@ -58,6 +58,17 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
   }, [placements]);
 
   const latestShot = state.history[state.history.length - 1];
+  const resultHero: ResultHeroModel = {
+    title: state.winnerRole ? `Wygrywa ${state.winnerRole}` : "Koniec gry",
+    subtitle: "Bitwa zakończona",
+    tone: state.winnerRole ? "info" : "neutral",
+    icon: state.winnerRole ? "🏆" : "≈",
+    stats: [
+      { label: "Sami", value: String(state.scores.Sami) },
+      { label: "Patryk", value: String(state.scores.Patryk) },
+      { label: "Ruchy", value: String(state.history.length) }
+    ]
+  };
 
   const placeNextShip = (x: number, y: number) => {
     const length = SHIP_LENGTHS[placements.length];
@@ -262,11 +273,7 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
 
         {state.phase === "finished" ? (
           <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
-            <RoundResultStrip
-              title="Koniec gry"
-              description="Bitwa zakończona"
-              badges={[winnerBadge(state.scores, state.winnerRole)]}
-            />
+            <ResultHero model={resultHero} />
 
             <div className="result-actions">
               <button

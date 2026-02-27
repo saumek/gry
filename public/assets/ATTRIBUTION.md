@@ -5,6 +5,19 @@
 - `bg-dark.webp` - custom gradient background generated locally for DuoPlay v1.5.
 - `ornament-wave.svg` - custom SVG ornament created for DuoPlay v1.5.
 - `ornament-mesh.svg` - custom SVG ornament created for DuoPlay v1.5.
+- `icons/duoplay-mark.svg` - custom brand mark generated locally for DuoPlay v1.9.
+- `icons/nav-game.svg` - custom navigation icon generated locally for DuoPlay v1.9.
+- `icons/nav-lobby.svg` - custom navigation icon generated locally for DuoPlay v1.9.
+- `icons/nav-history.svg` - custom navigation icon generated locally for DuoPlay v1.9.
+- `icons/game-qa.svg` - custom game icon generated locally for DuoPlay v1.9.
+- `icons/game-better-half.svg` - custom game icon generated locally for DuoPlay v1.9.
+- `icons/game-science.svg` - custom game icon generated locally for DuoPlay v1.9.
+- `icons/game-priorities.svg` - custom game icon generated locally for DuoPlay v1.9.
+- `icons/game-battleship.svg` - custom game icon generated locally for DuoPlay v1.9.
+- `illustrations/qa-editorial.svg` - custom reveal illustration generated locally for DuoPlay v1.9.
+- `illustrations/better-half-editorial.svg` - custom reveal illustration generated locally for DuoPlay v1.9.
+- `illustrations/science-editorial.svg` - custom reveal illustration generated locally for DuoPlay v1.9.
+- `illustrations/priorities-editorial.svg` - custom reveal illustration generated locally for DuoPlay v1.9.
 
 ## Third-party icons
 Source: Tabler Icons (MIT)

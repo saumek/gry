@@ -42,6 +42,7 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
 
       <div className="history-list">
         {visibleHistory.map((entry) => {
+          const catalog = getGameCatalogItem(entry.gameId);
           const badge =
             entry.status === "aborted"
               ? { tone: "warning" as const, icon: "•", label: "Przerwana" }
@@ -49,9 +50,12 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
 
           return (
             <article className="history-row" key={entry.sessionId} data-testid={`history-row-${entry.sessionId}`}>
-              <div className="history-row__head">
-                <h3>{gameLabel(entry.gameId)}</h3>
-                <p className="history-row__score">{`Sami ${entry.scores.Sami} : ${entry.scores.Patryk} Patryk`}</p>
+              <div className="history-row__head history-row__head--compact">
+                <h3>
+                  <img src={catalog.iconPath} alt="" aria-hidden="true" className="inline-icon" />
+                  {gameLabel(entry.gameId)}
+                </h3>
+                <p className="history-row__score">{`${entry.scores.Sami}:${entry.scores.Patryk}`}</p>
               </div>
 
               <div className="history-row__meta">

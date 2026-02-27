@@ -1,4 +1,5 @@
 import { gamesRegistry } from "../games/registry";
+import { getGameCatalogItem } from "../lib/game-catalog";
 import type {
   GameConfigPayload,
   GameId,
@@ -34,6 +35,7 @@ export function GameReadyPanel({
 
       <div className="game-list">
         {gamesRegistry.map((game) => {
+          const catalog = getGameCatalogItem(game.id);
           const ready = state.readyByGame[game.id];
           const activeElsewhere =
             state.activeGameId !== null &&
@@ -49,7 +51,10 @@ export function GameReadyPanel({
               data-testid={`game-row-${game.id}`}
             >
               <div className="game-row__title">
-                <h3>{game.title}</h3>
+                <h3>
+                  <img src={catalog.iconPath} alt="" aria-hidden="true" className="inline-icon" />
+                  {game.title}
+                </h3>
                 <span className="status-pill">{thisGameActive ? "Aktywna" : "Lobby"}</span>
               </div>
               <p className="muted">{game.description}</p>

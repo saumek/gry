@@ -2,11 +2,17 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { couplePrioritiesRevealBadges, winnerBadge } from "../lib/score-visuals";
+import {
+  createPrioritiesResultHero,
+  createPrioritiesRoundVisual,
+  createPrioritiesTimeline
+} from "../lib/game-visuals/priorities-visuals";
 import { phaseShortLabel } from "../lib/ui-state";
 import type { CouplePrioritiesGameState, GameActionPayload } from "../lib/types";
+import { PointBreakdown } from "./point-breakdown";
 import { ResultChip } from "./result-chip";
-import { RoundResultStrip } from "./round-result-strip";
+import { ResultHero } from "./result-hero";
+import { RoundTimeline } from "./round-timeline";
 import { Scoreboard } from "./scoreboard";
 
 type CouplePrioritiesGameProps = {
@@ -19,6 +25,9 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
   const [ranking, setRanking] = useState<number[]>([]);
   const [guessPartnerTop, setGuessPartnerTop] = useState<number | null>(null);
   const submitted = state.submittedRoles.includes(meRole);
+  const roundVisual = state.reveal ? createPrioritiesRoundVisual(state.reveal) : null;
+  const resultHero = createPrioritiesResultHero(state);
+  const timeline = createPrioritiesTimeline(state.history);
 
   useEffect(() => {
     if (state.phase === "in_round") {
@@ -134,26 +143,41 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
 
         {state.phase === "reveal" && state.reveal ? (
           <div className="stack motion-fade-up" key={`cp-reveal-${state.reveal.round}`}>
-            <RoundResultStrip
-              title={`Runda ${state.reveal.round} - zgodność`}
-              description={state.reveal.prompt.text}
-              badges={couplePrioritiesRevealBadges(state.reveal)}
-            />
+            {roundVisual ? (
+              <ResultHero
+                model={{
+                  title: `Runda ${state.reveal.round} · ${roundVisual.title}`,
+                  subtitle: roundVisual.subtitle ?? "",
+                  tone: roundVisual.tone,
+                  icon: roundVisual.icon,
+                  stats: [
+                    { label: "Sami", value: String(state.scores.Sami) },
+                    { label: "Patryk", value: String(state.scores.Patryk) }
+                  ]
+                }}
+              />
+            ) : null}
 
-            <div className="answer-grid">
-              <article className="answer-card">
-                <strong>Sami</strong>
-                <p>{formatRanking(state.reveal.submissions.Sami.ranking, state.reveal.prompt.options)}</p>
-                <p>{`Top-1 typ: ${state.reveal.prompt.options[state.reveal.submissions.Sami.guessPartnerTop]}`}</p>
-                <p>{`Punkty rundy: ${state.reveal.roundPoints.Sami}`}</p>
-              </article>
-              <article className="answer-card">
-                <strong>Patryk</strong>
-                <p>{formatRanking(state.reveal.submissions.Patryk.ranking, state.reveal.prompt.options)}</p>
-                <p>{`Top-1 typ: ${state.reveal.prompt.options[state.reveal.submissions.Patryk.guessPartnerTop]}`}</p>
-                <p>{`Punkty rundy: ${state.reveal.roundPoints.Patryk}`}</p>
-              </article>
+            <div className="decision-grid">
+              {roundVisual?.decisions.map((decision) => (
+                <article
+                  key={`${decision.title}-${decision.actor}`}
+                  className={`decision-card decision-card--${decision.tone}`}
+                >
+                  <div className="decision-card__head">
+                    <span className="decision-card__icon" aria-hidden="true">
+                      {decision.icon}
+                    </span>
+                    <strong>{decision.title}</strong>
+                  </div>
+                  <p className="decision-card__choice">{decision.choice}</p>
+                  {decision.detail ? <small>{decision.detail}</small> : null}
+                </article>
+              ))}
             </div>
+
+            {roundVisual ? <PointBreakdown title="Skąd punkty" items={roundVisual.points} /> : null}
+            <RoundTimeline items={timeline} />
 
             <button
               className="btn"
@@ -167,11 +191,8 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
 
         {state.phase === "finished" ? (
           <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
-            <RoundResultStrip
-              title="Koniec gry"
-              description="Podsumowanie sesji"
-              badges={[winnerBadge(state.scores, state.winnerRole)]}
-            />
+            <ResultHero model={resultHero} />
+            <RoundTimeline items={timeline} />
 
             <div className="result-actions">
               <button
@@ -194,11 +215,4 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
       </section>
     </section>
   );
-}
-
-function formatRanking(
-  ranking: [number, number, number, number],
-  options: [string, string, string, string]
-): string {
-  return ranking.map((optionIndex, index) => `${index + 1}. ${options[optionIndex]}`).join(" · ");
 }

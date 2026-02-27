@@ -2,16 +2,22 @@
 
 import { useMemo, useState } from "react";
 
-import { betterHalfRevealBadges, winnerBadge } from "../lib/score-visuals";
+import {
+  createBetterHalfResultHero,
+  createBetterHalfRoundVisual,
+  createBetterHalfTimeline
+} from "../lib/game-visuals/better-half-visuals";
 import { phaseShortLabel } from "../lib/ui-state";
 import type {
   BetterHalfGameState,
   GameActionPayload,
   QuestionAddPayload
 } from "../lib/types";
+import { PointBreakdown } from "./point-breakdown";
 import { QuestionCreateForm } from "./question-create-form";
 import { ResultChip } from "./result-chip";
-import { RoundResultStrip } from "./round-result-strip";
+import { ResultHero } from "./result-hero";
+import { RoundTimeline } from "./round-timeline";
 import { Scoreboard } from "./scoreboard";
 
 type BetterHalfGameProps = {
@@ -25,6 +31,9 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
   const [selfAnswerIndex, setSelfAnswerIndex] = useState<number | null>(null);
   const [guessAnswerIndex, setGuessAnswerIndex] = useState<number | null>(null);
   const submitted = state.submittedRoles.includes(meRole);
+  const roundVisual = state.reveal ? createBetterHalfRoundVisual(state.reveal) : null;
+  const resultHero = createBetterHalfResultHero(state);
+  const timeline = createBetterHalfTimeline(state.history);
 
   const canSubmit = useMemo(
     () => selfAnswerIndex !== null && guessAnswerIndex !== null,
@@ -115,24 +124,38 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
 
         {state.phase === "reveal" && state.reveal ? (
           <div className="stack motion-fade-up" key={`bh-reveal-${state.reveal.round}`}>
-            <RoundResultStrip
-              title={`Runda ${state.reveal.round} - trafienia`}
-              description={state.reveal.question.text}
-              badges={betterHalfRevealBadges(state.reveal)}
-            />
+            {roundVisual ? (
+              <ResultHero
+                model={{
+                  title: `Runda ${state.reveal.round} · ${roundVisual.title}`,
+                  subtitle: roundVisual.subtitle ?? "",
+                  tone: roundVisual.tone,
+                  icon: roundVisual.icon,
+                  stats: [
+                    { label: "Sami", value: String(state.scores.Sami) },
+                    { label: "Patryk", value: String(state.scores.Patryk) }
+                  ]
+                }}
+              />
+            ) : null}
 
-            <div className="answer-grid">
-              <article className="answer-card">
-                <strong>Sami</strong>
-                <p>Odp: {state.reveal.question.options[state.reveal.answers.Sami.selfAnswer]}</p>
-                <p>Typ: {state.reveal.question.options[state.reveal.answers.Sami.guessPartner]}</p>
-              </article>
-              <article className="answer-card">
-                <strong>Patryk</strong>
-                <p>Odp: {state.reveal.question.options[state.reveal.answers.Patryk.selfAnswer]}</p>
-                <p>Typ: {state.reveal.question.options[state.reveal.answers.Patryk.guessPartner]}</p>
-              </article>
+            <div className="decision-grid decision-grid--2x2">
+              {roundVisual?.decisions.map((decision) => (
+                <article key={decision.title} className={`decision-card decision-card--${decision.tone}`}>
+                  <div className="decision-card__head">
+                    <span className="decision-card__icon" aria-hidden="true">
+                      {decision.icon}
+                    </span>
+                    <strong>{decision.title}</strong>
+                  </div>
+                  <p className="decision-card__choice">{decision.choice}</p>
+                  {decision.detail ? <small>{decision.detail}</small> : null}
+                </article>
+              ))}
             </div>
+
+            {roundVisual ? <PointBreakdown title="Punkty tej rundy" items={roundVisual.points} /> : null}
+            <RoundTimeline items={timeline} />
 
             <button
               className="btn"
@@ -146,11 +169,8 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
 
         {state.phase === "finished" ? (
           <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
-            <RoundResultStrip
-              title="Koniec gry"
-              description="Podsumowanie sesji"
-              badges={[winnerBadge(state.scores, state.winnerRole)]}
-            />
+            <ResultHero model={resultHero} />
+            <RoundTimeline items={timeline} />
 
             <div className="result-actions">
               <button

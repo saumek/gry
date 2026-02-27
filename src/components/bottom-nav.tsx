@@ -8,9 +8,9 @@ type BottomNavProps = {
 };
 
 const navItems: NavItemModel[] = [
-  { id: "game", label: "Gra", icon: "G" },
-  { id: "lobby", label: "Lobby", icon: "L" },
-  { id: "history", label: "Historia", icon: "H" }
+  { id: "game", label: "Gra", icon: "/assets/icons/nav-game.svg" },
+  { id: "lobby", label: "Lobby", icon: "/assets/icons/nav-lobby.svg" },
+  { id: "history", label: "Historia", icon: "/assets/icons/nav-history.svg" }
 ];
 
 export function BottomNav({ activeTab, onChange, historyCount, gameActive }: BottomNavProps) {
@@ -30,7 +30,7 @@ export function BottomNav({ activeTab, onChange, historyCount, gameActive }: Bot
             data-testid={`tab-${item.id}`}
           >
             <span className="bottom-nav__icon" aria-hidden="true">
-              {item.icon}
+              <img src={item.icon} alt="" />
             </span>
             <span>{item.label}</span>
             {badge > 0 ? <span className="bottom-nav__badge" data-testid={`tab-badge-${item.id}`}>{badge}</span> : null}

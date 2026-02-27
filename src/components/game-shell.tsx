@@ -50,6 +50,13 @@ export function GameShell({
   const [showCelebration, setShowCelebration] = useState(false);
   const celebrationKeyRef = useRef<string>("");
   const endRequest = activeGame.endRequest;
+  const actionFocusText =
+    activeGame.phase === "finished"
+      ? "Sprawdź wynik końcowy i wybierz: Rewanż albo Powrót do lobby."
+      : endRequest
+        ? "Trwa proces zakończenia gry za zgodą obu osób."
+        : "Wykonaj akcję rundy poniżej, aby kontynuować grę.";
+  const activeCatalog = getGameCatalogItem(activeGame.gameId);
 
   useEffect(() => {
     if (!endRequest) {
@@ -114,9 +121,19 @@ export function GameShell({
 
       <section className="game-headline sticky-game-header" data-testid="game-headline">
         <div className="section-header">
-          <h2>{getGameCatalogItem(activeGame.gameId).title}</h2>
+          <h2>{activeCatalog.title}</h2>
           <span className="chip chip--phase">{phaseShortLabel(activeGame.phase)}</span>
         </div>
+        <p className="muted">{actionFocusText}</p>
+        {activeCatalog.revealIllustration && (activeGame.phase === "reveal" || activeGame.phase === "finished") ? (
+          <img
+            className="game-hero-illustration"
+            src={activeCatalog.revealIllustration}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
+        ) : null}
 
         {activeGame.phase !== "finished" && !endRequest ? (
           <button

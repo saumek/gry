@@ -25,7 +25,10 @@ export function TopStatusBar({
   return (
     <header className="top-status" data-testid="top-status-bar">
       <div className="top-status__line">
-        <strong className="top-status__brand">DuoPlay</strong>
+        <strong className="top-status__brand">
+          <img src="/assets/icons/duoplay-mark.svg" alt="" aria-hidden="true" className="brand-mark" />
+          DuoPlay
+        </strong>
         <div className="top-status__state">
           <span className="top-status__item">{model.roleLabel}</span>
           <span className={`status-dot status-dot--${model.connectionStatus}`} aria-hidden="true" />

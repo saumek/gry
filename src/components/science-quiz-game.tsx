@@ -1,10 +1,16 @@
 "use client";
 
-import { scienceQuizRevealBadges, winnerBadge } from "../lib/score-visuals";
+import {
+  createScienceResultHero,
+  createScienceRoundVisual,
+  createScienceTimeline
+} from "../lib/game-visuals/science-visuals";
 import { phaseShortLabel } from "../lib/ui-state";
 import type { GameActionPayload, ScienceQuizGameState } from "../lib/types";
+import { PointBreakdown } from "./point-breakdown";
 import { ResultChip } from "./result-chip";
-import { RoundResultStrip } from "./round-result-strip";
+import { ResultHero } from "./result-hero";
+import { RoundTimeline } from "./round-timeline";
 import { Scoreboard } from "./scoreboard";
 
 type ScienceQuizGameProps = {
@@ -15,6 +21,9 @@ type ScienceQuizGameProps = {
 
 export function ScienceQuizGame({ state, meRole, onAction }: ScienceQuizGameProps) {
   const submitted = state.submittedRoles.includes(meRole);
+  const roundVisual = state.reveal ? createScienceRoundVisual(state.reveal) : null;
+  const resultHero = createScienceResultHero(state);
+  const timeline = createScienceTimeline(state.history);
 
   return (
     <section className="stack-lg" data-testid="science-quiz-game">
@@ -65,26 +74,40 @@ export function ScienceQuizGame({ state, meRole, onAction }: ScienceQuizGameProp
 
         {state.phase === "reveal" && state.reveal ? (
           <div className="stack motion-fade-up" key={`science-reveal-${state.reveal.round}`}>
-            <RoundResultStrip
-              title={`Runda ${state.reveal.round} - wynik`}
-              description={state.reveal.question.text}
-              badges={scienceQuizRevealBadges(state.reveal)}
-            />
+            {roundVisual ? (
+              <ResultHero
+                model={{
+                  title: `Runda ${state.reveal.round} · ${roundVisual.title}`,
+                  subtitle: roundVisual.subtitle ?? "",
+                  tone: roundVisual.tone,
+                  icon: roundVisual.icon,
+                  stats: [
+                    { label: "Sami", value: String(state.scores.Sami) },
+                    { label: "Patryk", value: String(state.scores.Patryk) }
+                  ]
+                }}
+              />
+            ) : null}
 
-            <div className="answer-grid">
-              <article className="answer-card">
-                <strong>Poprawna</strong>
-                <p>{state.reveal.question.options[state.reveal.correctIndex]}</p>
-              </article>
-              <article className="answer-card">
-                <strong>Sami</strong>
-                <p>{state.reveal.question.options[state.reveal.answers.Sami]}</p>
-              </article>
-              <article className="answer-card">
-                <strong>Patryk</strong>
-                <p>{state.reveal.question.options[state.reveal.answers.Patryk]}</p>
-              </article>
+            <div className="decision-grid decision-grid--science">
+              {roundVisual?.decisions.map((decision) => (
+                <article
+                  key={`${decision.title}-${decision.actor}`}
+                  className={`decision-card decision-card--${decision.tone}`}
+                >
+                  <div className="decision-card__head">
+                    <span className="decision-card__icon" aria-hidden="true">
+                      {decision.icon}
+                    </span>
+                    <strong>{decision.title}</strong>
+                  </div>
+                  <p className="decision-card__choice">{decision.choice}</p>
+                </article>
+              ))}
             </div>
+
+            {roundVisual ? <PointBreakdown title="Rozpiska punktów" items={roundVisual.points} /> : null}
+            <RoundTimeline items={timeline} />
 
             <button
               className="btn"
@@ -98,11 +121,8 @@ export function ScienceQuizGame({ state, meRole, onAction }: ScienceQuizGameProp
 
         {state.phase === "finished" ? (
           <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
-            <RoundResultStrip
-              title="Koniec quizu"
-              description="Podsumowanie wszystkich rund"
-              badges={[winnerBadge(state.scores, state.winnerRole)]}
-            />
+            <ResultHero model={resultHero} />
+            <RoundTimeline items={timeline} />
 
             <div className="result-actions">
               <button
@@ -128,17 +148,8 @@ export function ScienceQuizGame({ state, meRole, onAction }: ScienceQuizGameProp
 }
 
 function categoryLabel(category: ScienceQuizGameState["category"]): string {
-  if (category === "matma") {
-    return "Matma";
-  }
-
-  if (category === "geografia") {
-    return "Geografia";
-  }
-
-  if (category === "nauka") {
-    return "Nauka";
-  }
-
+  if (category === "matma") return "Matma";
+  if (category === "geografia") return "Geografia";
+  if (category === "nauka") return "Nauka";
   return "Wiedza ogólna";
 }

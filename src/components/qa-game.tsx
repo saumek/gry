@@ -1,11 +1,17 @@
 "use client";
 
-import { qaRevealBadges, winnerBadge } from "../lib/score-visuals";
+import {
+  createQaResultHero,
+  createQaRoundVisual,
+  createQaTimeline
+} from "../lib/game-visuals/qa-visuals";
 import { phaseShortLabel } from "../lib/ui-state";
 import type { GameActionPayload, QaGameState, QuestionAddPayload } from "../lib/types";
+import { PointBreakdown } from "./point-breakdown";
 import { QuestionCreateForm } from "./question-create-form";
 import { ResultChip } from "./result-chip";
-import { RoundResultStrip } from "./round-result-strip";
+import { ResultHero } from "./result-hero";
+import { RoundTimeline } from "./round-timeline";
 import { Scoreboard } from "./scoreboard";
 
 type QaGameProps = {
@@ -17,6 +23,9 @@ type QaGameProps = {
 
 export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) {
   const submitted = state.submittedRoles.includes(meRole);
+  const roundVisual = state.reveal ? createQaRoundVisual(state.reveal) : null;
+  const resultHero = createQaResultHero(state);
+  const timeline = createQaTimeline(state.history);
 
   return (
     <section className="stack-lg" data-testid="qa-game">
@@ -67,22 +76,37 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
 
         {state.phase === "reveal" && state.reveal ? (
           <div className="stack motion-fade-up" key={`qa-reveal-${state.reveal.round}`}>
-            <RoundResultStrip
-              title={`Runda ${state.reveal.round} - wynik`}
-              description={state.reveal.question.text}
-              badges={qaRevealBadges(state.reveal)}
-            />
+            {roundVisual ? (
+              <ResultHero
+                model={{
+                  title: `Runda ${state.reveal.round} · ${roundVisual.title}`,
+                  subtitle: roundVisual.subtitle ?? "",
+                  tone: roundVisual.tone,
+                  icon: roundVisual.icon,
+                  stats: [
+                    { label: "Sami", value: String(state.scores.Sami) },
+                    { label: "Patryk", value: String(state.scores.Patryk) }
+                  ]
+                }}
+              />
+            ) : null}
 
-            <div className="answer-grid">
-              <article className="answer-card">
-                <strong>Sami</strong>
-                <p>{state.reveal.question.options[state.reveal.answers.Sami]}</p>
-              </article>
-              <article className="answer-card">
-                <strong>Patryk</strong>
-                <p>{state.reveal.question.options[state.reveal.answers.Patryk]}</p>
-              </article>
+            <div className="decision-grid">
+              {roundVisual?.decisions.map((decision) => (
+                <article key={decision.title} className={`decision-card decision-card--${decision.tone}`}>
+                  <div className="decision-card__head">
+                    <span className="decision-card__icon" aria-hidden="true">
+                      {decision.icon}
+                    </span>
+                    <strong>{decision.title}</strong>
+                  </div>
+                  <p className="decision-card__choice">{decision.choice}</p>
+                </article>
+              ))}
             </div>
+
+            {roundVisual ? <PointBreakdown title="Punkty tej rundy" items={roundVisual.points} /> : null}
+            <RoundTimeline items={timeline} />
 
             <button
               className="btn"
@@ -96,11 +120,8 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
 
         {state.phase === "finished" ? (
           <div className="stack motion-fade-up" id="game-result-section" data-testid="game-result-section">
-            <RoundResultStrip
-              title="Koniec gry"
-              description="Podsumowanie całej sesji"
-              badges={[winnerBadge(state.scores, state.winnerRole)]}
-            />
+            <ResultHero model={resultHero} />
+            <RoundTimeline items={timeline} />
 
             <div className="result-actions">
               <button

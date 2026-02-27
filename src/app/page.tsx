@@ -66,6 +66,7 @@ export default function HomePage() {
   const socketRef = useRef<Socket | null>(null);
   const activePinRef = useRef("");
   const lastAuthPayloadRef = useRef<AuthJoinPayload | null>(null);
+  const authTimeoutRef = useRef<number | null>(null);
   const lastPresenceRef = useRef<PresenceState>(initialPresence);
   const lastGameStateSignatureRef = useRef("");
 
@@ -91,6 +92,13 @@ export default function HomePage() {
 
   const clearFeedback = useCallback((): void => {
     setFeedback(undefined);
+  }, []);
+
+  const clearAuthTimeout = useCallback((): void => {
+    if (authTimeoutRef.current !== null) {
+      window.clearTimeout(authTimeoutRef.current);
+      authTimeoutRef.current = null;
+    }
   }, []);
 
   const applyPresenceUpdate = useCallback((nextPresence: PresenceState): void => {
@@ -169,10 +177,14 @@ export default function HomePage() {
 
     socket.on("connect_error", () => {
       setConnectionStatus(lastAuthPayloadRef.current ? "reconnecting" : "offline");
+      setIsBusy(false);
+      clearAuthTimeout();
+      pushFeedback("Brak połączenia z serwerem. Sprawdź internet i konfigurację hosta.", "error");
     });
 
     socket.on("auth:state", (state: AuthStatePayload) => {
       setIsBusy(false);
+      clearAuthTimeout();
 
       if (!state.ok) {
         if (state.roomFull) {
@@ -255,11 +267,12 @@ export default function HomePage() {
     });
 
     return () => {
+      clearAuthTimeout();
       socket.disconnect();
       socket.removeAllListeners();
       socketRef.current = null;
     };
-  }, [applyGameState, applyPresenceUpdate, clearFeedback, pushFeedback]);
+  }, [applyGameState, applyPresenceUpdate, clearAuthTimeout, clearFeedback, pushFeedback]);
 
   useEffect(() => {
     if (phase !== "lobby" || !meRole) {
@@ -339,13 +352,19 @@ export default function HomePage() {
 
     lastAuthPayloadRef.current = payload;
 
+    clearAuthTimeout();
+    authTimeoutRef.current = window.setTimeout(() => {
+      setIsBusy(false);
+      pushFeedback("Timeout połączenia. Spróbuj ponownie za chwilę.", "error");
+    }, 8000);
+
     if (!socket.connected) {
       socket.connect();
       return;
     }
 
     socket.emit("auth:join", payload);
-  }, [clearFeedback, pushFeedback]);
+  }, [clearAuthTimeout, clearFeedback, pushFeedback]);
 
   const onSubmitPin = useCallback((): void => {
     const normalizedPin = pin.trim();

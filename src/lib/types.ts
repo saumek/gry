@@ -423,6 +423,51 @@ export type ScoreCardModel = {
   lead: boolean;
 };
 
+export type RoundDecisionModel = {
+  actor: Role | "Oboje" | "System";
+  title: string;
+  choice: string;
+  tone: ResultTone;
+  icon: string;
+  detail?: string;
+};
+
+export type PointBreakdownItem = {
+  label: string;
+  value: string;
+  tone: ResultTone;
+  icon: string;
+  detail?: string;
+};
+
+export type RoundTimelineItem = {
+  round: number;
+  label: string;
+  tone: ResultTone;
+};
+
+export type GameRoundVisualState = {
+  title: string;
+  subtitle?: string;
+  tone: ResultTone;
+  icon: string;
+  decisions: RoundDecisionModel[];
+  points: PointBreakdownItem[];
+};
+
+export type ResultHeroStat = {
+  label: string;
+  value: string;
+};
+
+export type ResultHeroModel = {
+  title: string;
+  subtitle: string;
+  tone: ResultTone;
+  icon: string;
+  stats: ResultHeroStat[];
+};
+
 export type ThemeMode = "system" | "light" | "dark";
 
 export type ResolvedTheme = "light" | "dark";
