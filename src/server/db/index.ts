@@ -74,6 +74,36 @@ export class AppDatabase {
     this.db.pragma("optimize");
   }
 
+  transaction(work: () => void): void {
+    const tx = this.db.transaction(work);
+    tx();
+  }
+
+  getContentSeedMeta(key: string): string | undefined {
+    const row = this.db
+      .prepare("SELECT value FROM content_seed_meta WHERE key = ?")
+      .get(key) as { value?: string } | undefined;
+
+    return row?.value;
+  }
+
+  setContentSeedMeta(key: string, value: string): void {
+    this.db
+      .prepare(
+        `INSERT INTO content_seed_meta(key, value, updated_at)
+         VALUES (?, ?, ?)
+         ON CONFLICT(key)
+         DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`
+      )
+      .run(key, value, new Date().toISOString());
+  }
+
+  clearBuiltinQuestionContent(): void {
+    this.db.prepare("DELETE FROM questions WHERE source = 'builtin'").run();
+    this.db.prepare("DELETE FROM science_questions WHERE source = 'builtin'").run();
+    this.db.prepare("DELETE FROM priority_prompts WHERE source = 'builtin'").run();
+  }
+
   seedBuiltinQuestions(
     gameId: Extract<GameId, "qa-lightning" | "better-half">,
     cards: Array<{ text: string; options: [string, string, string, string] }>
@@ -401,6 +431,12 @@ export class AppDatabase {
         type TEXT NOT NULL,
         payload TEXT,
         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+      );
+
+      CREATE TABLE IF NOT EXISTS content_seed_meta (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL,
+        updated_at TEXT NOT NULL
       );
 
       CREATE TABLE IF NOT EXISTS questions (

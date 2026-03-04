@@ -59,6 +59,25 @@ npm test
 npm run test:e2e
 ```
 
+## Pakiet pytań v1.10 (PL)
+
+- Aplikacja używa wersjonowanego pakietu pytań: `v1.10-question-pack-pl`.
+- Pakiet jest trzymany lokalnie w pliku:
+  - `src/server/game/content/question-pack.v1_10.pl.json`
+- Przy starcie serwera seed jest aktualizowany automatycznie po zmianie wersji w `content_seed_meta`.
+- Pytania `source='custom'` pozostają bez zmian.
+
+Budowanie pakietu lokalnie:
+
+```bash
+npm run build:question-pack
+```
+
+Pipeline generatora:
+- `tools/question-bank/build-pack.ts`
+- `tools/question-bank/sources/rest-countries.ts`
+- `tools/question-bank/sources/jgoralcz-trivia.ts` (adapter źródła trivia)
+
 ## iPhone / LAN w trybie dev
 
 Przy otwieraniu aplikacji z telefonu po adresie LAN (np. `http://192.168.100.110:3000`) Next.js może blokować żądania `/_next/*`, jeśli host nie jest dozwolony.
