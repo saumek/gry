@@ -51,7 +51,21 @@ export const betterHalfEngineAdapter: GameEngine = {
               payload: outcome.roundReveal
             }
           : undefined,
-        scoreSnapshot: outcome.roundReveal?.scores
+        scoreSnapshot: outcome.roundReveal?.scores,
+        questionOutcome: outcome.roundReveal
+          ? {
+              gameId: "better-half",
+              questionId: outcome.roundReveal.question.id,
+              category: null,
+              roundNo: outcome.roundReveal.round,
+              successByRole: {
+                Sami: outcome.roundReveal.hits.Sami,
+                Patryk: outcome.roundReveal.hits.Patryk
+              },
+              bothSuccess: outcome.roundReveal.hits.Sami && outcome.roundReveal.hits.Patryk,
+              payload: outcome.roundReveal
+            }
+          : undefined
       };
     }
 

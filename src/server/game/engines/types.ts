@@ -6,6 +6,7 @@ import type {
   GameId,
   GameScore,
   GameStartPayload,
+  QuizCategory,
   Role
 } from "../../../lib/types";
 import type { AppDatabase } from "../../db";
@@ -61,6 +62,15 @@ export type EngineActionResult =
         x: number;
         y: number;
         result: "hit" | "miss" | "sunk";
+      };
+      questionOutcome?: {
+        gameId: Extract<GameId, "qa-lightning" | "better-half" | "science-quiz" | "couple-priorities">;
+        questionId: number;
+        category: QuizCategory | null;
+        roundNo: number;
+        successByRole: Record<Role, boolean>;
+        bothSuccess: boolean;
+        payload: unknown;
       };
       finished?: boolean;
     }

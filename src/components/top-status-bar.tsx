@@ -9,6 +9,8 @@ type TopStatusBarProps = {
   connectionLabel: string;
   themeMode: ThemeMode;
   onThemeChange: (next: ThemeMode) => void;
+  soundCuesEnabled: boolean;
+  onToggleSoundCues: () => void;
 };
 
 export function TopStatusBar({
@@ -17,7 +19,9 @@ export function TopStatusBar({
   connectionStatus,
   connectionLabel,
   themeMode,
-  onThemeChange
+  onThemeChange,
+  soundCuesEnabled,
+  onToggleSoundCues
 }: TopStatusBarProps) {
   const model = createTopBarModel(meRole, activeGame, connectionStatus, connectionLabel);
   const hasActiveGame = Boolean(activeGame);
@@ -34,6 +38,15 @@ export function TopStatusBar({
           <span className={`status-dot status-dot--${model.connectionStatus}`} aria-hidden="true" />
           <span className="top-status__item">{model.connectionLabel}</span>
         </div>
+        <button
+          type="button"
+          className={`sound-toggle ${soundCuesEnabled ? "is-active" : ""}`}
+          aria-label={soundCuesEnabled ? "Wyłącz dźwięki akcji" : "Włącz dźwięki akcji"}
+          title={soundCuesEnabled ? "Dźwięki: włączone" : "Dźwięki: wyłączone"}
+          onClick={onToggleSoundCues}
+        >
+          {soundCuesEnabled ? "🔔" : "🔕"}
+        </button>
         <ThemeToggle value={themeMode} onChange={onThemeChange} />
       </div>
 

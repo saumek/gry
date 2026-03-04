@@ -6,6 +6,7 @@ import type {
 } from "../../lib/types";
 import { AppDatabase } from "../db";
 import { loadQuestionPack, QUESTION_PACK_VERSION } from "./content/load-question-pack";
+import { selectQuestions } from "./question-selector";
 
 const CONTENT_META_KEY = "question_pack_version";
 
@@ -39,7 +40,12 @@ export function pickQuestions(
   gameId: "qa-lightning" | "better-half",
   count: number
 ): QuestionCard[] {
-  const selected = db.drawQuestions(gameId, count);
+  const selected = selectQuestions({
+    db,
+    gameId,
+    count,
+    recentSessionsWindow: 12
+  });
   return extendToCount(selected, count);
 }
 
@@ -48,12 +54,23 @@ export function pickScienceQuestions(
   category: QuizCategory,
   count: number
 ): Array<ScienceQuestionPrompt & { correctIndex: number }> {
-  const selected = db.drawScienceQuestions(category, count);
+  const selected = selectQuestions({
+    db,
+    gameId: "science-quiz",
+    category,
+    count,
+    recentSessionsWindow: 12
+  });
   return extendToCount(selected, count);
 }
 
 export function pickPriorityPrompts(db: AppDatabase, count: number): CouplePromptCard[] {
-  const selected = db.drawPriorityPrompts(count);
+  const selected = selectQuestions({
+    db,
+    gameId: "couple-priorities",
+    count,
+    recentSessionsWindow: 12
+  });
   return extendToCount(selected, count);
 }
 

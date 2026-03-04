@@ -46,7 +46,21 @@ export const qaEngineAdapter: GameEngine = {
               payload: outcome.roundReveal
             }
           : undefined,
-        scoreSnapshot: outcome.roundReveal?.scores
+        scoreSnapshot: outcome.roundReveal?.scores,
+        questionOutcome: outcome.roundReveal
+          ? {
+              gameId: "qa-lightning",
+              questionId: outcome.roundReveal.question.id,
+              category: null,
+              roundNo: outcome.roundReveal.round,
+              successByRole: {
+                Sami: outcome.roundReveal.matched,
+                Patryk: outcome.roundReveal.matched
+              },
+              bothSuccess: outcome.roundReveal.matched,
+              payload: outcome.roundReveal
+            }
+          : undefined
       };
     }
 

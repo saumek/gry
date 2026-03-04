@@ -438,6 +438,24 @@ small {
   background: color-mix(in srgb, var(--surface-1) 92%, transparent);
 }
 
+.sound-toggle {
+  min-height: 30px;
+  min-width: 30px;
+  border-radius: 999px;
+  border: 1px solid var(--line-subtle);
+  background: color-mix(in srgb, var(--surface-1) 90%, transparent);
+  color: var(--text-1);
+  font-size: 0.8rem;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.sound-toggle.is-active {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line-subtle));
+  color: var(--accent);
+}
+
 .theme-toggle__option {
   min-height: 30px;
   border: none;
@@ -725,6 +743,45 @@ small {
   padding-left: 6px;
   display: grid;
   gap: 4px;
+}
+
+.action-feedback-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.78rem;
+  border-left: 2px solid var(--line-subtle);
+  padding-left: 6px;
+}
+
+.action-feedback-strip--sending {
+  border-left-color: var(--warning);
+}
+
+.action-feedback-strip--acked,
+.action-feedback-strip--waiting_peer {
+  border-left-color: var(--info);
+}
+
+.action-feedback-strip--resolved {
+  border-left-color: var(--success);
+}
+
+.action-feedback-strip--failed {
+  border-left-color: var(--danger);
+}
+
+.smart-hint {
+  color: var(--text-1);
+  font-size: 0.78rem;
+}
+
+.auto-advance-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .round-strip {

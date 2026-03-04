@@ -59,6 +59,17 @@ npm test
 npm run test:e2e
 ```
 
+## v1.11 Smart Question Engine + iPhone feedback flow
+
+- Dobór pytań dla `qa-lightning`, `better-half`, `science-quiz`, `couple-priorities` działa przez ranking (nie sam random).
+- Anti-repeat obejmuje okno ostatnich `12` sesji z kontrolowanym fallbackiem `6/3/0`.
+- Każda runda zapisuje ekspozycję i outcome do:
+  - `question_exposure`
+  - `question_stats`
+- Realtime action feedback używa `clientActionId` + `game:ack`.
+- Duplikaty akcji po reconnect są ignorowane idempotentnie po `clientActionId`.
+- W reveal działa auto-advance `1.2s` z opcją `Zostań`; timer pauzuje się, gdy karta jest ukryta.
+
 ## Pakiet pytań v1.10 (PL)
 
 - Aplikacja używa wersjonowanego pakietu pytań: `v1.10-question-pack-pl`.

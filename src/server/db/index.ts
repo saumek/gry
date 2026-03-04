@@ -48,6 +48,17 @@ type PriorityPromptRow = {
   source: QuestionSource;
 };
 
+type QuestionStatsRow = {
+  game_id: GameId;
+  question_id: number;
+  category: QuizCategory | null;
+  seen_count: number;
+  success_sami: number;
+  success_patryk: number;
+  both_success: number;
+  last_seen_at: string;
+};
+
 type SessionRow = {
   id: number;
   game_id: GameId;
@@ -297,6 +308,167 @@ export class AppDatabase {
     }));
   }
 
+  listQuestionCandidates(
+    gameId: Extract<GameId, "qa-lightning" | "better-half">
+  ): QuestionCard[] {
+    const rows = this.db
+      .prepare(
+        `SELECT id, game_id, text, option_a, option_b, option_c, option_d, source, author_role
+         FROM questions
+         WHERE game_id = ?`
+      )
+      .all(gameId) as QuestionRow[];
+
+    return rows.map((row) => this.mapQuestion(row));
+  }
+
+  listScienceQuestionCandidates(
+    category: QuizCategory
+  ): Array<ScienceQuestionPrompt & { correctIndex: number }> {
+    const rows = this.db
+      .prepare(
+        `SELECT id, category, text, option_a, option_b, option_c, option_d, correct_index, source
+         FROM science_questions
+         WHERE category = ?`
+      )
+      .all(category) as ScienceQuestionRow[];
+
+    return rows.map((row) => ({
+      id: row.id,
+      gameId: "science-quiz",
+      category: row.category,
+      text: row.text,
+      options: [row.option_a, row.option_b, row.option_c, row.option_d],
+      correctIndex: row.correct_index,
+      source: row.source
+    }));
+  }
+
+  listPriorityPromptCandidates(): CouplePromptCard[] {
+    const rows = this.db
+      .prepare(
+        `SELECT id, text, option_a, option_b, option_c, option_d, source
+         FROM priority_prompts`
+      )
+      .all() as PriorityPromptRow[];
+
+    return rows.map((row) => ({
+      id: row.id,
+      gameId: "couple-priorities",
+      text: row.text,
+      options: [row.option_a, row.option_b, row.option_c, row.option_d],
+      source: row.source
+    }));
+  }
+
+  listRecentExposedQuestionIds(
+    gameId: Extract<GameId, "qa-lightning" | "better-half" | "science-quiz" | "couple-priorities">,
+    category: QuizCategory | null,
+    recentSessionsWindow: number
+  ): number[] {
+    const safeWindow = Math.max(0, Math.trunc(recentSessionsWindow));
+    if (safeWindow === 0) {
+      return [];
+    }
+
+    const rows = this.db
+      .prepare(
+        `SELECT DISTINCT qe.question_id
+         FROM question_exposure qe
+         JOIN (
+           SELECT id
+           FROM game_sessions
+           WHERE game_id = ?
+           ORDER BY id DESC
+           LIMIT ?
+         ) recent_sessions
+           ON recent_sessions.id = qe.session_id
+         WHERE qe.game_id = ?
+           AND (? IS NULL OR qe.category = ?)`
+      )
+      .all(gameId, safeWindow, gameId, category, category) as Array<{ question_id: number }>;
+
+    return rows.map((row) => row.question_id);
+  }
+
+  listQuestionStats(
+    gameId: Extract<GameId, "qa-lightning" | "better-half" | "science-quiz" | "couple-priorities">,
+    category: QuizCategory | null
+  ): QuestionStatsRow[] {
+    const rows = this.db
+      .prepare(
+        `SELECT game_id, question_id, category, seen_count, success_sami, success_patryk, both_success, last_seen_at
+         FROM question_stats
+         WHERE game_id = ?
+           AND (? IS NULL OR category = ?)`
+      )
+      .all(gameId, category, category) as QuestionStatsRow[];
+
+    return rows;
+  }
+
+  recordQuestionOutcome(input: {
+    gameId: Extract<GameId, "qa-lightning" | "better-half" | "science-quiz" | "couple-priorities">;
+    questionId: number;
+    category: QuizCategory | null;
+    sessionId: number;
+    roundNo: number;
+    shownAt: string;
+    successByRole: Record<Role, boolean>;
+    bothSuccess: boolean;
+    outcome: unknown;
+  }): void {
+    const exposureInsert = this.db.prepare(
+      `INSERT INTO question_exposure(
+        game_id, question_id, category, session_id, round_no, shown_at, outcome_json
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(session_id, game_id, round_no)
+      DO NOTHING`
+    );
+
+    const statsUpsert = this.db.prepare(
+      `INSERT INTO question_stats(
+        game_id, question_id, category, seen_count, success_sami, success_patryk, both_success, last_seen_at
+      ) VALUES (?, ?, ?, 1, ?, ?, ?, ?)
+      ON CONFLICT(game_id, question_id)
+      DO UPDATE SET
+        category = excluded.category,
+        seen_count = question_stats.seen_count + 1,
+        success_sami = question_stats.success_sami + excluded.success_sami,
+        success_patryk = question_stats.success_patryk + excluded.success_patryk,
+        both_success = question_stats.both_success + excluded.both_success,
+        last_seen_at = excluded.last_seen_at`
+    );
+
+    const tx = this.db.transaction(() => {
+      const exposure = exposureInsert.run(
+        input.gameId,
+        input.questionId,
+        input.category,
+        input.sessionId,
+        input.roundNo,
+        input.shownAt,
+        JSON.stringify(input.outcome)
+      );
+
+      if (exposure.changes === 0) {
+        return;
+      }
+
+      statsUpsert.run(
+        input.gameId,
+        input.questionId,
+        input.category,
+        input.successByRole.Sami ? 1 : 0,
+        input.successByRole.Patryk ? 1 : 0,
+        input.bothSuccess ? 1 : 0,
+        input.shownAt
+      );
+    });
+
+    tx();
+  }
+
   createGameSession(gameId: GameId, status: string, stateJson: string): number {
     const insert = this.db.prepare(
       `INSERT INTO game_sessions(game_id, status, started_at, state_json)
@@ -476,6 +648,31 @@ export class AppDatabase {
         created_at TEXT NOT NULL
       );
 
+      CREATE TABLE IF NOT EXISTS question_exposure (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        game_id TEXT NOT NULL CHECK(game_id IN ('qa-lightning','better-half','science-quiz','couple-priorities')),
+        question_id INTEGER NOT NULL,
+        category TEXT CHECK(category IN ('matma','geografia','nauka','wiedza-ogolna')),
+        session_id INTEGER NOT NULL,
+        round_no INTEGER NOT NULL,
+        shown_at TEXT NOT NULL,
+        outcome_json TEXT NOT NULL,
+        UNIQUE(session_id, game_id, round_no),
+        FOREIGN KEY(session_id) REFERENCES game_sessions(id)
+      );
+
+      CREATE TABLE IF NOT EXISTS question_stats (
+        game_id TEXT NOT NULL CHECK(game_id IN ('qa-lightning','better-half','science-quiz','couple-priorities')),
+        question_id INTEGER NOT NULL,
+        category TEXT CHECK(category IN ('matma','geografia','nauka','wiedza-ogolna')),
+        seen_count INTEGER NOT NULL DEFAULT 0,
+        success_sami INTEGER NOT NULL DEFAULT 0,
+        success_patryk INTEGER NOT NULL DEFAULT 0,
+        both_success INTEGER NOT NULL DEFAULT 0,
+        last_seen_at TEXT NOT NULL,
+        PRIMARY KEY(game_id, question_id)
+      );
+
       CREATE TABLE IF NOT EXISTS game_sessions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         game_id TEXT NOT NULL,
@@ -531,6 +728,8 @@ export class AppDatabase {
       CREATE INDEX IF NOT EXISTS idx_questions_game_id ON questions(game_id);
       CREATE INDEX IF NOT EXISTS idx_science_questions_category ON science_questions(category);
       CREATE INDEX IF NOT EXISTS idx_priority_prompts_source ON priority_prompts(source);
+      CREATE INDEX IF NOT EXISTS idx_qe_game_category_time ON question_exposure(game_id, category, shown_at DESC);
+      CREATE INDEX IF NOT EXISTS idx_qs_game_category_seen ON question_stats(game_id, category, seen_count);
       CREATE INDEX IF NOT EXISTS idx_game_rounds_session_id ON game_rounds(session_id);
       CREATE INDEX IF NOT EXISTS idx_game_scores_session_id ON game_scores(session_id);
       CREATE INDEX IF NOT EXISTS idx_battleship_shots_session_id ON battleship_shots(session_id);

@@ -7,6 +7,7 @@ import {
   createPrioritiesRoundVisual,
   createPrioritiesTimeline
 } from "../lib/game-visuals/priorities-visuals";
+import { useRevealAutoAdvance } from "../lib/use-reveal-auto-advance";
 import { phaseShortLabel } from "../lib/ui-state";
 import type { CouplePrioritiesGameState, GameActionPayload } from "../lib/types";
 import { PointBreakdown } from "./point-breakdown";
@@ -40,6 +41,12 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
     () => ranking.length === 4 && guessPartnerTop !== null,
     [ranking.length, guessPartnerTop]
   );
+  const autoAdvance = useRevealAutoAdvance({
+    enabled: state.phase === "reveal",
+    phase: state.phase,
+    roundKey: `priorities-${state.sessionId}-${state.reveal?.round ?? state.round}`,
+    onAdvance: () => onAction({ gameId: "couple-priorities", type: "advance" })
+  });
 
   return (
     <section className="stack-lg" data-testid="couple-priorities-game">
@@ -61,6 +68,9 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
             key={`cp-round-${state.round}`}
           >
             <h3>{state.currentPrompt.text}</h3>
+            {state.currentPrompt.smartMeta ? (
+              <p className="smart-hint">{state.currentPrompt.smartMeta.reason}</p>
+            ) : null}
 
             <div className="stack">
               <p className="label">Ułóż ranking 1-4</p>
@@ -184,6 +194,22 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
 
             {roundVisual ? <PointBreakdown title="Skąd punkty" items={roundVisual.points} /> : null}
             <RoundTimeline items={timeline} />
+            <div className="auto-advance-row">
+              <ResultChip
+                tone={autoAdvance.isPaused ? "warning" : "info"}
+                icon="•"
+                label={
+                  autoAdvance.isPaused
+                    ? "Auto-przejście wstrzymane"
+                    : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
+                }
+              />
+              {!autoAdvance.isPaused ? (
+                <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
+                  Zostań
+                </button>
+              ) : null}
+            </div>
 
             <button
               className="btn"

@@ -46,7 +46,23 @@ export const couplePrioritiesEngineAdapter: GameEngine = {
               payload: outcome.roundReveal
             }
           : undefined,
-        scoreSnapshot: outcome.roundReveal?.scores
+        scoreSnapshot: outcome.roundReveal?.scores,
+        questionOutcome: outcome.roundReveal
+          ? {
+              gameId: "couple-priorities",
+              questionId: outcome.roundReveal.prompt.id,
+              category: null,
+              roundNo: outcome.roundReveal.round,
+              successByRole: {
+                Sami: outcome.roundReveal.roundPoints.Sami >= 3,
+                Patryk: outcome.roundReveal.roundPoints.Patryk >= 3
+              },
+              bothSuccess:
+                outcome.roundReveal.roundPoints.Sami >= 3 &&
+                outcome.roundReveal.roundPoints.Patryk >= 3,
+              payload: outcome.roundReveal
+            }
+          : undefined
       };
     }
 

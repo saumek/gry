@@ -245,6 +245,108 @@ describe("socket runtime", () => {
     expect(stateC.roomFull).toBe(true);
   });
 
+  it("emituje game:ack i ignoruje duplikat clientActionId bez dodatkowej zmiany stanu", async () => {
+    const dbPath = path.join(os.tmpdir(), `duoplay-test-${Date.now()}-ack.db`);
+    const httpServer = http.createServer();
+
+    const runtime: SocketRuntime = createSocketRuntime({
+      httpServer,
+      roomPin: "1234",
+      heartbeatIntervalMs: 10000,
+      sessionTtlMs: 30000,
+      dbPath
+    });
+
+    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    const address = httpServer.address();
+    if (!address || typeof address === "string") {
+      throw new Error("Nie udało się odczytać portu testowego");
+    }
+
+    const baseUrl = `http://127.0.0.1:${address.port}`;
+    resources.push(async () => runtime.close());
+    resources.push(async () => {
+      await closeHttpServer(httpServer);
+    });
+
+    const a = createClient(baseUrl, { transports: ["websocket"] });
+    const b = createClient(baseUrl, { transports: ["websocket"] });
+
+    resources.push(async () => {
+      a.disconnect();
+    });
+    resources.push(async () => {
+      b.disconnect();
+    });
+
+    await waitForConnect(a);
+    await waitForConnect(b);
+
+    const authAPromise = waitForEvent(a, "auth:state");
+    a.emit("auth:join", { pin: "1234", deviceId: "device-ack-a", desiredRole: "Sami" });
+    await authAPromise;
+
+    const authBPromise = waitForEvent(b, "auth:state");
+    b.emit("auth:join", { pin: "1234", deviceId: "device-ack-b", desiredRole: "Patryk" });
+    await authBPromise;
+
+    let readyEvents = 0;
+    let gameStateEvents = 0;
+    a.on("game:event", (payload: { kind?: string; gameId?: string }) => {
+      if (payload.kind === "ready_changed" && payload.gameId === "qa-lightning") {
+        readyEvents += 1;
+      }
+    });
+    a.on("game:state", () => {
+      gameStateEvents += 1;
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 80));
+    readyEvents = 0;
+    gameStateEvents = 0;
+
+    const ack1Promise = waitForEvent<{ clientActionId: string; ok: boolean; code?: string }>(
+      a,
+      "game:ack"
+    );
+    a.emit("game:ready", {
+      gameId: "qa-lightning",
+      ready: true,
+      clientActionId: "dup_ready_action",
+      clientSentAt: Date.now()
+    });
+    const ack1 = await ack1Promise;
+
+    expect(ack1.clientActionId).toBe("dup_ready_action");
+    expect(ack1.ok).toBe(true);
+    expect(ack1.code).toBeUndefined();
+
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    const stateEventsAfterFirst = gameStateEvents;
+    expect(readyEvents).toBe(1);
+    expect(stateEventsAfterFirst).toBeGreaterThan(0);
+
+    const ack2Promise = waitForEvent<{ clientActionId: string; ok: boolean; code?: string }>(
+      a,
+      "game:ack"
+    );
+    a.emit("game:ready", {
+      gameId: "qa-lightning",
+      ready: false,
+      clientActionId: "dup_ready_action",
+      clientSentAt: Date.now() + 1
+    });
+    const ack2 = await ack2Promise;
+
+    expect(ack2.clientActionId).toBe("dup_ready_action");
+    expect(ack2.ok).toBe(true);
+    expect(ack2.code).toBe("DUPLICATE_IGNORED");
+
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    expect(readyEvents).toBe(1);
+    expect(gameStateEvents).toBe(stateEventsAfterFirst);
+  });
+
   it("odrzuca stary payload z gameId fire-water-coop", async () => {
     const dbPath = path.join(os.tmpdir(), `duoplay-test-${Date.now()}-legacy.db`);
     const httpServer = http.createServer();

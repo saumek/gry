@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import type { ActionFeedbackModel } from "../lib/action-feedback";
 import { WinCelebration } from "./win-celebration";
 import { getGameCatalogItem } from "../lib/game-catalog";
 import { phaseShortLabel } from "../lib/ui-state";
@@ -20,6 +21,8 @@ type GameShellProps = {
   latestResult: GameResultPayload | null;
   onAction: (payload: GameActionPayload) => void;
   onAddQuestion: (payload: QuestionAddPayload) => void;
+  actionFeedback: ActionFeedbackModel | null;
+  onRetryAction: () => void;
 };
 
 const QaGame = dynamic(() => import("./qa-game").then((mod) => mod.QaGame), {
@@ -44,7 +47,9 @@ export function GameShell({
   activeGame,
   latestResult,
   onAction,
-  onAddQuestion
+  onAddQuestion,
+  actionFeedback,
+  onRetryAction
 }: GameShellProps) {
   const [nowMs, setNowMs] = useState(Date.now());
   const [showCelebration, setShowCelebration] = useState(false);
@@ -88,6 +93,20 @@ export function GameShell({
     latestResult.gameId === activeGame.gameId
       ? latestResult
       : null;
+  const feedbackForGame =
+    actionFeedback && actionFeedback.gameId === activeGame.gameId ? actionFeedback : null;
+  const feedbackLabel =
+    feedbackForGame?.state === "sending"
+      ? "Wysyłanie..."
+      : feedbackForGame?.state === "acked"
+        ? "Akcja potwierdzona"
+        : feedbackForGame?.state === "waiting_peer"
+          ? "Czekasz na drugą osobę"
+          : feedbackForGame?.state === "resolved"
+            ? "Gotowe"
+            : feedbackForGame?.state === "failed"
+              ? "Nie udało się wysłać"
+              : null;
 
   useEffect(() => {
     if (activeGame.phase !== "finished") {
@@ -125,6 +144,17 @@ export function GameShell({
           <span className="chip chip--phase">{phaseShortLabel(activeGame.phase)}</span>
         </div>
         <p className="muted">{actionFocusText}</p>
+        {feedbackForGame && feedbackLabel ? (
+          <div className={`action-feedback-strip action-feedback-strip--${feedbackForGame.state}`}>
+            <span>{feedbackForGame.label}</span>
+            <strong>{feedbackLabel}</strong>
+            {feedbackForGame.state === "failed" ? (
+              <button className="btn btn--ghost btn--small" type="button" onClick={onRetryAction}>
+                Spróbuj ponownie
+              </button>
+            ) : null}
+          </div>
+        ) : null}
         {activeCatalog.revealIllustration && (activeGame.phase === "reveal" || activeGame.phase === "finished") ? (
           <img
             className="game-hero-illustration"

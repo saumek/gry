@@ -2,7 +2,7 @@ import type { Server as HttpServer } from "node:http";
 
 import { Server as SocketIOServer } from "socket.io";
 
-import type { AuthStatePayload, Role } from "../../lib/types";
+import type { AuthStatePayload, GameAckPayload, Role } from "../../lib/types";
 import { AppDatabase } from "../db";
 import { GameManager } from "../game/game-manager";
 import { SessionManager } from "../session/session-manager";
@@ -39,8 +39,73 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
   const sessionManager = new SessionManager(config.sessionTtlMs);
   const db = new AppDatabase(config.dbPath);
   const gameManager = new GameManager(db);
+  const actionCacheByRole = new Map<Role, Map<string, number>>();
+  const ACTION_ID_TTL_MS = 90_000;
   let lastPresenceRevisionEmitted = -1;
   let lastGameRevisionEmitted = -1;
+
+  const emitAck = (
+    socket: Parameters<typeof io.on>[1] extends (socket: infer S) => unknown ? S : never,
+    clientActionId: string | undefined,
+    ok: boolean,
+    code?: string
+  ): void => {
+    if (!clientActionId) {
+      return;
+    }
+
+    const payload: GameAckPayload = {
+      clientActionId,
+      ok,
+      acceptedAt: new Date().toISOString(),
+      ...(code ? { code } : {})
+    };
+    socket.emit("game:ack", payload);
+  };
+
+  const extractClientActionId = (payload: unknown): string | undefined => {
+    if (!payload || typeof payload !== "object") {
+      return undefined;
+    }
+
+    const value = (payload as { clientActionId?: unknown }).clientActionId;
+    if (typeof value !== "string" || value.trim().length === 0) {
+      return undefined;
+    }
+
+    return value;
+  };
+
+  const isDuplicateAction = (role: Role, clientActionId: string): boolean => {
+    const roleCache = actionCacheByRole.get(role);
+    if (!roleCache) {
+      return false;
+    }
+
+    return roleCache.has(clientActionId);
+  };
+
+  const rememberAction = (role: Role, clientActionId: string): void => {
+    const now = Date.now();
+    const roleCache = actionCacheByRole.get(role) ?? new Map<string, number>();
+    roleCache.set(clientActionId, now + ACTION_ID_TTL_MS);
+    actionCacheByRole.set(role, roleCache);
+  };
+
+  const cleanupActionCache = (): void => {
+    const now = Date.now();
+    for (const [role, cache] of actionCacheByRole.entries()) {
+      for (const [id, expiresAt] of cache.entries()) {
+        if (expiresAt <= now) {
+          cache.delete(id);
+        }
+      }
+
+      if (cache.size === 0) {
+        actionCacheByRole.delete(role);
+      }
+    }
+  };
 
   const emitGameStateToAll = (): void => {
     for (const socket of io.sockets.sockets.values()) {
@@ -164,8 +229,10 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
     });
 
     socket.on("game:ready", (payload) => {
+      const clientActionId = extractClientActionId(payload);
       const role = socket.data.role as Role | undefined;
       if (!role) {
+        emitAck(socket, clientActionId, false, "UNAUTHORIZED");
         socket.emit("error", {
           code: "UNAUTHORIZED",
           message: "Najpierw dołącz do pokoju."
@@ -176,6 +243,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
 
       const parsed = gameReadySchema.safeParse(payload);
       if (!parsed.success) {
+        emitAck(socket, clientActionId, false, "INVALID_GAME_READY");
         socket.emit("error", {
           code: "INVALID_GAME_READY",
           message: "Niepoprawny payload gotowości gry."
@@ -183,14 +251,25 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         return;
       }
 
+      if (parsed.data.clientActionId && isDuplicateAction(role, parsed.data.clientActionId)) {
+        emitAck(socket, parsed.data.clientActionId, true, "DUPLICATE_IGNORED");
+        return;
+      }
+
       const outcome = gameManager.setReady(role, parsed.data.gameId, parsed.data.ready);
       if (!outcome.ok) {
+        emitAck(socket, parsed.data.clientActionId, false, "GAME_READY_REJECTED");
         socket.emit("error", {
           code: "GAME_READY_REJECTED",
           message: outcome.errorMessage
         });
         return;
       }
+
+      if (parsed.data.clientActionId) {
+        rememberAction(role, parsed.data.clientActionId);
+      }
+      emitAck(socket, parsed.data.clientActionId, true);
 
       if (outcome.event) {
         io.emit("game:event", outcome.event);
@@ -199,8 +278,10 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
     });
 
     socket.on("game:start", (payload) => {
+      const clientActionId = extractClientActionId(payload);
       const role = socket.data.role as Role | undefined;
       if (!role) {
+        emitAck(socket, clientActionId, false, "UNAUTHORIZED");
         socket.emit("error", {
           code: "UNAUTHORIZED",
           message: "Najpierw dołącz do pokoju."
@@ -211,6 +292,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
 
       const parsed = gameStartSchema.safeParse(payload);
       if (!parsed.success) {
+        emitAck(socket, clientActionId, false, "INVALID_GAME_START");
         socket.emit("error", {
           code: "INVALID_GAME_START",
           message: "Niepoprawny payload startu gry."
@@ -218,14 +300,25 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         return;
       }
 
+      if (parsed.data.clientActionId && isDuplicateAction(role, parsed.data.clientActionId)) {
+        emitAck(socket, parsed.data.clientActionId, true, "DUPLICATE_IGNORED");
+        return;
+      }
+
       const outcome = gameManager.startGame(role, parsed.data, sessionManager.getPresence());
       if (!outcome.ok) {
+        emitAck(socket, parsed.data.clientActionId, false, "GAME_START_REJECTED");
         socket.emit("error", {
           code: "GAME_START_REJECTED",
           message: outcome.errorMessage
         });
         return;
       }
+
+      if (parsed.data.clientActionId) {
+        rememberAction(role, parsed.data.clientActionId);
+      }
+      emitAck(socket, parsed.data.clientActionId, true);
 
       if (outcome.event) {
         io.emit("game:event", outcome.event);
@@ -239,8 +332,10 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
     });
 
     socket.on("game:config", (payload) => {
+      const clientActionId = extractClientActionId(payload);
       const role = socket.data.role as Role | undefined;
       if (!role) {
+        emitAck(socket, clientActionId, false, "UNAUTHORIZED");
         socket.emit("error", {
           code: "UNAUTHORIZED",
           message: "Najpierw dołącz do pokoju."
@@ -251,6 +346,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
 
       const parsed = gameConfigSchema.safeParse(payload);
       if (!parsed.success) {
+        emitAck(socket, clientActionId, false, "INVALID_GAME_CONFIG");
         socket.emit("error", {
           code: "INVALID_GAME_CONFIG",
           message: "Niepoprawna konfiguracja gry."
@@ -258,14 +354,25 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         return;
       }
 
+      if (parsed.data.clientActionId && isDuplicateAction(role, parsed.data.clientActionId)) {
+        emitAck(socket, parsed.data.clientActionId, true, "DUPLICATE_IGNORED");
+        return;
+      }
+
       const outcome = gameManager.setConfig(role, parsed.data);
       if (!outcome.ok) {
+        emitAck(socket, parsed.data.clientActionId, false, "GAME_CONFIG_REJECTED");
         socket.emit("error", {
           code: "GAME_CONFIG_REJECTED",
           message: outcome.errorMessage
         });
         return;
       }
+
+      if (parsed.data.clientActionId) {
+        rememberAction(role, parsed.data.clientActionId);
+      }
+      emitAck(socket, parsed.data.clientActionId, true);
 
       if (outcome.event) {
         io.emit("game:event", outcome.event);
@@ -275,8 +382,10 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
     });
 
     socket.on("question:add", (payload) => {
+      const clientActionId = extractClientActionId(payload);
       const role = socket.data.role as Role | undefined;
       if (!role) {
+        emitAck(socket, clientActionId, false, "UNAUTHORIZED");
         socket.emit("error", {
           code: "UNAUTHORIZED",
           message: "Najpierw dołącz do pokoju."
@@ -287,6 +396,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
 
       const parsed = questionAddSchema.safeParse(payload);
       if (!parsed.success) {
+        emitAck(socket, clientActionId, false, "INVALID_QUESTION");
         socket.emit("error", {
           code: "INVALID_QUESTION",
           message: "Niepoprawny format pytania."
@@ -294,14 +404,25 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         return;
       }
 
+      if (parsed.data.clientActionId && isDuplicateAction(role, parsed.data.clientActionId)) {
+        emitAck(socket, parsed.data.clientActionId, true, "DUPLICATE_IGNORED");
+        return;
+      }
+
       const outcome = gameManager.addQuestion(role, parsed.data);
       if (!outcome.ok) {
+        emitAck(socket, parsed.data.clientActionId, false, "QUESTION_ADD_REJECTED");
         socket.emit("error", {
           code: "QUESTION_ADD_REJECTED",
           message: outcome.errorMessage
         });
         return;
       }
+
+      if (parsed.data.clientActionId) {
+        rememberAction(role, parsed.data.clientActionId);
+      }
+      emitAck(socket, parsed.data.clientActionId, true);
 
       if (outcome.questionAdded) {
         io.emit("question:added", outcome.questionAdded);
@@ -315,8 +436,10 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
     });
 
     socket.on("game:action", (payload) => {
+      const clientActionId = extractClientActionId(payload);
       const role = socket.data.role as Role | undefined;
       if (!role) {
+        emitAck(socket, clientActionId, false, "UNAUTHORIZED");
         socket.emit("error", {
           code: "UNAUTHORIZED",
           message: "Najpierw dołącz do pokoju."
@@ -327,6 +450,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
 
       const parsed = gameActionSchema.safeParse(payload);
       if (!parsed.success) {
+        emitAck(socket, clientActionId, false, "INVALID_GAME_ACTION");
         socket.emit("error", {
           code: "INVALID_GAME_ACTION",
           message: "Niepoprawna akcja gry."
@@ -334,14 +458,25 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
         return;
       }
 
+      if (parsed.data.clientActionId && isDuplicateAction(role, parsed.data.clientActionId)) {
+        emitAck(socket, parsed.data.clientActionId, true, "DUPLICATE_IGNORED");
+        return;
+      }
+
       const outcome = gameManager.handleAction(role, parsed.data);
       if (!outcome.ok) {
+        emitAck(socket, parsed.data.clientActionId, false, "GAME_ACTION_REJECTED");
         socket.emit("error", {
           code: "GAME_ACTION_REJECTED",
           message: outcome.errorMessage
         });
         return;
       }
+
+      if (parsed.data.clientActionId) {
+        rememberAction(role, parsed.data.clientActionId);
+      }
+      emitAck(socket, parsed.data.clientActionId, true);
 
       if (outcome.event) {
         io.emit("game:event", outcome.event);
@@ -362,6 +497,7 @@ export function createSocketRuntime(config: SocketRuntimeConfig): SocketRuntime 
 
   const sweeper = setInterval(() => {
     sessionManager.cleanupExpired();
+    cleanupActionCache();
     const expiredEndRequestEvent = gameManager.cleanupExpiredEndRequests(Date.now());
     if (expiredEndRequestEvent) {
       io.emit("game:event", expiredEndRequestEvent);

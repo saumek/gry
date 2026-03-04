@@ -7,6 +7,7 @@ import {
   createBetterHalfRoundVisual,
   createBetterHalfTimeline
 } from "../lib/game-visuals/better-half-visuals";
+import { useRevealAutoAdvance } from "../lib/use-reveal-auto-advance";
 import { phaseShortLabel } from "../lib/ui-state";
 import type {
   BetterHalfGameState,
@@ -39,6 +40,12 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
     () => selfAnswerIndex !== null && guessAnswerIndex !== null,
     [selfAnswerIndex, guessAnswerIndex]
   );
+  const autoAdvance = useRevealAutoAdvance({
+    enabled: state.phase === "reveal",
+    phase: state.phase,
+    roundKey: `bh-${state.sessionId}-${state.reveal?.round ?? state.round}`,
+    onAdvance: () => onAction({ gameId: "better-half", type: "advance" })
+  });
 
   return (
     <section className="stack-lg" data-testid="better-half-game">
@@ -60,6 +67,9 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
             key={`bh-round-${state.round}`}
           >
             <h3>{state.currentQuestion.text}</h3>
+            {state.currentQuestion.smartMeta ? (
+              <p className="smart-hint">{state.currentQuestion.smartMeta.reason}</p>
+            ) : null}
 
             <div className="stack">
               <p className="label">Twoja odpowiedź</p>
@@ -162,6 +172,22 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
 
             {roundVisual ? <PointBreakdown title="Punkty tej rundy" items={roundVisual.points} /> : null}
             <RoundTimeline items={timeline} />
+            <div className="auto-advance-row">
+              <ResultChip
+                tone={autoAdvance.isPaused ? "warning" : "info"}
+                icon="•"
+                label={
+                  autoAdvance.isPaused
+                    ? "Auto-przejście wstrzymane"
+                    : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
+                }
+              />
+              {!autoAdvance.isPaused ? (
+                <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
+                  Zostań
+                </button>
+              ) : null}
+            </div>
 
             <button
               className="btn"

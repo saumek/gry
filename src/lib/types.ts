@@ -40,6 +40,17 @@ export type QuestionSource = "builtin" | "custom";
 
 export type QuizCategory = "matma" | "geografia" | "nauka" | "wiedza-ogolna";
 
+export type QuestionDifficultyBand = "easy" | "balanced" | "challenge";
+
+export type RepeatRisk = "low" | "medium" | "fallback";
+
+export type QuestionSmartMeta = {
+  noveltyScore: number;
+  difficultyBand: QuestionDifficultyBand;
+  repeatRisk: RepeatRisk;
+  reason: string;
+};
+
 export type QuestionCard = {
   id: number;
   gameId: Extract<GameId, "qa-lightning" | "better-half">;
@@ -47,6 +58,7 @@ export type QuestionCard = {
   options: [string, string, string, string];
   source: QuestionSource;
   authorRole?: Role;
+  smartMeta?: QuestionSmartMeta;
 };
 
 export type ScienceQuestionPrompt = {
@@ -56,6 +68,7 @@ export type ScienceQuestionPrompt = {
   text: string;
   options: [string, string, string, string];
   source: QuestionSource;
+  smartMeta?: QuestionSmartMeta;
 };
 
 export type CouplePromptCard = {
@@ -64,6 +77,7 @@ export type CouplePromptCard = {
   text: string;
   options: [string, string, string, string];
   source: QuestionSource;
+  smartMeta?: QuestionSmartMeta;
 };
 
 export type GameScore = Record<Role, number>;
@@ -281,99 +295,108 @@ export type SessionConfigPayload = {
   sessionTtlMs: number;
 };
 
+export type ActionMeta = {
+  clientActionId?: string;
+  clientSentAt?: number;
+};
+
 export type GameReadyPayload = {
   gameId: GameId;
   ready: boolean;
-};
+} & ActionMeta;
 
 export type GameStartPayload =
   | {
       gameId: "science-quiz";
       config?: { category: QuizCategory };
+      clientActionId?: string;
+      clientSentAt?: number;
     }
   | {
       gameId: Exclude<GameId, "science-quiz">;
+      clientActionId?: string;
+      clientSentAt?: number;
     };
 
 export type GameConfigPayload = {
   gameId: "science-quiz";
   category: QuizCategory;
-};
+} & ActionMeta;
 
 export type QuestionAddPayload = {
   gameId: Extract<GameId, "qa-lightning" | "better-half">;
   text: string;
   options: [string, string, string, string];
-};
+} & ActionMeta;
 
 export type QaSubmitPayload = {
   gameId: "qa-lightning";
   type: "submit";
   answerIndex: number;
-};
+} & ActionMeta;
 
 export type BetterHalfSubmitPayload = {
   gameId: "better-half";
   type: "submit";
   selfAnswerIndex: number;
   guessPartnerIndex: number;
-};
+} & ActionMeta;
 
 export type BattleshipPlaceShipsPayload = {
   gameId: "mini-battleship";
   type: "place_ships";
   placements: ShipPlacement[];
-};
+} & ActionMeta;
 
 export type BattleshipFirePayload = {
   gameId: "mini-battleship";
   type: "fire";
   x: number;
   y: number;
-};
+} & ActionMeta;
 
 export type ScienceQuizSubmitPayload = {
   gameId: "science-quiz";
   type: "submit";
   answerIndex: number;
-};
+} & ActionMeta;
 
 export type CouplePrioritiesSubmitPayload = {
   gameId: "couple-priorities";
   type: "submit";
   ranking: [number, number, number, number];
   guessPartnerTop: number;
-};
+} & ActionMeta;
 
 export type AdvancePayload = {
   gameId: GameId;
   type: "advance";
-};
+} & ActionMeta;
 
 export type RematchPayload = {
   gameId: GameId;
   type: "rematch";
-};
+} & ActionMeta;
 
 export type ReturnLobbyPayload = {
   gameId: GameId;
   type: "return_lobby";
-};
+} & ActionMeta;
 
 export type GameRequestEndPayload = {
   gameId: GameId;
   type: "request_end";
-};
+} & ActionMeta;
 
 export type GameApproveEndPayload = {
   gameId: GameId;
   type: "approve_end";
-};
+} & ActionMeta;
 
 export type GameRejectEndPayload = {
   gameId: GameId;
   type: "reject_end";
-};
+} & ActionMeta;
 
 export type GameActionPayload =
   | QaSubmitPayload
@@ -407,6 +430,21 @@ export type GameEventPayload = {
   gameId: GameId;
   message: string;
 };
+
+export type GameAckPayload = {
+  clientActionId: string;
+  ok: boolean;
+  acceptedAt: string;
+  code?: string;
+};
+
+export type ActionFeedbackState =
+  | "idle"
+  | "sending"
+  | "acked"
+  | "waiting_peer"
+  | "resolved"
+  | "failed";
 
 export type ResultTone = "success" | "danger" | "neutral" | "info" | "warning";
 

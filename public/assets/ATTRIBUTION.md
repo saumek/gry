@@ -18,6 +18,9 @@
 - `illustrations/better-half-editorial.svg` - custom reveal illustration generated locally for DuoPlay v1.9.
 - `illustrations/science-editorial.svg` - custom reveal illustration generated locally for DuoPlay v1.9.
 - `illustrations/priorities-editorial.svg` - custom reveal illustration generated locally for DuoPlay v1.9.
+- `sfx/success.wav` - custom short feedback sound generated locally for DuoPlay v1.11.
+- `sfx/warning.wav` - custom short feedback sound generated locally for DuoPlay v1.11.
+- `sfx/error.wav` - custom short feedback sound generated locally for DuoPlay v1.11.
 
 ## Third-party icons
 Source: Tabler Icons (MIT)

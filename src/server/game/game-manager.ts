@@ -311,6 +311,20 @@ export class GameManager {
       );
     }
 
+    if (outcome.questionOutcome) {
+      this.db.recordQuestionOutcome({
+        gameId: outcome.questionOutcome.gameId,
+        questionId: outcome.questionOutcome.questionId,
+        category: outcome.questionOutcome.category,
+        sessionId: this.activeGame.sessionId,
+        roundNo: outcome.questionOutcome.roundNo,
+        shownAt: new Date().toISOString(),
+        successByRole: outcome.questionOutcome.successByRole,
+        bothSuccess: outcome.questionOutcome.bothSuccess,
+        outcome: outcome.questionOutcome.payload
+      });
+    }
+
     if (outcome.scoreSnapshot) {
       this.persistScores(this.activeGame.sessionId, outcome.scoreSnapshot);
     }

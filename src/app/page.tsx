@@ -13,6 +13,18 @@ import { RolePicker } from "../components/role-picker";
 import { RoomFull } from "../components/room-full";
 import { TopStatusBar } from "../components/top-status-bar";
 import { getOrCreateDeviceId } from "../lib/device";
+import {
+  createClientActionId,
+  feedbackLabel,
+  hapticTap,
+  playTone,
+  questionGameNeedsPeer,
+  shouldResolveByEventKind,
+  type ActionFeedbackModel,
+  type ActionEventName,
+  type AnyTrackedPayload,
+  type PendingAction
+} from "../lib/action-feedback";
 import { resolveFeedbackTone, shouldAutoDismiss } from "../lib/ui-feedback";
 import { readThemeMode, resolveTheme, saveThemeMode } from "../lib/theme";
 import { resolveTab } from "../lib/ui-state";
@@ -22,7 +34,9 @@ import type {
   AuthStatePayload,
   ConnectionStatus,
   GameActionPayload,
+  GameAckPayload,
   GameConfigPayload,
+  GameEventPayload,
   GameId,
   GameStartPayload,
   GameStatusPayload,
@@ -37,6 +51,7 @@ import type {
 } from "../lib/types";
 
 const SAVED_PIN_KEY = "duoplay_pin";
+const SOUND_CUES_KEY = "duoplay_sound_cues";
 
 const initialPresence: PresenceState = {
   online: {
@@ -69,6 +84,11 @@ export default function HomePage() {
   const authTimeoutRef = useRef<number | null>(null);
   const lastPresenceRef = useRef<PresenceState>(initialPresence);
   const lastGameStateSignatureRef = useRef("");
+  const meRoleRef = useRef<Role | undefined>(undefined);
+  const pendingActionsRef = useRef<Map<string, PendingAction>>(new Map());
+  const pendingActionTimeoutsRef = useRef<Map<string, number>>(new Map());
+  const actionFeedbackRef = useRef<ActionFeedbackModel | null>(null);
+  const lastActionFeedbackStateRef = useRef<string>("idle");
 
   const [phase, setPhase] = useState<Phase>("pin");
   const [pin, setPin] = useState("");
@@ -86,6 +106,8 @@ export default function HomePage() {
   const [prefersDark, setPrefersDark] = useState(false);
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
   const [activeTab, setActiveTab] = useState<AppTab>("lobby");
+  const [actionFeedback, setActionFeedback] = useState<ActionFeedbackModel | null>(null);
+  const [soundCuesEnabled, setSoundCuesEnabled] = useState(false);
 
   const pushFeedback = useCallback((text: string, tone: UiMessageTone): void => {
     setIsFeedbackLeaving(false);
@@ -102,6 +124,23 @@ export default function HomePage() {
       window.clearTimeout(authTimeoutRef.current);
       authTimeoutRef.current = null;
     }
+  }, []);
+
+  const clearTrackedActionTimeout = useCallback((actionId: string): void => {
+    const timeoutId = pendingActionTimeoutsRef.current.get(actionId);
+    if (typeof timeoutId === "number") {
+      window.clearTimeout(timeoutId);
+      pendingActionTimeoutsRef.current.delete(actionId);
+    }
+  }, []);
+
+  const clearAllTrackedActions = useCallback((): void => {
+    for (const timeoutId of pendingActionTimeoutsRef.current.values()) {
+      window.clearTimeout(timeoutId);
+    }
+    pendingActionTimeoutsRef.current.clear();
+    pendingActionsRef.current.clear();
+    setActionFeedback(null);
   }, []);
 
   const applyPresenceUpdate = useCallback((nextPresence: PresenceState): void => {
@@ -121,11 +160,204 @@ export default function HomePage() {
 
     lastGameStateSignatureRef.current = signature;
     setGameState(nextState);
-  }, []);
+
+    const liveFeedback = actionFeedbackRef.current;
+    if (!liveFeedback) {
+      return;
+    }
+
+    const pending = pendingActionsRef.current.get(liveFeedback.actionId);
+    if (!pending) {
+      return;
+    }
+
+    if (liveFeedback.state === "sending") {
+      const nextStateValue =
+        questionGameNeedsPeer(pending.payload) && "type" in pending.payload
+          ? "waiting_peer"
+          : "resolved";
+      setActionFeedback((current) =>
+        current && current.actionId === pending.id
+          ? {
+              ...current,
+              state: nextStateValue
+            }
+          : current
+      );
+
+      if (nextStateValue === "resolved") {
+        clearTrackedActionTimeout(pending.id);
+        pendingActionsRef.current.delete(pending.id);
+      }
+      return;
+    }
+
+    if (liveFeedback.state === "acked" || liveFeedback.state === "waiting_peer") {
+      const active = nextState.activeGame;
+      if (
+        questionGameNeedsPeer(pending.payload) &&
+        active &&
+        meRoleRef.current &&
+        active.gameId === pending.payload.gameId &&
+        active.phase === "in_round" &&
+        "submittedRoles" in active &&
+        active.submittedRoles.includes(meRoleRef.current)
+      ) {
+        setActionFeedback((current) =>
+          current && current.actionId === pending.id
+            ? {
+                ...current,
+                state: "waiting_peer"
+              }
+            : current
+        );
+        return;
+      }
+
+      setActionFeedback((current) =>
+        current && current.actionId === pending.id
+          ? {
+              ...current,
+              state: "resolved"
+            }
+          : current
+      );
+      clearTrackedActionTimeout(pending.id);
+      pendingActionsRef.current.delete(pending.id);
+    }
+  }, [clearTrackedActionTimeout]);
 
   useEffect(() => {
     activePinRef.current = activePin;
   }, [activePin]);
+
+  useEffect(() => {
+    meRoleRef.current = meRole;
+  }, [meRole]);
+
+  useEffect(() => {
+    actionFeedbackRef.current = actionFeedback;
+  }, [actionFeedback]);
+
+  useEffect(() => {
+    const nextState = actionFeedback?.state ?? "idle";
+    const prevState = lastActionFeedbackStateRef.current;
+    if (nextState === prevState) {
+      return;
+    }
+
+    lastActionFeedbackStateRef.current = nextState;
+
+    if (nextState === "resolved") {
+      hapticTap("success");
+      playTone(soundCuesEnabled, "success");
+      return;
+    }
+
+    if (nextState === "waiting_peer") {
+      hapticTap("warning");
+      return;
+    }
+
+    if (nextState === "failed") {
+      hapticTap("error");
+      playTone(soundCuesEnabled, "error");
+    }
+  }, [actionFeedback?.state, soundCuesEnabled]);
+
+  const emitTracked = useCallback(
+    (event: ActionEventName, payload: AnyTrackedPayload): void => {
+      const socket = socketRef.current;
+      if (!socket) {
+        pushFeedback("Brak aktywnego połączenia z serwerem.", "error");
+        return;
+      }
+
+      const clientActionId = createClientActionId(event.replace(":", "_"));
+      const enrichedPayload = {
+        ...payload,
+        clientActionId,
+        clientSentAt: Date.now()
+      } as AnyTrackedPayload;
+
+      const pending: PendingAction = {
+        id: clientActionId,
+        event,
+        payload: enrichedPayload,
+        createdAt: Date.now(),
+        attempts: 1
+      };
+
+      pendingActionsRef.current.set(clientActionId, pending);
+      setActionFeedback({
+        actionId: clientActionId,
+        state: "sending",
+        label: feedbackLabel(enrichedPayload),
+        gameId: enrichedPayload.gameId
+      });
+
+      const timeoutId = window.setTimeout(() => {
+        const stillPending = pendingActionsRef.current.get(clientActionId);
+        if (!stillPending) {
+          return;
+        }
+
+        setActionFeedback({
+          actionId: clientActionId,
+          state: "failed",
+          label: feedbackLabel(enrichedPayload),
+          gameId: enrichedPayload.gameId,
+          errorCode: "ACK_TIMEOUT"
+        });
+      }, 2500);
+      pendingActionTimeoutsRef.current.set(clientActionId, timeoutId);
+
+      socket.emit(event, enrichedPayload);
+    },
+    [pushFeedback]
+  );
+
+  const retryLastAction = useCallback((): void => {
+    const feedbackState = actionFeedback;
+    if (!feedbackState || feedbackState.state !== "failed") {
+      return;
+    }
+
+    const pending = pendingActionsRef.current.get(feedbackState.actionId);
+    const socket = socketRef.current;
+    if (!pending || !socket) {
+      return;
+    }
+
+    clearTrackedActionTimeout(pending.id);
+    pending.attempts += 1;
+    pending.createdAt = Date.now();
+    pendingActionsRef.current.set(pending.id, pending);
+    setActionFeedback({
+      actionId: pending.id,
+      state: "sending",
+      label: feedbackLabel(pending.payload),
+      gameId: pending.payload.gameId
+    });
+
+    const timeoutId = window.setTimeout(() => {
+      const stillPending = pendingActionsRef.current.get(pending.id);
+      if (!stillPending) {
+        return;
+      }
+
+      setActionFeedback({
+        actionId: pending.id,
+        state: "failed",
+        label: feedbackLabel(pending.payload),
+        gameId: pending.payload.gameId,
+        errorCode: "ACK_TIMEOUT"
+      });
+    }, 2500);
+    pendingActionTimeoutsRef.current.set(pending.id, timeoutId);
+
+    socket.emit(pending.event, pending.payload);
+  }, [actionFeedback, clearTrackedActionTimeout]);
 
   useEffect(() => {
     const savedPin = window.localStorage.getItem(SAVED_PIN_KEY);
@@ -136,6 +368,7 @@ export default function HomePage() {
     }
 
     setThemeMode(readThemeMode(window.localStorage));
+    setSoundCuesEnabled(window.localStorage.getItem(SOUND_CUES_KEY) === "1");
   }, []);
 
   useEffect(() => {
@@ -158,6 +391,10 @@ export default function HomePage() {
     document.documentElement.dataset.theme = nextTheme;
     saveThemeMode(window.localStorage, themeMode);
   }, [themeMode, prefersDark]);
+
+  useEffect(() => {
+    window.localStorage.setItem(SOUND_CUES_KEY, soundCuesEnabled ? "1" : "0");
+  }, [soundCuesEnabled]);
 
   useEffect(() => {
     const socket = io({
@@ -242,10 +479,59 @@ export default function HomePage() {
       applyGameState(payload);
     });
 
-    socket.on("game:event", (payload: { message?: string }) => {
+    socket.on("game:ack", (payload: GameAckPayload) => {
+      const pending = pendingActionsRef.current.get(payload.clientActionId);
+      if (!pending) {
+        return;
+      }
+
+      if (!payload.ok) {
+        clearTrackedActionTimeout(payload.clientActionId);
+        setActionFeedback({
+          actionId: payload.clientActionId,
+          state: "failed",
+          label: feedbackLabel(pending.payload),
+          gameId: pending.payload.gameId,
+          errorCode: payload.code
+        });
+        return;
+      }
+
+      setActionFeedback({
+        actionId: payload.clientActionId,
+        state: questionGameNeedsPeer(pending.payload) ? "waiting_peer" : "acked",
+        label: feedbackLabel(pending.payload),
+        gameId: pending.payload.gameId
+      });
+    });
+
+    socket.on("game:event", (payload: GameEventPayload) => {
       if (payload?.message) {
         pushFeedback(payload.message, resolveFeedbackTone("event"));
       }
+
+      const activeFeedback = actionFeedbackRef.current;
+      if (!activeFeedback) {
+        return;
+      }
+
+      const pending = pendingActionsRef.current.get(activeFeedback.actionId);
+      if (!pending) {
+        return;
+      }
+
+      if (!shouldResolveByEventKind(payload?.kind, pending.payload)) {
+        return;
+      }
+
+      clearTrackedActionTimeout(pending.id);
+      pendingActionsRef.current.delete(pending.id);
+      setActionFeedback({
+        actionId: pending.id,
+        state: "resolved",
+        label: feedbackLabel(pending.payload),
+        gameId: pending.payload.gameId
+      });
     });
 
     socket.on("game:result", (payload: { summary?: string }) => {
@@ -271,11 +557,20 @@ export default function HomePage() {
 
     return () => {
       clearAuthTimeout();
+      clearAllTrackedActions();
       socket.disconnect();
       socket.removeAllListeners();
       socketRef.current = null;
     };
-  }, [applyGameState, applyPresenceUpdate, clearAuthTimeout, clearFeedback, pushFeedback]);
+  }, [
+    applyGameState,
+    applyPresenceUpdate,
+    clearAuthTimeout,
+    clearAllTrackedActions,
+    clearFeedback,
+    clearTrackedActionTimeout,
+    pushFeedback
+  ]);
 
   useEffect(() => {
     if (phase !== "lobby" || !meRole) {
@@ -389,28 +684,28 @@ export default function HomePage() {
   }, [activePin, joinRoom, pin]);
 
   const onReadyChange = useCallback((gameId: GameId, ready: boolean): void => {
-    socketRef.current?.emit("game:ready", { gameId, ready });
-  }, []);
+    emitTracked("game:ready", { gameId, ready });
+  }, [emitTracked]);
 
   const onStartGame = useCallback((payload: GameStartPayload): void => {
     if (gameState?.activeGameId === payload.gameId && gameState.activeGame) {
       return;
     }
 
-    socketRef.current?.emit("game:start", payload);
-  }, [gameState?.activeGame, gameState?.activeGameId]);
+    emitTracked("game:start", payload);
+  }, [emitTracked, gameState?.activeGame, gameState?.activeGameId]);
 
   const onGameAction = useCallback((payload: GameActionPayload): void => {
-    socketRef.current?.emit("game:action", payload);
-  }, []);
+    emitTracked("game:action", payload);
+  }, [emitTracked]);
 
   const onConfigureGame = useCallback((payload: GameConfigPayload): void => {
-    socketRef.current?.emit("game:config", payload);
-  }, []);
+    emitTracked("game:config", payload);
+  }, [emitTracked]);
 
   const onAddQuestion = useCallback((payload: QuestionAddPayload): void => {
-    socketRef.current?.emit("question:add", payload);
-  }, []);
+    emitTracked("question:add", payload);
+  }, [emitTracked]);
 
   const headerTitle = useMemo(() => {
     if (!meRole) {
@@ -445,6 +740,8 @@ export default function HomePage() {
         connectionLabel={connectionLabel}
         themeMode={themeMode}
         onThemeChange={setThemeMode}
+        soundCuesEnabled={soundCuesEnabled}
+        onToggleSoundCues={() => setSoundCuesEnabled((prev) => !prev)}
       />
 
       <section className="main-viewport" data-testid="main-viewport">
@@ -509,6 +806,8 @@ export default function HomePage() {
                       latestResult={gameState.latestResult}
                       onAction={onGameAction}
                       onAddQuestion={onAddQuestion}
+                      actionFeedback={actionFeedback}
+                      onRetryAction={retryLastAction}
                     />
                   ) : (
                     <>

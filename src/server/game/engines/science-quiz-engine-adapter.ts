@@ -58,7 +58,21 @@ export const scienceQuizEngineAdapter: GameEngine = {
               payload: outcome.roundReveal
             }
           : undefined,
-        scoreSnapshot: outcome.roundReveal?.scores
+        scoreSnapshot: outcome.roundReveal?.scores,
+        questionOutcome: outcome.roundReveal
+          ? {
+              gameId: "science-quiz",
+              questionId: outcome.roundReveal.question.id,
+              category: outcome.roundReveal.question.category,
+              roundNo: outcome.roundReveal.round,
+              successByRole: {
+                Sami: outcome.roundReveal.correctByRole.Sami,
+                Patryk: outcome.roundReveal.correctByRole.Patryk
+              },
+              bothSuccess: outcome.roundReveal.bothCorrect,
+              payload: outcome.roundReveal
+            }
+          : undefined
       };
     }
 

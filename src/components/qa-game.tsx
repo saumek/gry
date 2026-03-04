@@ -1,10 +1,13 @@
 "use client";
 
+import { useCallback } from "react";
+
 import {
   createQaResultHero,
   createQaRoundVisual,
   createQaTimeline
 } from "../lib/game-visuals/qa-visuals";
+import { useRevealAutoAdvance } from "../lib/use-reveal-auto-advance";
 import { phaseShortLabel } from "../lib/ui-state";
 import type { GameActionPayload, QaGameState, QuestionAddPayload } from "../lib/types";
 import { PointBreakdown } from "./point-breakdown";
@@ -26,6 +29,15 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
   const roundVisual = state.reveal ? createQaRoundVisual(state.reveal) : null;
   const resultHero = createQaResultHero(state);
   const timeline = createQaTimeline(state.history);
+  const handleAdvance = useCallback(() => {
+    onAction({ gameId: "qa-lightning", type: "advance" });
+  }, [onAction]);
+  const autoAdvance = useRevealAutoAdvance({
+    enabled: state.phase === "reveal",
+    phase: state.phase,
+    roundKey: `qa-${state.sessionId}-${state.reveal?.round ?? state.round}`,
+    onAdvance: handleAdvance
+  });
 
   return (
     <section className="stack-lg" data-testid="qa-game">
@@ -47,6 +59,9 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
             key={`qa-round-${state.round}`}
           >
             <h3>{state.currentQuestion.text}</h3>
+            {state.currentQuestion.smartMeta ? (
+              <p className="smart-hint">{state.currentQuestion.smartMeta.reason}</p>
+            ) : null}
             <div className="option-grid">
               {state.currentQuestion.options.map((option, index) => (
                 <button
@@ -113,11 +128,27 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
 
             {roundVisual ? <PointBreakdown title="Punkty tej rundy" items={roundVisual.points} /> : null}
             <RoundTimeline items={timeline} />
+            <div className="auto-advance-row">
+              <ResultChip
+                tone={autoAdvance.isPaused ? "warning" : "info"}
+                icon="•"
+                label={
+                  autoAdvance.isPaused
+                    ? "Auto-przejście wstrzymane"
+                    : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
+                }
+              />
+              {!autoAdvance.isPaused ? (
+                <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
+                  Zostań
+                </button>
+              ) : null}
+            </div>
 
             <button
               className="btn"
               type="button"
-              onClick={() => onAction({ gameId: "qa-lightning", type: "advance" })}
+              onClick={handleAdvance}
             >
               {state.round >= state.totalRounds ? "Pokaż wynik końcowy" : "Następna runda"}
             </button>
