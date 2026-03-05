@@ -1,4 +1,3 @@
-import { ThemeToggle } from "./theme-toggle";
 import { createTopBarModel } from "../lib/ui-state";
 import type { ActiveGameState, ConnectionStatus, ThemeMode, Role } from "../lib/types";
 
@@ -8,9 +7,6 @@ type TopStatusBarProps = {
   connectionStatus: ConnectionStatus;
   connectionLabel: string;
   themeMode: ThemeMode;
-  onThemeChange: (next: ThemeMode) => void;
-  soundCuesEnabled: boolean;
-  onToggleSoundCues: () => void;
 };
 
 export function TopStatusBar({
@@ -18,53 +14,24 @@ export function TopStatusBar({
   activeGame,
   connectionStatus,
   connectionLabel,
-  themeMode,
-  onThemeChange,
-  soundCuesEnabled,
-  onToggleSoundCues
+  themeMode
 }: TopStatusBarProps) {
   const model = createTopBarModel(meRole, activeGame, connectionStatus, connectionLabel);
-  const hasActiveGame = Boolean(activeGame);
 
   return (
     <header className="top-status" data-testid="top-status-bar">
-      <div className="top-status__line">
-        <strong className="top-status__brand">
-          <img src="/assets/icons/duoplay-mark.svg" alt="" aria-hidden="true" className="brand-mark" />
-          DuoPlay
-        </strong>
-        <div className="top-status__state">
-          <span className="top-status__item">{model.roleLabel}</span>
-          <span className={`status-dot status-dot--${model.connectionStatus}`} aria-hidden="true" />
-          <span className="top-status__item">{model.connectionLabel}</span>
-        </div>
-        <button
-          type="button"
-          className={`sound-toggle ${soundCuesEnabled ? "is-active" : ""}`}
-          aria-label={soundCuesEnabled ? "Wyłącz dźwięki akcji" : "Włącz dźwięki akcji"}
-          title={soundCuesEnabled ? "Dźwięki: włączone" : "Dźwięki: wyłączone"}
-          onClick={onToggleSoundCues}
-        >
-          {soundCuesEnabled ? "🔔" : "🔕"}
-        </button>
-        <ThemeToggle value={themeMode} onChange={onThemeChange} />
+      <strong className="top-status__brand">
+        <img src="/assets/icons/duoplay-mark.svg" alt="" aria-hidden="true" className="brand-mark" />
+        DuoPlay
+      </strong>
+      <div className="top-status__state">
+        <span className="top-status__item top-status__item--role">{model.roleLabel}</span>
+        <span className={`status-dot status-dot--${model.connectionStatus}`} aria-hidden="true" />
+        <span className="top-status__item">{model.connectionLabel}</span>
       </div>
-
-      {hasActiveGame ? (
-        <div className="top-status__line top-status__line--sub">
-          <p className="top-status__summary">
-            <strong>Gra</strong>
-            <span> · {model.gameLabel}</span>
-            {model.phaseLabel ? <span> · {model.phaseLabel}</span> : null}
-            {model.scoreLabel ? <span> · {model.scoreLabel}</span> : null}
-          </p>
-          {model.jumpToResult ? (
-            <a className="jump-link" href="#game-result-section">
-              Wynik
-            </a>
-          ) : null}
-        </div>
-      ) : null}
+      <span className="top-status__theme" aria-hidden="true">
+        {themeMode === "system" ? "Auto" : themeMode === "light" ? "Jasny" : "Ciemny"}
+      </span>
     </header>
   );
 }

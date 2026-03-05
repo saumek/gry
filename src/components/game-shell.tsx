@@ -57,10 +57,14 @@ export function GameShell({
   const endRequest = activeGame.endRequest;
   const actionFocusText =
     activeGame.phase === "finished"
-      ? "Sprawdź wynik końcowy i wybierz: Rewanż albo Powrót do lobby."
+      ? "Sprawdź końcowy wynik i zdecyduj, co dalej."
       : endRequest
-        ? "Trwa proces zakończenia gry za zgodą obu osób."
-        : "Wykonaj akcję rundy poniżej, aby kontynuować grę.";
+        ? "Trwa kończenie gry za zgodą obu osób."
+        : activeGame.phase === "setup"
+          ? "Dokończ ustawienie, żeby przejść dalej."
+          : activeGame.phase === "reveal"
+            ? "Zobacz wynik rundy i przejdź dalej."
+            : "Wykonaj swoją akcję w tej rundzie.";
   const activeCatalog = getGameCatalogItem(activeGame.gameId);
 
   useEffect(() => {
@@ -97,15 +101,27 @@ export function GameShell({
     actionFeedback && actionFeedback.gameId === activeGame.gameId ? actionFeedback : null;
   const feedbackLabel =
     feedbackForGame?.state === "sending"
-      ? "Wysyłanie..."
+      ? "Wysyłanie"
       : feedbackForGame?.state === "acked"
-        ? "Akcja potwierdzona"
+        ? "Potwierdzono"
         : feedbackForGame?.state === "waiting_peer"
-          ? "Czekasz na drugą osobę"
+          ? "Czeka na partnera"
           : feedbackForGame?.state === "resolved"
-            ? "Gotowe"
+            ? "Zapisano"
             : feedbackForGame?.state === "failed"
-              ? "Nie udało się wysłać"
+              ? "Spróbuj ponownie"
+              : null;
+  const feedbackIcon =
+    feedbackForGame?.state === "sending"
+      ? "••"
+      : feedbackForGame?.state === "acked"
+        ? "OK"
+        : feedbackForGame?.state === "waiting_peer"
+          ? "•"
+          : feedbackForGame?.state === "resolved"
+            ? "✓"
+            : feedbackForGame?.state === "failed"
+              ? "!"
               : null;
 
   useEffect(() => {
@@ -139,13 +155,29 @@ export function GameShell({
       />
 
       <section className="game-headline sticky-game-header" data-testid="game-headline">
-        <div className="section-header">
-          <h2>{activeCatalog.title}</h2>
-          <span className="chip chip--phase">{phaseShortLabel(activeGame.phase)}</span>
+        <div className="game-context-strip">
+          <div className="game-context-strip__title">
+            <p className="game-context-strip__eyebrow">Gra aktywna</p>
+            <h2>{activeCatalog.title}</h2>
+          </div>
+          <div className="game-context-strip__meta">
+            <span className="chip chip--phase">{phaseShortLabel(activeGame.phase)}</span>
+            <span className="game-context-strip__score">{`${activeGame.scores.Sami}:${activeGame.scores.Patryk}`}</span>
+            {resultForActiveSession ? (
+              <a className="jump-link" href="#game-result-section">
+                Wynik
+              </a>
+            ) : null}
+          </div>
         </div>
-        <p className="muted">{actionFocusText}</p>
+        <p className="game-context-strip__prompt muted">{actionFocusText}</p>
         {feedbackForGame && feedbackLabel ? (
           <div className={`action-feedback-strip action-feedback-strip--${feedbackForGame.state}`}>
+            {feedbackIcon ? (
+              <span className="action-feedback-strip__icon" aria-hidden="true">
+                {feedbackIcon}
+              </span>
+            ) : null}
             <span>{feedbackForGame.label}</span>
             <strong>{feedbackLabel}</strong>
             {feedbackForGame.state === "failed" ? (
@@ -155,7 +187,7 @@ export function GameShell({
             ) : null}
           </div>
         ) : null}
-        {activeCatalog.revealIllustration && (activeGame.phase === "reveal" || activeGame.phase === "finished") ? (
+        {activeCatalog.revealIllustration && activeGame.phase === "finished" ? (
           <img
             className="game-hero-illustration"
             src={activeCatalog.revealIllustration}
@@ -166,13 +198,15 @@ export function GameShell({
         ) : null}
 
         {activeGame.phase !== "finished" && !endRequest ? (
-          <button
-            className="btn btn--ghost btn--small btn--inline"
-            type="button"
-            onClick={() => onAction({ gameId: activeGame.gameId, type: "request_end" })}
-          >
-            Zakończ za zgodą
-          </button>
+          <div className="game-context-actions">
+            <button
+              className="btn btn--ghost btn--small btn--inline"
+              type="button"
+              onClick={() => onAction({ gameId: activeGame.gameId, type: "request_end" })}
+            >
+              Zakończ za zgodą
+            </button>
+          </div>
         ) : null}
 
         {endRequest ? (
@@ -180,7 +214,7 @@ export function GameShell({
             {isEndRequester ? (
               <>
                 <p>
-                  Czekamy na zgodę partnera. <strong>{remainingSeconds}s</strong>.
+                  Czekamy na zgodę drugiej osoby. <strong>{remainingSeconds}s</strong>.
                 </p>
                 <button
                   className="btn btn--ghost btn--small"

@@ -51,6 +51,7 @@ test("dwie osoby łączą się, trzecia widzi pełny pokój i działa zakończen
   await joinRoom(pageA);
   await expect(pageA.getByTestId("bottom-nav")).toBeVisible();
   await expect(pageA.getByTestId("tab-badge-game")).toHaveCount(0);
+  await expect(pageA.getByTestId("top-status-bar").getByTestId("theme-toggle")).toHaveCount(0);
 
   await joinRoom(pageB);
   await expect(pageA.getByText("Mini-czat")).toHaveCount(0);
@@ -107,6 +108,10 @@ test("dwie osoby łączą się, trzecia widzi pełny pokój i działa zakończen
   await expect(feedback).toBeVisible();
   await expect(feedback).toHaveClass(/feedback-inline--info/);
   await expect(pageA.getByTestId("tab-badge-history")).toBeVisible();
+  await pageA.getByTestId("tab-history").click();
+  await expect(pageA.getByTestId("settings-panel")).toBeVisible();
+  await expect(pageA.getByTestId("settings-panel").getByTestId("theme-toggle")).toBeVisible();
+  await expect(pageA.getByTestId("settings-sound-toggle")).toBeVisible();
 
   await contextA.close();
   await contextB.close();

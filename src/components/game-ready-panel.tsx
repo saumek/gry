@@ -6,6 +6,7 @@ import type {
   GameId,
   GameStartPayload,
   GameStatusPayload,
+  PresenceState,
   QuizCategory,
   Role
 } from "../lib/types";
@@ -13,6 +14,7 @@ import type {
 type GameReadyPanelProps = {
   meRole: Role;
   state: GameStatusPayload;
+  presence: PresenceState;
   onReadyChange: (gameId: GameId, ready: boolean) => void;
   onStart: (payload: GameStartPayload) => void;
   onConfigure: (payload: GameConfigPayload) => void;
@@ -21,6 +23,7 @@ type GameReadyPanelProps = {
 export function GameReadyPanel({
   meRole,
   state,
+  presence,
   onReadyChange,
   onStart,
   onConfigure
@@ -28,11 +31,31 @@ export function GameReadyPanel({
   const selectedCategory = state.configByGame["science-quiz"]?.category ?? "matma";
 
   return (
-    <section className="section-block" data-testid="lobby-games">
+    <section className="section-block lobby-panel" data-testid="lobby-games">
       <header className="section-header">
-        <h2>Wybór gry</h2>
-        <span className="chip chip--soft">Obie osoby klikają Gotowy</span>
+        <h2>Lobby</h2>
+        <span className="chip chip--soft">2 osoby</span>
       </header>
+
+      <div className="lobby-overview">
+        {(["Sami", "Patryk"] as const).map((role) => {
+          const online = presence.online[role];
+          const occupied = presence.occupiedRoles.includes(role);
+          const stateLabel = online ? "Online" : occupied ? "Rozłączony" : "Wolny";
+
+          return (
+            <article className={`lobby-person ${online ? "is-online" : ""}`} key={role}>
+              <div className="lobby-person__main">
+                <strong>{role}</strong>
+                {meRole === role ? <span className="me-tag">To Ty</span> : null}
+              </div>
+              <small>{stateLabel}</small>
+            </article>
+          );
+        })}
+      </div>
+
+      <p className="lobby-note">Obie osoby klikają Gotowy, potem Start.</p>
 
       <div className="game-list">
         {gamesRegistry.map((game) => {
@@ -51,43 +74,50 @@ export function GameReadyPanel({
               key={game.id}
               data-testid={`game-row-${game.id}`}
             >
-              <div className="game-row__title">
-                <h3>
-                  <AppIcon src={catalog.iconPath} className="inline-icon" />
-                  {game.title}
-                </h3>
-                <span className="status-pill">{thisGameActive ? "Aktywna" : "Lobby"}</span>
-              </div>
-              <p className="muted">{game.description}</p>
-              <p className="muted">{`Gotowi: ${readyCount}/2`}</p>
-
-              {game.id === "science-quiz" ? (
-                <div className="science-config-row">
-                  <label className="label" htmlFor="science-category-select">
-                    Kategoria
-                  </label>
-                  <select
-                    id="science-category-select"
-                    className="input"
-                    value={selectedCategory}
-                    disabled={activeElsewhere}
-                    onChange={(event) => {
-                      onConfigure({
-                        gameId: "science-quiz",
-                        category: event.target.value as QuizCategory
-                      });
-                    }}
-                    data-testid="science-category-select"
-                  >
-                    <option value="matma">Matma</option>
-                    <option value="geografia">Geografia</option>
-                    <option value="nauka">Nauka</option>
-                    <option value="wiedza-ogolna">Wiedza ogólna</option>
-                  </select>
+              <div className="game-row__main">
+                <div className="game-row__title">
+                  <h3>
+                    <AppIcon src={catalog.iconPath} className="inline-icon" />
+                    {game.title}
+                  </h3>
+                  <span className="status-pill">{thisGameActive ? "Aktywna" : `${readyCount}/2 got.`}</span>
                 </div>
-              ) : null}
+                <p className="game-row__description muted">{game.description}</p>
 
-              <div className="row-actions">
+                <div className="game-row__meta">
+                  <span className="game-row__meta-label">
+                    {thisGameActive ? "Trwa sesja" : readyCount > 0 ? "Czeka na gotowość" : "Gotowa do startu"}
+                  </span>
+
+                  {game.id === "science-quiz" ? (
+                    <div className="science-config-row">
+                      <label className="label" htmlFor="science-category-select">
+                        Kategoria
+                      </label>
+                      <select
+                        id="science-category-select"
+                        className="input"
+                        value={selectedCategory}
+                        disabled={activeElsewhere}
+                        onChange={(event) => {
+                          onConfigure({
+                            gameId: "science-quiz",
+                            category: event.target.value as QuizCategory
+                          });
+                        }}
+                        data-testid="science-category-select"
+                      >
+                        <option value="matma">Matma</option>
+                        <option value="geografia">Geografia</option>
+                        <option value="nauka">Nauka</option>
+                        <option value="wiedza-ogolna">Wiedza ogólna</option>
+                      </select>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+
+              <div className="row-actions game-row__actions">
                 <button
                   className="btn btn--ghost btn--small"
                   type="button"

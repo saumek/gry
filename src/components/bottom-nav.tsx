@@ -28,6 +28,7 @@ export function BottomNav({ activeTab, onChange, historyCount, gameActive }: Bot
             className={`bottom-nav__item ${isActive ? "is-active" : ""}`}
             onClick={() => onChange(item.id)}
             aria-pressed={isActive}
+            title={item.label}
             data-testid={`tab-${item.id}`}
           >
             <span className="bottom-nav__icon" aria-hidden="true">
@@ -35,6 +36,9 @@ export function BottomNav({ activeTab, onChange, historyCount, gameActive }: Bot
             </span>
             <span>{item.label}</span>
             {badge > 0 ? <span className="bottom-nav__badge" data-testid={`tab-badge-${item.id}`}>{badge}</span> : null}
+            {gameActive && item.id === "game" && !isActive ? (
+              <span className="bottom-nav__dot" aria-hidden="true" />
+            ) : null}
             {gameActive && item.id === "game" ? <span className="sr-only">Aktywna gra</span> : null}
           </button>
         );

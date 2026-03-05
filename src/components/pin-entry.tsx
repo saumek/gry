@@ -10,11 +10,11 @@ type PinEntryProps = {
 
 export function PinEntry({ pin, onPinChange, onSubmit, isBusy, message }: PinEntryProps) {
   return (
-    <section className="section-block section-block--hero" data-testid="pin-entry">
-      <p className="muted">Pokój dla dwóch osób. Wpisz kod, aby wejść do wspólnego lobby.</p>
+    <section className="section-block section-block--hero entry-panel" data-testid="pin-entry">
+      <p className="entry-panel__lead">Pokój dla dwóch osób. Wpisz kod, aby wejść do wspólnego lobby.</p>
 
       <form
-        className="stack stack--spacious"
+        className="stack stack--spacious entry-panel__form"
         onSubmit={(event) => {
           event.preventDefault();
           if (!isBusy) {
@@ -39,7 +39,7 @@ export function PinEntry({ pin, onPinChange, onSubmit, isBusy, message }: PinEnt
           required
         />
 
-        <button className={`btn ${isBusy ? "btn--loading" : ""}`} type="submit" disabled={isBusy}>
+        <button className={`btn entry-panel__cta ${isBusy ? "btn--loading" : ""}`} type="submit" disabled={isBusy}>
           {isBusy ? "Łączenie..." : "Wejdź do pokoju"}
         </button>
       </form>

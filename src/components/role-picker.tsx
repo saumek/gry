@@ -9,9 +9,9 @@ type RolePickerProps = {
 
 export function RolePicker({ availableRoles, onPick }: RolePickerProps) {
   return (
-    <section className="section-block" data-testid="role-picker">
+    <section className="section-block entry-panel" data-testid="role-picker">
       <h2>Wybierz użytkownika</h2>
-      <p className="muted">W pokoju są dostępne oba miejsca. Wybierz swoje imię.</p>
+      <p className="entry-panel__lead">W pokoju są dostępne oba miejsca. Wybierz swoje imię.</p>
       <div className="grid-two grid-two--tight">
         {availableRoles.map((role) => (
           <button

@@ -3,12 +3,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
+import { AppSettingsPanel } from "../components/app-settings-panel";
 import { BottomNav } from "../components/bottom-nav";
 import { GameHistoryCards } from "../components/game-history-cards";
 import { GameReadyPanel } from "../components/game-ready-panel";
 import { GameShell } from "../components/game-shell";
 import { PinEntry } from "../components/pin-entry";
-import { PresenceStrip } from "../components/presence-strip";
 import { RolePicker } from "../components/role-picker";
 import { RoomFull } from "../components/room-full";
 import { TopStatusBar } from "../components/top-status-bar";
@@ -739,9 +739,6 @@ export default function HomePage() {
         connectionStatus={connectionStatus}
         connectionLabel={connectionLabel}
         themeMode={themeMode}
-        onThemeChange={setThemeMode}
-        soundCuesEnabled={soundCuesEnabled}
-        onToggleSoundCues={() => setSoundCuesEnabled((prev) => !prev)}
       />
 
       <section className="main-viewport" data-testid="main-viewport">
@@ -828,13 +825,13 @@ export default function HomePage() {
                 <section className="tab-section motion-tab-switch" data-testid="tab-panel-lobby">
                   <section className="screen-title">
                     <h1>Lobby</h1>
-                    <p>Status osób i start gry.</p>
+                    <p>Szybki start, status duetu i wybór gry.</p>
                   </section>
-                  <PresenceStrip presence={presence} meRole={meRole} />
                   {gameState ? (
                     <GameReadyPanel
                       meRole={meRole}
                       state={gameState}
+                      presence={presence}
                       onReadyChange={onReadyChange}
                       onStart={onStartGame}
                       onConfigure={onConfigureGame}
@@ -847,8 +844,14 @@ export default function HomePage() {
                 <section className="tab-section motion-tab-switch" data-testid="tab-panel-history">
                   <section className="screen-title">
                     <h1>Historia</h1>
-                    <p>Poprzednie mecze i wyniki.</p>
+                    <p>Wyniki, ustawienia i ostatnie sesje.</p>
                   </section>
+                  <AppSettingsPanel
+                    themeMode={themeMode}
+                    onThemeChange={setThemeMode}
+                    soundCuesEnabled={soundCuesEnabled}
+                    onToggleSoundCues={() => setSoundCuesEnabled((prev) => !prev)}
+                  />
                   {gameState?.history && gameState.history.length > 0 ? (
                     <GameHistoryCards history={gameState.history} />
                   ) : (
