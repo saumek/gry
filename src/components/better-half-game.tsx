@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   createBetterHalfResultHero,
@@ -36,15 +36,26 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
   const resultHero = createBetterHalfResultHero(state);
   const timeline = createBetterHalfTimeline(state.history);
 
+  useEffect(() => {
+    if (state.phase === "in_round") {
+      setSelfAnswerIndex(null);
+      setGuessAnswerIndex(null);
+    }
+  }, [state.phase, state.round, state.sessionId]);
+
   const canSubmit = useMemo(
     () => selfAnswerIndex !== null && guessAnswerIndex !== null,
     [selfAnswerIndex, guessAnswerIndex]
   );
+  const canAutoAdvance = state.phase === "reveal" && state.round < state.totalRounds;
+  const handleAdvance = useCallback(() => {
+    onAction({ gameId: "better-half", type: "advance" });
+  }, [onAction]);
   const autoAdvance = useRevealAutoAdvance({
-    enabled: state.phase === "reveal",
+    enabled: canAutoAdvance,
     phase: state.phase,
     roundKey: `bh-${state.sessionId}-${state.reveal?.round ?? state.round}`,
-    onAdvance: () => onAction({ gameId: "better-half", type: "advance" })
+    onAdvance: handleAdvance
   });
 
   return (
@@ -172,27 +183,29 @@ export function BetterHalfGame({ state, meRole, onAction, onAddQuestion }: Bette
 
             {roundVisual ? <PointBreakdown title="Punkty tej rundy" items={roundVisual.points} /> : null}
             <RoundTimeline items={timeline} />
-            <div className="auto-advance-row">
-              <ResultChip
-                tone={autoAdvance.isPaused ? "warning" : "info"}
-                icon="•"
-                label={
-                  autoAdvance.isPaused
-                    ? "Auto-przejście wstrzymane"
-                    : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
-                }
-              />
-              {!autoAdvance.isPaused ? (
-                <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
-                  Zostań
-                </button>
-              ) : null}
-            </div>
+            {canAutoAdvance ? (
+              <div className="auto-advance-row">
+                <ResultChip
+                  tone={autoAdvance.isPaused ? "warning" : "info"}
+                  icon="•"
+                  label={
+                    autoAdvance.isPaused
+                      ? "Auto-przejście wstrzymane"
+                      : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
+                  }
+                />
+                {!autoAdvance.isPaused ? (
+                  <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
+                    Zostań
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
 
             <button
               className="btn"
               type="button"
-              onClick={() => onAction({ gameId: "better-half", type: "advance" })}
+              onClick={handleAdvance}
             >
               {state.round >= state.totalRounds ? "Pokaż wynik końcowy" : "Następna runda"}
             </button>

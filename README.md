@@ -72,7 +72,7 @@ npm run test:e2e
 
 ## Pakiet pytań v1.10 (PL)
 
-- Aplikacja używa wersjonowanego pakietu pytań: `v1.10-question-pack-pl`.
+- Aplikacja używa wersjonowanego pakietu pytań: `v1.10.1-question-pack-pl`.
 - Pakiet jest trzymany lokalnie w pliku:
   - `src/server/game/content/question-pack.v1_10.pl.json`
 - Przy starcie serwera seed jest aktualizowany automatycznie po zmianie wersji w `content_seed_meta`.

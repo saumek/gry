@@ -29,11 +29,12 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
   const roundVisual = state.reveal ? createQaRoundVisual(state.reveal) : null;
   const resultHero = createQaResultHero(state);
   const timeline = createQaTimeline(state.history);
+  const canAutoAdvance = state.phase === "reveal" && state.round < state.totalRounds;
   const handleAdvance = useCallback(() => {
     onAction({ gameId: "qa-lightning", type: "advance" });
   }, [onAction]);
   const autoAdvance = useRevealAutoAdvance({
-    enabled: state.phase === "reveal",
+    enabled: canAutoAdvance,
     phase: state.phase,
     roundKey: `qa-${state.sessionId}-${state.reveal?.round ?? state.round}`,
     onAdvance: handleAdvance
@@ -128,22 +129,24 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
 
             {roundVisual ? <PointBreakdown title="Punkty tej rundy" items={roundVisual.points} /> : null}
             <RoundTimeline items={timeline} />
-            <div className="auto-advance-row">
-              <ResultChip
-                tone={autoAdvance.isPaused ? "warning" : "info"}
-                icon="•"
-                label={
-                  autoAdvance.isPaused
-                    ? "Auto-przejście wstrzymane"
-                    : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
-                }
-              />
-              {!autoAdvance.isPaused ? (
-                <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
-                  Zostań
-                </button>
-              ) : null}
-            </div>
+            {canAutoAdvance ? (
+              <div className="auto-advance-row">
+                <ResultChip
+                  tone={autoAdvance.isPaused ? "warning" : "info"}
+                  icon="•"
+                  label={
+                    autoAdvance.isPaused
+                      ? "Auto-przejście wstrzymane"
+                      : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
+                  }
+                />
+                {!autoAdvance.isPaused ? (
+                  <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
+                    Zostań
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
 
             <button
               className="btn"

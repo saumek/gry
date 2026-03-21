@@ -54,6 +54,7 @@ type RankedCandidate<T> = {
   difficultyBand: QuestionDifficultyBand;
   finalScore: number;
   successRate: number | undefined;
+  themeKey: string;
 };
 
 const TARGET_DIFFICULTY: Record<QuestionGameId, number> = {
@@ -133,8 +134,7 @@ function rankAndSelect<T extends CandidateBase>({
   let selectedCustom = 0;
 
   while (selected.length < count && remaining.length > 0) {
-    let best: RankedCandidate<T> | null = null;
-    let bestIndex = -1;
+    const rankedEntries: Array<{ ranked: RankedCandidate<T>; index: number }> = [];
 
     for (let index = 0; index < remaining.length; index += 1) {
       const candidate = remaining[index];
@@ -143,23 +143,23 @@ function rankAndSelect<T extends CandidateBase>({
       const novelty = computeNoveltyScore(rowStats, nowMs);
       const diffFit = difficultyFitScore(successRate, targetDifficulty);
       const freshnessScore = computeFreshnessScore(rowStats, nowMs);
+      const candidateTheme = deriveThemeKey(candidate.text, candidate.options);
 
-      let score = novelty * 0.42 + diffFit * 0.28 + freshnessScore * 0.18 + sourceScore(candidate.source) * 0.12;
+      let score = novelty * 0.38 + diffFit * 0.24 + freshnessScore * 0.16 + sourceScore(candidate.source) * 0.1;
 
       if (candidate.source === "custom" && selectedCustom >= customLimit) {
         score -= 0.45;
       }
 
-      const candidateTheme = deriveThemeKey(candidate.text);
       if (selectedThemeKeys.length >= 2) {
         const last = selectedThemeKeys[selectedThemeKeys.length - 1];
         const beforeLast = selectedThemeKeys[selectedThemeKeys.length - 2];
         if (candidateTheme === last && candidateTheme === beforeLast) {
-          score -= 0.35;
+          score -= 0.42;
         }
       }
 
-      const tokens = tokenize(candidate.text);
+      const tokens = tokenize(candidate.text, candidate.options);
       if (selectedTokenSets.length > 0) {
         let maxSimilarity = 0;
         for (const selectedTokens of selectedTokenSets) {
@@ -169,8 +169,8 @@ function rankAndSelect<T extends CandidateBase>({
           }
         }
 
-        if (maxSimilarity > 0.7) {
-          score -= (maxSimilarity - 0.7) * 0.9;
+        if (maxSimilarity > 0.45) {
+          score -= Math.min(0.85, (maxSimilarity - 0.45) * 1.6);
         }
       }
 
@@ -179,25 +179,27 @@ function rankAndSelect<T extends CandidateBase>({
         novelty,
         difficultyBand: inferDifficultyBand(successRate, targetDifficulty),
         finalScore: score,
-        successRate
+        successRate,
+        themeKey: candidateTheme
       };
-
-      if (!best || ranked.finalScore > best.finalScore) {
-        best = ranked;
-        bestIndex = index;
-      }
+      rankedEntries.push({ ranked, index });
     }
 
-    if (!best || bestIndex === -1) {
+    if (rankedEntries.length === 0) {
       break;
     }
+
+    rankedEntries.sort((left, right) => right.ranked.finalScore - left.ranked.finalScore);
+    const pickedEntry = pickRankedCandidate(rankedEntries);
+    const best = pickedEntry.ranked;
+    const bestIndex = pickedEntry.index;
 
     selected.push(best);
     if (best.candidate.source === "custom") {
       selectedCustom += 1;
     }
-    selectedThemeKeys.push(deriveThemeKey(best.candidate.text));
-    selectedTokenSets.push(tokenize(best.candidate.text));
+    selectedThemeKeys.push(best.themeKey);
+    selectedTokenSets.push(tokenize(best.candidate.text, best.candidate.options));
     remaining.splice(bestIndex, 1);
   }
 
@@ -272,7 +274,7 @@ function sourceScore(source: "builtin" | "custom"): number {
   return source === "builtin" ? 0.7 : 0.55;
 }
 
-function deriveThemeKey(text: string): string {
+function deriveThemeKey(text: string, options: [string, string, string, string]): string {
   const stopwords = new Set([
     "jak",
     "ile",
@@ -290,16 +292,20 @@ function deriveThemeKey(text: string): string {
     "zadaniu"
   ]);
 
-  const tokens = normalize(text)
+  const tokens = normalize([text, ...options].join(" "))
     .split(" ")
     .filter((token) => token.length > 3 && !stopwords.has(token));
 
-  return tokens[0] ?? "misc";
+  if (tokens.length === 0) {
+    return "misc";
+  }
+
+  return tokens.slice(0, 2).join("-");
 }
 
-function tokenize(text: string): Set<string> {
+function tokenize(text: string, options: [string, string, string, string]): Set<string> {
   return new Set(
-    normalize(text)
+    normalize([text, ...options].join(" "))
       .split(" ")
       .filter((token) => token.length > 2 || /^\d+$/.test(token))
   );
@@ -359,6 +365,39 @@ function buildSmartReason<T extends CandidateBase>(
   }
 
   return parts.join(" · ");
+}
+
+function pickRankedCandidate<T extends CandidateBase>(
+  rankedEntries: Array<{ ranked: RankedCandidate<T>; index: number }>
+): { ranked: RankedCandidate<T>; index: number } {
+  if (rankedEntries.length === 1) {
+    return rankedEntries[0];
+  }
+
+  const bestScore = rankedEntries[0].ranked.finalScore;
+  const window = rankedEntries
+    .filter((entry, index) => index < 6 && entry.ranked.finalScore >= bestScore - 0.08)
+    .slice(0, 6);
+
+  if (window.length === 1) {
+    return window[0];
+  }
+
+  const weighted = window.map((entry) => ({
+    entry,
+    weight: Math.max(0.01, entry.ranked.finalScore - (bestScore - 0.1))
+  }));
+  const totalWeight = weighted.reduce((sum, item) => sum + item.weight, 0);
+  let target = Math.random() * totalWeight;
+
+  for (const item of weighted) {
+    target -= item.weight;
+    if (target <= 0) {
+      return item.entry;
+    }
+  }
+
+  return weighted[0].entry;
 }
 
 function selectFromCandidates<T extends CandidateBase>(input: {

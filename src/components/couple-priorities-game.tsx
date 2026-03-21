@@ -41,8 +41,9 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
     () => ranking.length === 4 && guessPartnerTop !== null,
     [ranking.length, guessPartnerTop]
   );
+  const canAutoAdvance = state.phase === "reveal" && state.round < state.totalRounds;
   const autoAdvance = useRevealAutoAdvance({
-    enabled: state.phase === "reveal",
+    enabled: canAutoAdvance,
     phase: state.phase,
     roundKey: `priorities-${state.sessionId}-${state.reveal?.round ?? state.round}`,
     onAdvance: () => onAction({ gameId: "couple-priorities", type: "advance" })
@@ -194,22 +195,24 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
 
             {roundVisual ? <PointBreakdown title="Skąd punkty" items={roundVisual.points} /> : null}
             <RoundTimeline items={timeline} />
-            <div className="auto-advance-row">
-              <ResultChip
-                tone={autoAdvance.isPaused ? "warning" : "info"}
-                icon="•"
-                label={
-                  autoAdvance.isPaused
-                    ? "Auto-przejście wstrzymane"
-                    : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
-                }
-              />
-              {!autoAdvance.isPaused ? (
-                <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
-                  Zostań
-                </button>
-              ) : null}
-            </div>
+            {canAutoAdvance ? (
+              <div className="auto-advance-row">
+                <ResultChip
+                  tone={autoAdvance.isPaused ? "warning" : "info"}
+                  icon="•"
+                  label={
+                    autoAdvance.isPaused
+                      ? "Auto-przejście wstrzymane"
+                      : `Auto-przejście za ${autoAdvance.secondsLeft.toFixed(1)}s`
+                  }
+                />
+                {!autoAdvance.isPaused ? (
+                  <button className="btn btn--ghost btn--small" type="button" onClick={autoAdvance.pause}>
+                    Zostań
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
 
             <button
               className="btn"

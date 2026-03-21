@@ -2288,6 +2288,20 @@ a:focus-visible {
   font-size: 0.76rem;
 }
 
+.feedback-toast {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  bottom: calc(var(--safe-bottom) + 62px);
+  z-index: 70;
+  width: auto;
+  max-width: none;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+  pointer-events: none;
+}
+
 .lobby-panel {
   gap: 10px;
 }

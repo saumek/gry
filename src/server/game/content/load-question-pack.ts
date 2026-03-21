@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import { QuestionPack, validateQuestionPack } from "./question-pack.schema";
 
-export const QUESTION_PACK_VERSION = "v1.10-question-pack-pl";
+export const QUESTION_PACK_VERSION = "v1.10.1-question-pack-pl";
 const QUESTION_PACK_FILE = "question-pack.v1_10.pl.json";
 
 let cachedPack: QuestionPack | null = null;

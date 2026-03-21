@@ -52,13 +52,19 @@ export function createBetterHalfRoundVisual(reveal: BetterHalfRoundReveal): Game
         label: "Punkty Sami",
         value: reveal.hits.Sami ? "+1" : "+0",
         tone: reveal.hits.Sami ? "success" : "danger",
-        icon: reveal.hits.Sami ? "✓" : "✕"
+        icon: reveal.hits.Sami ? "✓" : "✕",
+        detail: reveal.hits.Sami
+          ? "Sami dobrze przewidział odpowiedź Patryka"
+          : "Sami nie trafił odpowiedzi Patryka"
       },
       {
         label: "Punkty Patryk",
         value: reveal.hits.Patryk ? "+1" : "+0",
         tone: reveal.hits.Patryk ? "success" : "danger",
-        icon: reveal.hits.Patryk ? "✓" : "✕"
+        icon: reveal.hits.Patryk ? "✓" : "✕",
+        detail: reveal.hits.Patryk
+          ? "Patryk dobrze przewidział odpowiedź Sami"
+          : "Patryk nie trafił odpowiedzi Sami"
       }
     ]
   };

@@ -1,6 +1,6 @@
 {
-  "version": "v1.10-question-pack-pl",
-  "generatedAt": "2026-03-04T18:50:24.399Z",
+  "version": "v1.10.1-question-pack-pl",
+  "generatedAt": "2026-03-09T22:00:41.840Z",
   "qaLightning": [
     {
       "text": "Po intensywnym tygodniu co najlepiej resetuje głowę po pracy · komfort?",
@@ -5408,2002 +5408,2002 @@
   "scienceQuiz": {
     "matma": [
       {
-        "text": "Ile to 17 + 6 w zadaniu 1?",
+        "text": "Jaki stopień ma wielomian W(x)=2x^3-x^2+2x+1?",
         "options": [
-          "23",
-          "15",
-          "27",
-          "12"
+          "stopień 3",
+          "stopień 2",
+          "stopień 1",
+          "stopień 4"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 18 + 7 w zadaniu 2?",
+        "text": "Wskaż stopień wielomianu 3x^4-2x^3+3x^2+2.",
         "options": [
-          "34",
-          "20",
-          "26",
-          "25"
+          "stopień 3",
+          "stopień 2",
+          "stopień 5",
+          "stopień 4"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 19 + 8 w zadaniu 3?",
+        "text": "Ile wynosi stopień wielomianu P(x)=4x^5-3x^4+4x^3+3?",
         "options": [
-          "33",
-          "25",
-          "27",
-          "17"
+          "stopień 3",
+          "stopień 6",
+          "stopień 5",
+          "stopień 4"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 20 + 9 w zadaniu 4?",
+        "text": "Najwyższa potęga w wielomianie 2x^6-4x^5+5x^4+4 to",
         "options": [
-          "32",
-          "29",
-          "40",
-          "22"
+          "stopień 7",
+          "stopień 6",
+          "stopień 5",
+          "stopień 4"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 21 + 10 w zadaniu 5?",
+        "text": "Jaki stopień ma wielomian W(x)=3x^3-5x^2+2x+5?",
         "options": [
-          "31",
-          "30",
-          "39",
-          "27"
+          "stopień 3",
+          "stopień 2",
+          "stopień 1",
+          "stopień 4"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 22 + 11 w zadaniu 6?",
+        "text": "Wskaż stopień wielomianu 4x^4-x^3+3x^2+6.",
         "options": [
-          "35",
-          "24",
-          "38",
-          "33"
+          "stopień 3",
+          "stopień 2",
+          "stopień 5",
+          "stopień 4"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 23 + 12 w zadaniu 7?",
+        "text": "Ile wynosi stopień wielomianu P(x)=2x^5-2x^4+4x^3+7?",
         "options": [
-          "45",
-          "29",
-          "35",
-          "32"
+          "stopień 3",
+          "stopień 6",
+          "stopień 5",
+          "stopień 4"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 24 + 13 w zadaniu 8?",
+        "text": "Najwyższa potęga w wielomianie 3x^6-3x^5+5x^4+1 to",
         "options": [
-          "44",
-          "37",
-          "41",
-          "26"
+          "stopień 7",
+          "stopień 6",
+          "stopień 5",
+          "stopień 4"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 25 + 14 w zadaniu 9?",
+        "text": "Jaki stopień ma wielomian W(x)=4x^3-4x^2+2x+2?",
         "options": [
-          "39",
-          "34",
-          "40",
-          "31"
+          "stopień 3",
+          "stopień 2",
+          "stopień 1",
+          "stopień 4"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 26 + 15 w zadaniu 10?",
+        "text": "Wskaż stopień wielomianu 2x^4-5x^3+3x^2+3.",
         "options": [
-          "47",
-          "39",
-          "50",
-          "41"
+          "stopień 3",
+          "stopień 2",
+          "stopień 5",
+          "stopień 4"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 27 + 16 w zadaniu 11?",
+        "text": "Ile wynosi W(-2), jeśli W(x)=2x^2-5x+3?",
         "options": [
-          "46",
-          "33",
-          "43",
-          "36"
+          "wartość 21",
+          "wartość 22",
+          "wartość 19",
+          "wartość 24"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Oblicz wartość wielomianu 3x^2-4x+4 dla x=-1.",
+        "options": [
+          "wartość 12",
+          "wartość 9",
+          "wartość 14",
+          "wartość 11"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Podstaw x=2 do wielomianu 4x^2-3x+5. Jaki jest wynik?",
+        "options": [
+          "wartość 13",
+          "wartość 18",
+          "wartość 15",
+          "wartość 16"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 28 + 17 w zadaniu 12?",
+        "text": "Wartość wielomianu 2x^2-2x+6 dla argumentu 3 to",
         "options": [
-          "56",
-          "45",
-          "53",
-          "41"
+          "wartość 21",
+          "wartość 18",
+          "wartość 19",
+          "wartość 16"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 29 + 18 w zadaniu 13?",
+        "text": "Ile wynosi W(-2), jeśli W(x)=3x^2-x+3?",
         "options": [
-          "47",
-          "38",
-          "52",
-          "46"
+          "wartość 17",
+          "wartość 18",
+          "wartość 15",
+          "wartość 20"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 30 + 19 w zadaniu 14?",
+        "text": "Oblicz wartość wielomianu 4x^2+4 dla x=-1.",
         "options": [
-          "59",
-          "43",
-          "51",
-          "49"
+          "wartość 9",
+          "wartość 6",
+          "wartość 11",
+          "wartość 8"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 31 + 20 w zadaniu 15?",
+        "text": "Podstaw x=2 do wielomianu 2x^2+x+5. Jaki jest wynik?",
         "options": [
-          "58",
-          "48",
-          "51",
-          "40"
+          "wartość 13",
+          "wartość 18",
+          "wartość 15",
+          "wartość 16"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 32 + 21 w zadaniu 16?",
+        "text": "Wartość wielomianu 3x^2+2x+6 dla argumentu 3 to",
         "options": [
-          "57",
-          "53",
-          "54",
-          "45"
+          "wartość 42",
+          "wartość 39",
+          "wartość 40",
+          "wartość 37"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 33 + 22 w zadaniu 17?",
+        "text": "Ile wynosi W(-2), jeśli W(x)=4x^2+3x+3?",
         "options": [
-          "55",
-          "53",
-          "64",
-          "50"
+          "wartość 13",
+          "wartość 14",
+          "wartość 11",
+          "wartość 16"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 34 + 23 w zadaniu 18?",
+        "text": "Oblicz wartość wielomianu 2x^2+4x+4 dla x=-1.",
         "options": [
-          "60",
-          "47",
-          "63",
-          "57"
+          "wartość 3",
+          "wartość 0",
+          "wartość 5",
+          "wartość 2"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 35 + 6 w zadaniu 19?",
+        "text": "Który rozkład na czynniki jest poprawny dla x^2-4x+3?",
         "options": [
-          "52",
-          "34",
-          "41",
-          "37"
+          "(x-1)(x-3)",
+          "Wariant 41",
+          "Wariant 42",
+          "Wariant 43"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Jak poprawnie rozłożyć na czynniki wielomian x^2-7x+10?",
+        "options": [
+          "Wariant 42",
+          "Wariant 43",
+          "Wariant 44",
+          "(x-2)(x-5)"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Wskaż prawidłowy rozkład na czynniki dla x^2-7x+12.",
+        "options": [
+          "Wariant 44",
+          "Wariant 45",
+          "(x-3)(x-4)",
+          "Wariant 43"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 36 + 7 w zadaniu 20?",
+        "text": "Poprawny rozkład wielomianu x^2+x-2 ma postać",
         "options": [
-          "51",
-          "43",
-          "48",
-          "42"
+          "Wariant 46",
+          "(x-1)(x+2)",
+          "Wariant 44",
+          "Wariant 45"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 37 + 8 w zadaniu 21?",
+        "text": "Który rozkład na czynniki jest poprawny dla x^2+x-6?",
         "options": [
-          "45",
-          "39",
-          "47",
-          "36"
+          "(x-2)(x+3)",
+          "Wariant 45",
+          "Wariant 46",
+          "Wariant 47"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 38 + 9 w zadaniu 22?",
+        "text": "Jak poprawnie rozłożyć na czynniki wielomian x^2-3x-4?",
         "options": [
-          "54",
-          "44",
-          "57",
-          "47"
+          "Wariant 46",
+          "Wariant 47",
+          "Wariant 48",
+          "(x-4)(x+1)"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 39 + 10 w zadaniu 23?",
+        "text": "Wskaż prawidłowy rozkład na czynniki dla x^2-7x+10.",
         "options": [
-          "53",
-          "38",
-          "49",
-          "41"
+          "Wariant 48",
+          "Wariant 49",
+          "(x-5)(x-2)",
+          "Wariant 47"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 40 + 11 w zadaniu 24?",
+        "text": "Poprawny rozkład wielomianu x^2+5x+4 ma postać",
         "options": [
-          "52",
-          "51",
-          "60",
-          "46"
+          "Wariant 50",
+          "(x+1)(x+4)",
+          "Wariant 48",
+          "Wariant 49"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 41 + 12 w zadaniu 25?",
+        "text": "Który rozkład na czynniki jest poprawny dla x^2+7x+10?",
         "options": [
-          "53",
-          "43",
-          "59",
-          "51"
+          "(x+2)(x+5)",
+          "Wariant 49",
+          "Wariant 50",
+          "Wariant 51"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 42 + 13 w zadaniu 26?",
+        "text": "Jak poprawnie rozłożyć na czynniki wielomian x^2-2x-3?",
         "options": [
-          "66",
-          "48",
-          "58",
-          "55"
+          "Wariant 50",
+          "Wariant 51",
+          "Wariant 52",
+          "(x-3)(x+1)"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 43 + 14 w zadaniu 27?",
+        "text": "Jaka jest reszta z dzielenia x^3-3x^2+2x-4 przez x+2?",
         "options": [
-          "65",
-          "53",
-          "57",
-          "56"
+          "reszta -28",
+          "reszta -27",
+          "reszta -30",
+          "reszta -24"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Wskaż resztę z dzielenia wielomianu x^3-2x^2+3x-3 przez x+1.",
+        "options": [
+          "reszta -8",
+          "reszta -11",
+          "reszta -5",
+          "reszta -9"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Ile wynosi reszta po podzieleniu x^3-x^2+4x-2 przez x-1?",
+        "options": [
+          "reszta 0",
+          "reszta 6",
+          "reszta 2",
+          "reszta 3"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 44 + 15 w zadaniu 28?",
+        "text": "Reszta z dzielenia wielomianu x^3+5x-1 przez x-2 to",
         "options": [
-          "64",
-          "59",
-          "61",
-          "50"
+          "reszta 21",
+          "reszta 17",
+          "reszta 18",
+          "reszta 15"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 45 + 16 w zadaniu 29?",
+        "text": "Jaka jest reszta z dzielenia x^3+x^2+6x przez x-3?",
         "options": [
-          "61",
-          "58",
-          "71",
-          "55"
+          "reszta 54",
+          "reszta 55",
+          "reszta 52",
+          "reszta 58"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 46 + 17 w zadaniu 30?",
+        "text": "Wskaż resztę z dzielenia wielomianu x^3+2x^2+2x+1 przez x+2.",
         "options": [
-          "67",
-          "52",
-          "70",
-          "63"
+          "reszta -2",
+          "reszta -5",
+          "reszta 1",
+          "reszta -3"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 47 + 18 w zadaniu 31?",
+        "text": "Ile wynosi reszta po podzieleniu x^3+3x^2+3x+2 przez x+1?",
         "options": [
-          "66",
-          "57",
-          "65",
-          "60"
+          "reszta 5",
+          "Wariant 67",
+          "reszta 1",
+          "reszta 2"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 48 + 19 w zadaniu 32?",
+        "text": "Reszta z dzielenia wielomianu x^3+4x^2+4x+3 przez x-1 to",
         "options": [
-          "76",
-          "67",
-          "73",
-          "65"
+          "reszta 16",
+          "reszta 12",
+          "reszta 13",
+          "reszta 10"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 49 + 20 w zadaniu 33?",
+        "text": "Jaka jest reszta z dzielenia x^3+5x^2+5x+4 przez x-2?",
         "options": [
-          "69",
-          "62",
-          "72",
-          "59"
+          "reszta 42",
+          "reszta 43",
+          "reszta 40",
+          "reszta 46"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 50 + 21 w zadaniu 34?",
+        "text": "Wskaż resztę z dzielenia wielomianu x^3+6x^2+6x+5 przez x-3.",
         "options": [
-          "79",
-          "67",
-          "82",
-          "71"
+          "reszta 105",
+          "reszta 102",
+          "reszta 108",
+          "reszta 104"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 51 + 22 w zadaniu 35?",
+        "text": "Ile wynosi sumę pierwiastków równania x^2-4x+3=0?",
         "options": [
-          "78",
-          "72",
-          "73",
-          "64"
+          "suma 4",
+          "suma 3",
+          "suma 5",
+          "suma 2"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Wskaż iloczyn pierwiastków równania x^2-7x+10=0.",
+        "options": [
+          "iloczyn 7",
+          "iloczyn 11",
+          "iloczyn 8",
+          "iloczyn 10"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Dla równania x^2-7x+12=0 oblicz sumę pierwiastków.",
+        "options": [
+          "suma 8",
+          "suma 5",
+          "suma 7",
+          "suma 12"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 52 + 23 w zadaniu 36?",
+        "text": "Jaka jest wartość: iloczyn pierwiastków dla równania x^2+x-2=0?",
         "options": [
-          "77",
-          "75",
-          "85",
-          "69"
+          "Wariant 84",
+          "iloczyn -2",
+          "iloczyn -1",
+          "iloczyn -4"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 53 + 6 w zadaniu 37?",
+        "text": "Ile wynosi sumę pierwiastków równania x^2+x-6=0?",
         "options": [
-          "59",
-          "48",
-          "66",
-          "56"
+          "suma -1",
+          "suma -6",
+          "suma 0",
+          "suma -3"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 54 + 7 w zadaniu 38?",
+        "text": "Wskaż iloczyn pierwiastków równania x^2-3x-4=0.",
         "options": [
-          "62",
-          "53",
-          "65",
-          "61"
+          "iloczyn 3",
+          "iloczyn -6",
+          "Wariant 86",
+          "iloczyn -4"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 55 + 8 w zadaniu 39?",
+        "text": "Dla równania x^2-7x+10=0 oblicz sumę pierwiastków.",
         "options": [
-          "72",
-          "58",
-          "63",
-          "61"
+          "suma 8",
+          "suma 5",
+          "suma 7",
+          "suma 10"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 56 + 9 w zadaniu 40?",
+        "text": "Jaka jest wartość: iloczyn pierwiastków dla równania x^2+5x+4=0?",
         "options": [
-          "71",
-          "65",
-          "68",
-          "55"
+          "Wariant 88",
+          "iloczyn 4",
+          "iloczyn -5",
+          "iloczyn 2"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 57 + 10 w zadaniu 41?",
+        "text": "Ile wynosi sumę pierwiastków równania x^2+7x+10=0?",
         "options": [
-          "67",
-          "63",
-          "78",
-          "60"
+          "suma -7",
+          "suma 10",
+          "suma -6",
+          "suma -9"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 58 + 11 w zadaniu 42?",
+        "text": "Wskaż iloczyn pierwiastków równania x^2-2x-3=0.",
         "options": [
-          "74",
-          "68",
-          "77",
-          "69"
+          "iloczyn 2",
+          "iloczyn -5",
+          "Wariant 90",
+          "iloczyn -3"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 59 + 12 w zadaniu 43?",
+        "text": "Dla jakiego b liczba 1 jest miejscem zerowym wielomianu W(x)=x^2+bx-6?",
         "options": [
-          "73",
-          "62",
-          "71",
-          "65"
+          "b=5",
+          "b=6",
+          "b=3",
+          "b=8"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Wskaż b, dla którego -1 zeruje wielomian x^2+bx+4.",
+        "options": [
+          "b=6",
+          "b=3",
+          "b=8",
+          "b=5"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jeśli 2 jest miejscem zerowym wielomianu x^2+bx-8, to b jest równe",
+        "options": [
+          "b=0",
+          "b=5",
+          "b=2",
+          "b=3"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 60 + 13 w zadaniu 44?",
+        "text": "Jaka wartość b sprawia, że -2 jest pierwiastkiem wielomianu x^2+bx+8?",
         "options": [
-          "83",
-          "73",
-          "80",
-          "70"
+          "b=9",
+          "b=6",
+          "b=7",
+          "b=4"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 61 + 14 w zadaniu 45?",
+        "text": "Dla jakiego b liczba 1 jest miejscem zerowym wielomianu W(x)=x^3+bx-3?",
         "options": [
-          "75",
-          "67",
-          "79",
-          "64"
+          "b=2",
+          "b=3",
+          "b=0",
+          "b=5"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 62 + 15 w zadaniu 46?",
+        "text": "Wskaż b, dla którego -1 zeruje wielomian x^3+bx+5.",
         "options": [
-          "86",
-          "72",
-          "78",
-          "77"
+          "b=5",
+          "b=2",
+          "b=7",
+          "b=4"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 63 + 16 w zadaniu 47?",
+        "text": "Jeśli 2 jest miejscem zerowym wielomianu x^2+bx-12, to b jest równe",
         "options": [
-          "85",
-          "77",
-          "79",
-          "69"
+          "b=2",
+          "b=7",
+          "b=4",
+          "b=5"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 64 + 17 w zadaniu 48?",
+        "text": "Jaka wartość b sprawia, że -1 jest pierwiastkiem wielomianu x^2+bx-2?",
         "options": [
-          "84",
-          "81",
-          "92",
-          "74"
+          "b=2",
+          "b=-1",
+          "b=0",
+          "b=-3"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 65 + 18 w zadaniu 49?",
+        "text": "Dla jakiego b liczba 1 jest miejscem zerowym wielomianu W(x)=x^2+bx+7?",
         "options": [
-          "83",
-          "82",
-          "91",
-          "79"
+          "b=-8",
+          "b=-7",
+          "b=-10",
+          "b=-5"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 66 + 19 w zadaniu 50?",
+        "text": "Wskaż b, dla którego -2 zeruje wielomian x^2+bx-4.",
         "options": [
-          "87",
-          "76",
-          "90",
-          "85"
+          "b=1",
+          "b=-2",
+          "b=3",
+          "b=0"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 67 + 20 w zadaniu 51?",
+        "text": "Jaka jest dziedzina wyrażenia (x+2)/(x-1)?",
         "options": [
-          "97",
-          "81",
-          "87",
-          "84"
+          "x != 1",
+          "x != 2",
+          "x dowolne",
+          "Wariant 141"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Wskaż dziedzinę wyrażenia (x+3)/(x-2).",
+        "options": [
+          "x != 3",
+          "x dowolne",
+          "Wariant 142",
+          "x != 2"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Dla jakich x wyrażenie (x+4)/(x-3) ma sens?",
+        "options": [
+          "x dowolne",
+          "Wariant 143",
+          "x != 3",
+          "x != 4"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 68 + 21 w zadaniu 52?",
+        "text": "Które ograniczenie opisuje dziedzinę wyrażenia (x+5)/(x-4)?",
         "options": [
-          "96",
-          "89",
-          "93",
-          "78"
+          "Wariant 144",
+          "x != 4",
+          "x != 5",
+          "x dowolne"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 69 + 22 w zadaniu 53?",
+        "text": "Jaka jest dziedzina wyrażenia (x+6)/(x-5)?",
         "options": [
-          "91",
-          "86",
-          "92",
-          "83"
+          "x != 5",
+          "x != 6",
+          "x dowolne",
+          "Wariant 145"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 70 + 23 w zadaniu 54?",
+        "text": "Wskaż dziedzinę wyrażenia (x+7)/(x-6).",
         "options": [
-          "99",
-          "91",
-          "102",
-          "93"
+          "x != 7",
+          "x dowolne",
+          "Wariant 146",
+          "x != 6"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 71 + 6 w zadaniu 55?",
+        "text": "Dla jakich x wyrażenie (x+8)/(x-7) ma sens?",
         "options": [
-          "80",
-          "67",
-          "77",
-          "70"
+          "x dowolne",
+          "Wariant 147",
+          "x != 7",
+          "x != 8"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 72 + 7 w zadaniu 56?",
+        "text": "Które ograniczenie opisuje dziedzinę wyrażenia (x+9)/(x-8)?",
         "options": [
-          "90",
-          "79",
-          "87",
-          "75"
+          "Wariant 148",
+          "x != 8",
+          "x != 9",
+          "x dowolne"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 73 + 8 w zadaniu 57?",
+        "text": "Jaka jest dziedzina wyrażenia (x+10)/(x-9)?",
         "options": [
-          "81",
-          "72",
-          "86",
-          "80"
+          "x != 9",
+          "x != 10",
+          "x dowolne",
+          "Wariant 149"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 74 + 9 w zadaniu 58?",
+        "text": "Wskaż dziedzinę wyrażenia (x+11)/(x-10).",
         "options": [
-          "93",
-          "77",
-          "85",
-          "83"
+          "x != 11",
+          "x dowolne",
+          "Wariant 150",
+          "x != 10"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 75 + 10 w zadaniu 59?",
+        "text": "Wskaż dziedzinę wyrażenia (x+1)/(x^2-4).",
         "options": [
-          "92",
-          "82",
-          "85",
-          "74"
+          "x != 2 i x != -2",
+          "x != 2",
+          "Wariant 161",
+          "Wariant 162"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Dla jakich x wyrażenie (x+2)/(x^2-9) ma sens?",
+        "options": [
+          "x != 3",
+          "Wariant 162",
+          "Wariant 163",
+          "x != 3 i x != -3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Które ograniczenie opisuje dziedzinę wyrażenia (x+3)/(x^2-16)?",
+        "options": [
+          "Wariant 163",
+          "Wariant 164",
+          "x != 4 i x != -4",
+          "x != 4"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 76 + 11 w zadaniu 60?",
+        "text": "Jaka jest dziedzina wyrażenia (x+4)/(x^2-25)?",
         "options": [
-          "91",
-          "87",
-          "88",
-          "79"
+          "Wariant 165",
+          "x != 5 i x != -5",
+          "x != 5",
+          "Wariant 164"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 80 - 7 w zadaniu 61?",
+        "text": "Wskaż dziedzinę wyrażenia (x+5)/(x^2-36).",
         "options": [
-          "73",
-          "62",
-          "80",
-          "70"
+          "x != 6 i x != -6",
+          "x != 6",
+          "Wariant 165",
+          "Wariant 166"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 81 - 8 w zadaniu 62?",
+        "text": "Dla jakich x wyrażenie (x+6)/(x^2-49) ma sens?",
         "options": [
-          "74",
-          "65",
-          "77",
-          "73"
+          "x != 7",
+          "Wariant 166",
+          "Wariant 167",
+          "x != 7 i x != -7"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 82 - 9 w zadaniu 63?",
+        "text": "Które ograniczenie opisuje dziedzinę wyrażenia (x+7)/(x^2-64)?",
         "options": [
-          "82",
-          "68",
-          "73",
-          "71"
+          "Wariant 167",
+          "Wariant 168",
+          "x != 8 i x != -8",
+          "x != 8"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 83 - 10 w zadaniu 64?",
+        "text": "Jaka jest dziedzina wyrażenia (x+8)/(x^2-81)?",
         "options": [
-          "79",
-          "73",
-          "76",
-          "63"
+          "Wariant 169",
+          "x != 9 i x != -9",
+          "x != 9",
+          "Wariant 168"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 84 - 11 w zadaniu 65?",
+        "text": "Wskaż dziedzinę wyrażenia (x+9)/(x^2-100).",
         "options": [
-          "73",
-          "69",
-          "84",
-          "66"
+          "x != 10 i x != -10",
+          "x != 10",
+          "Wariant 169",
+          "Wariant 170"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 85 - 12 w zadaniu 66?",
+        "text": "Dla jakich x wyrażenie (x+10)/(x^2-121) ma sens?",
         "options": [
-          "78",
-          "72",
-          "81",
-          "73"
+          "x != 11",
+          "Wariant 170",
+          "Wariant 171",
+          "x != 11 i x != -11"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 86 - 13 w zadaniu 67?",
+        "text": "Jak upraszcza się wyrażenie (x^2-4)/(x-2) dla x != 2?",
         "options": [
-          "75",
-          "64",
-          "73",
-          "67"
+          "x+2",
+          "x^2-4",
+          "04",
+          "Wariant 181"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Wskaż uproszczoną postać wyrażenia (x^2-9)/(x-3) dla x != 3.",
+        "options": [
+          "x^2-9",
+          "06",
+          "Wariant 182",
+          "x+3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Po skróceniu wyrażenia (x^2-16)/(x-4) dla x != 4 otrzymujemy",
+        "options": [
+          "08",
+          "Wariant 183",
+          "x+4",
+          "x^2-16"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile to 87 - 14 w zadaniu 68?",
+        "text": "Jaka jest najprostsza postać wyrażenia (x^2-25)/(x-5) dla x != 5?",
         "options": [
-          "83",
-          "73",
-          "80",
-          "70"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 88 - 15 w zadaniu 69?",
-        "options": [
-          "73",
-          "65",
-          "77",
-          "62"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 89 - 16 w zadaniu 70?",
-        "options": [
-          "82",
-          "68",
-          "74",
-          "73"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 90 - 17 w zadaniu 71?",
-        "options": [
-          "79",
-          "71",
-          "73",
-          "63"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 91 - 18 w zadaniu 72?",
-        "options": [
-          "76",
-          "73",
-          "84",
-          "66"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 92 - 19 w zadaniu 73?",
-        "options": [
-          "73",
-          "72",
-          "81",
-          "69"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 93 - 20 w zadaniu 74?",
-        "options": [
-          "75",
-          "64",
-          "78",
-          "73"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 94 - 21 w zadaniu 75?",
-        "options": [
-          "83",
-          "67",
-          "73",
-          "70"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 95 - 22 w zadaniu 76?",
-        "options": [
-          "80",
-          "73",
-          "77",
-          "62"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 96 - 23 w zadaniu 77?",
-        "options": [
-          "73",
-          "68",
-          "74",
-          "65"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 97 - 24 w zadaniu 78?",
-        "options": [
-          "79",
-          "71",
-          "82",
-          "73"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 98 - 25 w zadaniu 79?",
-        "options": [
-          "76",
-          "63",
-          "73",
-          "66"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 99 - 26 w zadaniu 80?",
-        "options": [
-          "84",
-          "73",
-          "81",
-          "69"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 100 - 27 w zadaniu 81?",
-        "options": [
-          "73",
-          "64",
-          "78",
-          "72"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 101 - 28 w zadaniu 82?",
-        "options": [
-          "83",
-          "67",
-          "75",
-          "73"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 102 - 29 w zadaniu 83?",
-        "options": [
-          "80",
-          "70",
-          "73",
-          "62"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 103 - 7 w zadaniu 84?",
-        "options": [
-          "100",
-          "96",
-          "97",
-          "88"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 104 - 8 w zadaniu 85?",
-        "options": [
-          "96",
-          "94",
-          "105",
-          "91"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 105 - 9 w zadaniu 86?",
-        "options": [
-          "99",
-          "86",
-          "102",
-          "96"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 106 - 10 w zadaniu 87?",
-        "options": [
-          "107",
-          "89",
-          "96",
-          "92"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 107 - 11 w zadaniu 88?",
-        "options": [
-          "104",
-          "96",
-          "101",
-          "95"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 108 - 12 w zadaniu 89?",
-        "options": [
-          "96",
-          "90",
-          "98",
-          "87"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 109 - 13 w zadaniu 90?",
-        "options": [
-          "103",
-          "93",
-          "106",
-          "96"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 110 - 14 w zadaniu 91?",
-        "options": [
-          "100",
-          "85",
-          "96",
-          "88"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 111 - 15 w zadaniu 92?",
-        "options": [
-          "97",
-          "96",
-          "105",
-          "91"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 112 - 16 w zadaniu 93?",
-        "options": [
-          "96",
-          "86",
-          "102",
-          "94"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 113 - 17 w zadaniu 94?",
-        "options": [
-          "107",
-          "89",
-          "99",
-          "96"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 114 - 18 w zadaniu 95?",
-        "options": [
-          "104",
-          "92",
-          "96",
-          "95"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 115 - 19 w zadaniu 96?",
-        "options": [
-          "101",
-          "96",
-          "98",
-          "87"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 116 - 20 w zadaniu 97?",
-        "options": [
-          "96",
-          "93",
-          "106",
-          "90"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 117 - 21 w zadaniu 98?",
-        "options": [
-          "100",
-          "85",
-          "103",
-          "96"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 118 - 22 w zadaniu 99?",
-        "options": [
-          "97",
-          "88",
-          "96",
-          "91"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 119 - 23 w zadaniu 100?",
-        "options": [
-          "105",
-          "96",
-          "102",
-          "94"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 120 - 24 w zadaniu 101?",
-        "options": [
-          "96",
-          "89",
-          "99",
-          "86"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 121 - 25 w zadaniu 102?",
-        "options": [
-          "104",
-          "92",
-          "107",
-          "96"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 122 - 26 w zadaniu 103?",
-        "options": [
-          "101",
-          "95",
-          "96",
-          "87"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 123 - 27 w zadaniu 104?",
-        "options": [
-          "98",
-          "96",
-          "106",
-          "90"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 124 - 28 w zadaniu 105?",
-        "options": [
-          "96",
-          "85",
-          "103",
-          "93"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 125 - 29 w zadaniu 106?",
-        "options": [
-          "97",
-          "88",
-          "100",
-          "96"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 126 - 7 w zadaniu 107?",
-        "options": [
-          "128",
-          "114",
-          "119",
-          "117"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 127 - 8 w zadaniu 108?",
-        "options": [
-          "125",
-          "119",
-          "122",
-          "109"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 128 - 9 w zadaniu 109?",
-        "options": [
-          "119",
-          "115",
-          "130",
-          "112"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 129 - 10 w zadaniu 110?",
-        "options": [
-          "124",
-          "118",
-          "127",
-          "119"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 3 × 4 w zadaniu 111?",
-        "options": [
-          "12",
-          "07",
-          "13",
-          "04"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 4 × 4 w zadaniu 112?",
-        "options": [
-          "22",
-          "14",
-          "25",
-          "16"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 5 × 4 w zadaniu 113?",
-        "options": [
-          "23",
-          "10",
-          "20",
-          "13"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 6 × 4 w zadaniu 114?",
-        "options": [
-          "35",
-          "24",
-          "32",
-          "20"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 7 × 4 w zadaniu 115?",
-        "options": [
-          "28",
-          "19",
-          "33",
-          "27"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 8 × 4 w zadaniu 116?",
-        "options": [
-          "42",
-          "26",
-          "34",
-          "32"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 9 × 4 w zadaniu 117?",
-        "options": [
-          "43",
-          "33",
-          "36",
-          "25"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 10 × 4 w zadaniu 118?",
-        "options": [
-          "44",
-          "40",
-          "41",
-          "32"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 3 × 5 w zadaniu 119?",
-        "options": [
-          "15",
-          "13",
-          "24",
+          "Wariant 184",
+          "x+5",
+          "x^2-25",
           "10"
         ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 4 × 5 w zadaniu 120?",
-        "options": [
-          "23",
-          "10",
-          "26",
-          "20"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 5 × 5 w zadaniu 121?",
-        "options": [
-          "36",
-          "18",
-          "25",
-          "21"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 6 × 5 w zadaniu 122?",
-        "options": [
-          "38",
-          "30",
-          "35",
-          "29"
-        ],
         "correctIndex": 1
       },
       {
-        "text": "Ile to 7 × 5 w zadaniu 123?",
+        "text": "Jak upraszcza się wyrażenie (x^2-36)/(x-6) dla x != 6?",
         "options": [
-          "35",
-          "29",
-          "37",
-          "26"
+          "x+6",
+          "x^2-36",
+          "12",
+          "Wariant 185"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile to 8 × 5 w zadaniu 124?",
+        "text": "Wskaż uproszczoną postać wyrażenia (x^2-49)/(x-7) dla x != 7.",
         "options": [
-          "47",
-          "37",
-          "50",
-          "40"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 9 × 5 w zadaniu 125?",
-        "options": [
-          "49",
-          "34",
-          "45",
-          "37"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 10 × 5 w zadaniu 126?",
-        "options": [
-          "51",
-          "50",
-          "59",
-          "45"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 3 × 6 w zadaniu 127?",
-        "options": [
-          "18",
-          "08",
-          "24",
-          "16"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 4 × 6 w zadaniu 128?",
-        "options": [
-          "35",
-          "17",
-          "27",
-          "24"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 5 × 6 w zadaniu 129?",
-        "options": [
-          "38",
-          "26",
-          "30",
-          "29"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 6 × 6 w zadaniu 130?",
-        "options": [
-          "41",
-          "36",
-          "38",
-          "27"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 7 × 6 w zadaniu 131?",
-        "options": [
-          "42",
-          "39",
-          "52",
-          "36"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 8 × 6 w zadaniu 132?",
-        "options": [
-          "52",
-          "37",
-          "55",
-          "48"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 9 × 6 w zadaniu 133?",
-        "options": [
-          "55",
-          "46",
-          "54",
-          "49"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 10 × 6 w zadaniu 134?",
-        "options": [
-          "69",
-          "60",
-          "66",
-          "58"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 3 × 7 w zadaniu 135?",
-        "options": [
-          "21",
+          "x^2-49",
           "14",
-          "24",
-          "11"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 4 × 7 w zadaniu 136?",
-        "options": [
-          "36",
-          "24",
-          "39",
-          "28"
+          "Wariant 186",
+          "x+7"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile to 5 × 7 w zadaniu 137?",
+        "text": "Po skróceniu wyrażenia (x^2-64)/(x-8) dla x != 8 otrzymujemy",
         "options": [
-          "40",
-          "34",
-          "35",
-          "26"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 6 × 7 w zadaniu 138?",
-        "options": [
-          "44",
-          "42",
-          "52",
-          "36"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 7 × 7 w zadaniu 139?",
-        "options": [
-          "49",
-          "38",
-          "56",
-          "46"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 8 × 7 w zadaniu 140?",
-        "options": [
-          "57",
-          "48",
-          "60",
-          "56"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 9 × 7 w zadaniu 141?",
-        "options": [
-          "72",
-          "58",
-          "63",
-          "61"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 10 × 7 w zadaniu 142?",
-        "options": [
-          "76",
-          "70",
-          "73",
-          "60"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 3 × 8 w zadaniu 143?",
-        "options": [
-          "24",
-          "20",
-          "35",
-          "17"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 4 × 8 w zadaniu 144?",
-        "options": [
-          "37",
-          "31",
-          "40",
-          "32"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 5 × 8 w zadaniu 145?",
-        "options": [
-          "42",
-          "31",
-          "40",
-          "34"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 6 × 8 w zadaniu 146?",
-        "options": [
-          "58",
-          "48",
-          "55",
-          "45"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile to 7 × 8 w zadaniu 147?",
-        "options": [
-          "56",
-          "48",
-          "60",
-          "45"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile to 8 × 8 w zadaniu 148?",
-        "options": [
-          "73",
-          "59",
-          "65",
-          "64"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile to 9 × 8 w zadaniu 149?",
-        "options": [
-          "78",
-          "70",
-          "72",
-          "62"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile to 10 × 8 w zadaniu 150?",
-        "options": [
-          "83",
-          "80",
-          "91",
-          "73"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile wynosi 10% z 80 w zadaniu 151?",
-        "options": [
-          "08",
-          "07",
           "16",
-          "04"
+          "Wariant 187",
+          "x+8",
+          "x^2-64"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Jaka jest najprostsza postać wyrażenia (x^2-81)/(x-9) dla x != 9?",
+        "options": [
+          "Wariant 188",
+          "x+9",
+          "x^2-81",
+          "18"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Jak upraszcza się wyrażenie (x^2-100)/(x-10) dla x != 10?",
+        "options": [
+          "x+10",
+          "x^2-100",
+          "20",
+          "Wariant 189"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile wynosi 15% z 82 w zadaniu 152?",
+        "text": "Wskaż uproszczoną postać wyrażenia (x^2-121)/(x-11) dla x != 11.",
         "options": [
-          "14",
-          "03",
-          "17",
-          "12"
+          "x^2-121",
+          "22",
+          "Wariant 190",
+          "x+11"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile wynosi 20% z 84 w zadaniu 153?",
+        "text": "Wskaż uproszczoną postać wyrażenia (x^2+2x)/x dla x != 0. Współczynnik liniowy to 2.",
         "options": [
-          "27",
-          "11",
-          "17",
+          "x+2",
+          "2x",
+          "x^2+2",
+          "Wariant 201"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Po skróceniu wyrażenia (x^2+3x)/x dla x != 0 otrzymujemy Współczynnik liniowy to 3.",
+        "options": [
+          "3x",
+          "x^2+3",
+          "Wariant 202",
+          "x+3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jaka jest najprostsza postać wyrażenia (x^2+4x)/x dla x != 0? Współczynnik liniowy to 4.",
+        "options": [
+          "x^2+4",
+          "Wariant 203",
+          "x+4",
+          "4x"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Jak upraszcza się wyrażenie (x^2+5x)/x dla x != 0? Współczynnik liniowy to 5.",
+        "options": [
+          "Wariant 204",
+          "x+5",
+          "5x",
+          "x^2+5"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Wskaż uproszczoną postać wyrażenia (x^2+6x)/x dla x != 0. Współczynnik liniowy to 6.",
+        "options": [
+          "x+6",
+          "6x",
+          "x^2+6",
+          "Wariant 205"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Po skróceniu wyrażenia (x^2+7x)/x dla x != 0 otrzymujemy Współczynnik liniowy to 7.",
+        "options": [
+          "7x",
+          "x^2+7",
+          "Wariant 206",
+          "x+7"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jaka jest najprostsza postać wyrażenia (x^2+8x)/x dla x != 0? Współczynnik liniowy to 8.",
+        "options": [
+          "x^2+8",
+          "Wariant 207",
+          "x+8",
+          "8x"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Jak upraszcza się wyrażenie (x^2+9x)/x dla x != 0? Współczynnik liniowy to 9.",
+        "options": [
+          "Wariant 208",
+          "x+9",
+          "9x",
+          "x^2+9"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Wskaż uproszczoną postać wyrażenia (x^2+10x)/x dla x != 0. Współczynnik liniowy to 10.",
+        "options": [
+          "x+10",
+          "10x",
+          "x^2+10",
+          "Wariant 209"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Po skróceniu wyrażenia (x^2+11x)/x dla x != 0 otrzymujemy Współczynnik liniowy to 11.",
+        "options": [
+          "11x",
+          "x^2+11",
+          "Wariant 210",
+          "x+11"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Rozwiąż równanie (x+1)/(x-2)=2.",
+        "options": [
+          "x=5",
+          "x=4",
+          "x=7",
+          "x=2"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Wskaż rozwiązanie równania (x+2)/(x-3)=2.",
+        "options": [
+          "x=7",
+          "x=10",
+          "x=3",
+          "x=8"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jaka liczba spełnia równanie (x+3)/(x-4)=2?",
+        "options": [
+          "x=13",
+          "x=4",
+          "x=11",
+          "x=10"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Rozwiązaniem równania (x+4)/(x-5)=2 jest",
+        "options": [
+          "x=5",
+          "x=14",
+          "x=13",
+          "x=16"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Rozwiąż równanie (x+5)/(x-2)=2.",
+        "options": [
+          "x=9",
+          "x=8",
+          "x=11",
+          "x=2"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Wskaż rozwiązanie równania (x+6)/(x-3)=2.",
+        "options": [
+          "x=11",
+          "x=14",
+          "x=3",
+          "x=12"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jaka liczba spełnia równanie (x+7)/(x-4)=2?",
+        "options": [
+          "x=17",
+          "x=4",
+          "x=15",
+          "x=14"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Rozwiązaniem równania (x+8)/(x-5)=2 jest",
+        "options": [
+          "x=5",
+          "x=18",
+          "x=17",
+          "x=20"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Rozwiąż równanie (x+9)/(x-2)=2.",
+        "options": [
+          "x=13",
+          "x=12",
+          "x=15",
+          "x=2"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Wskaż rozwiązanie równania (x+10)/(x-3)=2.",
+        "options": [
+          "x=15",
+          "x=18",
+          "x=3",
+          "x=16"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Wskaż rozwiązanie równania 4/(x+1)=1.",
+        "options": [
+          "x=3",
+          "x=4",
+          "x=1",
+          "Wariant 241"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Jaka liczba spełnia równanie 5/(x+2)=1?",
+        "options": [
+          "x=4",
+          "x=1",
+          "x=-2",
+          "x=3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Rozwiązaniem równania 6/(x+3)=1 jest",
+        "options": [
+          "x=1",
+          "Wariant 243",
+          "x=3",
+          "x=4"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Rozwiąż równanie 7/(x+4)=1.",
+        "options": [
+          "Wariant 244",
+          "x=3",
+          "x=4",
+          "x=1"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Wskaż rozwiązanie równania 8/(x+5)=1.",
+        "options": [
+          "x=3",
+          "x=4",
+          "x=1",
+          "x=-5"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Jaka liczba spełnia równanie 9/(x+1)=1?",
+        "options": [
+          "x=9",
+          "x=6",
+          "x=-1",
+          "x=8"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Rozwiązaniem równania 10/(x+2)=1 jest",
+        "options": [
+          "x=6",
+          "x=-2",
+          "x=8",
+          "x=9"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Rozwiąż równanie 11/(x+3)=1.",
+        "options": [
+          "x=-3",
+          "x=8",
+          "x=9",
+          "x=6"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Wskaż rozwiązanie równania 12/(x+4)=1.",
+        "options": [
+          "x=8",
+          "x=9",
+          "x=6",
+          "x=-4"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Jaka liczba spełnia równanie 13/(x+5)=1?",
+        "options": [
+          "x=9",
+          "x=6",
+          "x=-5",
+          "x=8"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "W ciągu arytmetycznym pierwszy wyraz wynosi 4, a różnica -3. Ile wynosi wyraz numer 4? Rozważ numer n=4 w tabeli wartości.",
+        "options": [
+          "a4=-5",
+          "a4=-3",
+          "a4=-8",
+          "a4=-1"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Dany jest ciąg arytmetyczny o pierwszym wyrazie 5 i różnicy -2. Oblicz wyraz numer 5. Rozważ numer n=5 w notatki klasowej.",
+        "options": [
+          "a5=-1",
+          "a5=-6",
+          "Wariant 262",
+          "a5=-3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jeśli pierwszy wyraz ciągu arytmetycznego to 6, a różnica jest równa 2, to ile wynosi wyraz numer 6? Rozważ numer n=6 w arkusza ćwiczeń.",
+        "options": [
+          "a6=13",
+          "a6=20",
+          "a6=16",
+          "a6=18"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Która liczba jest wyrazem numer 7 ciągu arytmetycznego, gdy pierwszy wyraz to 7, a różnica 3? Rozważ numer n=7 w osi liczbowej.",
+        "options": [
+          "a7=29",
+          "a7=25",
+          "a7=27",
+          "a7=22"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "W ciągu arytmetycznym pierwszy wyraz wynosi 8, a różnica -3. Ile wynosi wyraz numer 4? Rozważ numer n=4 w planu rat.",
+        "options": [
+          "a4=-1",
+          "a4=-4",
+          "a4=3",
+          "Wariant 265"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Dany jest ciąg arytmetyczny o pierwszym wyrazie 9 i różnicy -2. Oblicz wyraz numer 5. Rozważ numer n=5 w zestawu powtórkowego.",
+        "options": [
+          "a5=3",
+          "a5=-2",
+          "a5=5",
+          "a5=1"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jeśli pierwszy wyraz ciągu arytmetycznego to 10, a różnica jest równa 2, to ile wynosi wyraz numer 6? Rozważ numer n=6 w próbnego arkusza.",
+        "options": [
+          "a6=17",
+          "a6=24",
+          "a6=20",
+          "a6=22"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Która liczba jest wyrazem numer 7 ciągu arytmetycznego, gdy pierwszy wyraz to 11, a różnica 3? Rozważ numer n=7 w analizy danych.",
+        "options": [
+          "a7=33",
+          "a7=29",
+          "a7=31",
+          "a7=26"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "W ciągu arytmetycznym pierwszy wyraz wynosi 12, a różnica -3. Ile wynosi wyraz numer 4? Rozważ numer n=4 w szkolnego sprawdzianu.",
+        "options": [
+          "a4=3",
+          "a4=5",
+          "a4=0",
+          "a4=7"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Dany jest ciąg arytmetyczny o pierwszym wyrazie 13 i różnicy -2. Oblicz wyraz numer 5. Rozważ numer n=5 w zadania domowego.",
+        "options": [
+          "a5=7",
+          "a5=2",
+          "a5=9",
+          "a5=5"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "W ciągu arytmetycznym pierwszy wyraz wynosi 2, a wyraz numer 5 jest równy -6. Ile wynosi różnica? Tutaj n=5 w pierwszej serii.",
+        "options": [
+          "r=-2",
+          "r=-1",
+          "r=-4",
+          "r=-8"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Znajdź różnicę ciągu arytmetycznego, jeśli pierwszy wyraz to 3, a wyraz numer 6 ma wartość 18. Tutaj n=6 w drugiej serii.",
+        "options": [
+          "r=4",
+          "r=1",
+          "r=15",
+          "r=3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jaka jest różnica r w ciągu arytmetycznym, gdzie pierwszy wyraz wynosi 4, a wyraz numer 7 jest równy 28? Tutaj n=7 w arkusza A.",
+        "options": [
+          "r=2",
+          "r=24",
+          "r=4",
+          "r=5"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Oblicz różnicę ciągu arytmetycznego z warunków: pierwszy wyraz 5, wyraz numer 5 równy -7. Tutaj n=5 w arkusza B.",
+        "options": [
+          "r=-12",
+          "r=-3",
+          "r=-2",
+          "r=-5"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "W ciągu arytmetycznym pierwszy wyraz wynosi 6, a wyraz numer 6 jest równy -4. Ile wynosi różnica? Tutaj n=6 w krótkiej powtórki.",
+        "options": [
+          "r=-2",
+          "r=-1",
+          "r=-4",
+          "r=-10"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Znajdź różnicę ciągu arytmetycznego, jeśli pierwszy wyraz to 7, a wyraz numer 7 ma wartość 25. Tutaj n=7 w notatnika ucznia.",
+        "options": [
+          "r=4",
+          "r=1",
+          "r=18",
+          "r=3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jaka jest różnica r w ciągu arytmetycznym, gdzie pierwszy wyraz wynosi 8, a wyraz numer 5 jest równy 24? Tutaj n=5 w wersji rozszerzonej.",
+        "options": [
+          "r=2",
+          "r=16",
+          "r=4",
+          "r=5"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Oblicz różnicę ciągu arytmetycznego z warunków: pierwszy wyraz 9, wyraz numer 6 równy -6. Tutaj n=6 w zestawu próbnego.",
+        "options": [
+          "r=-15",
+          "r=-3",
+          "r=-2",
+          "r=-5"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "W ciągu arytmetycznym pierwszy wyraz wynosi 10, a wyraz numer 7 jest równy -2. Ile wynosi różnica? Tutaj n=7 w zadania konkursowego.",
+        "options": [
+          "r=-2",
+          "r=-1",
+          "r=-4",
+          "r=-12"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Znajdź różnicę ciągu arytmetycznego, jeśli pierwszy wyraz to 11, a wyraz numer 5 ma wartość 23. Tutaj n=5 w powtórzenia przed klasówką.",
+        "options": [
+          "r=4",
+          "r=1",
+          "r=12",
+          "r=3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Ile wynosi suma pierwszych 5 wyrazów ciągu arytmetycznego: 3, 5, 7, 9, 11?",
+        "options": [
+          "suma 35",
+          "suma 40",
+          "suma 31",
+          "suma 11"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Oblicz sumę 5 początkowych wyrazów ciągu 4, 7, 10, 13, 16.",
+        "options": [
+          "suma 55",
+          "suma 46",
+          "suma 16",
+          "suma 50"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Wskaż sumę pierwszych 5 wyrazów ciągu arytmetycznego 5, 9, 13, 17, 21.",
+        "options": [
+          "suma 61",
+          "suma 21",
+          "suma 65",
+          "suma 70"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Suma pierwszych 5 wyrazów ciągu 6, 8, 10, 12, 14 jest równa",
+        "options": [
+          "suma 14",
+          "suma 50",
+          "suma 55",
+          "suma 46"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Ile wynosi suma pierwszych 5 wyrazów ciągu arytmetycznego: 7, 10, 13, 16, 19?",
+        "options": [
+          "suma 65",
+          "suma 70",
+          "suma 61",
+          "suma 19"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Oblicz sumę 5 początkowych wyrazów ciągu 8, 12, 16, 20, 24.",
+        "options": [
+          "suma 85",
+          "suma 76",
+          "suma 24",
+          "suma 80"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Wskaż sumę pierwszych 5 wyrazów ciągu arytmetycznego 9, 11, 13, 15, 17.",
+        "options": [
+          "suma 61",
+          "suma 17",
+          "suma 65",
+          "suma 70"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Suma pierwszych 5 wyrazów ciągu 10, 13, 16, 19, 22 jest równa",
+        "options": [
+          "suma 22",
+          "suma 80",
+          "suma 85",
+          "suma 76"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Ile wynosi suma pierwszych 5 wyrazów ciągu arytmetycznego: 11, 15, 19, 23, 27?",
+        "options": [
+          "suma 95",
+          "suma 100",
+          "suma 91",
+          "suma 27"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Oblicz sumę 5 początkowych wyrazów ciągu 12, 14, 16, 18, 20.",
+        "options": [
+          "suma 85",
+          "suma 76",
+          "suma 20",
+          "suma 80"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "W ciągu geometrycznym pierwszy wyraz wynosi 2, a iloraz -2. Ile wynosi wyraz numer 4? Liczymy wyraz dla n=4 w modelu wzrostu.",
+        "options": [
+          "a4=-16",
+          "a4=32",
+          "a4=-14",
+          "a4=-19"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Dany jest ciąg geometryczny o pierwszym wyrazie 3 i ilorazie 2. Oblicz wyraz numer 5. Liczymy wyraz dla n=5 w zadania z potęgami.",
+        "options": [
+          "a5=96",
+          "a5=50",
+          "a5=45",
+          "a5=48"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jeśli pierwszy wyraz ciągu geometrycznego to 4, a iloraz jest równy 3, to ile wynosi wyraz numer 6? Liczymy wyraz dla n=6 w notatki o ilorazie.",
+        "options": [
+          "a6=974",
+          "a6=969",
+          "a6=972",
+          "a6=2916"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Która liczba jest wyrazem numer 4 ciągu geometrycznego, gdy pierwszy wyraz to 5, a iloraz 1/2? Liczymy wyraz dla n=4 w ćwiczenia z szeregiem.",
+        "options": [
+          "a4=-2,375",
+          "a4=0,625",
+          "a4=1,25",
+          "a4=2,625"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "W ciągu geometrycznym pierwszy wyraz wynosi 2, a iloraz -2. Ile wynosi wyraz numer 5? Liczymy wyraz dla n=5 w arkusza próbnego.",
+        "options": [
+          "a5=32",
+          "a5=-64",
+          "a5=34",
+          "a5=29"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Dany jest ciąg geometryczny o pierwszym wyrazie 3 i ilorazie 2. Oblicz wyraz numer 6. Liczymy wyraz dla n=6 w powtórki do sprawdzianu.",
+        "options": [
+          "a6=192",
+          "a6=98",
+          "a6=93",
+          "a6=96"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jeśli pierwszy wyraz ciągu geometrycznego to 4, a iloraz jest równy 3, to ile wynosi wyraz numer 4? Liczymy wyraz dla n=4 w zadania domowego.",
+        "options": [
+          "a4=110",
+          "a4=105",
+          "a4=108",
+          "a4=324"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Która liczba jest wyrazem numer 5 ciągu geometrycznego, gdy pierwszy wyraz to 5, a iloraz 1/2? Liczymy wyraz dla n=5 w przykładu z tablicy.",
+        "options": [
+          "a5=-2,6875",
+          "a5=0,3125",
+          "a5=0,625",
+          "a5=2,3125"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "W ciągu geometrycznym pierwszy wyraz wynosi 2, a iloraz -2. Ile wynosi wyraz numer 6? Liczymy wyraz dla n=6 w zestawu maturalnego.",
+        "options": [
+          "a6=-64",
+          "a6=128",
+          "a6=-62",
+          "a6=-67"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Dany jest ciąg geometryczny o pierwszym wyrazie 3 i ilorazie 2. Oblicz wyraz numer 4. Liczymy wyraz dla n=4 w karty pracy.",
+        "options": [
+          "a4=48",
+          "a4=26",
+          "a4=21",
+          "a4=24"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "W ciągu geometrycznym pierwszy wyraz wynosi 2, a wyraz numer 4 jest równy 16. Ile wynosi iloraz? W tym zadaniu n=4 w wariantu podstawowego.",
+        "options": [
+          "q=2",
+          "q=3",
+          "q=1",
+          "Wariant 341"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Znajdź iloraz ciągu geometrycznego, jeśli pierwszy wyraz to 3, a wyraz numer 4 ma wartość 81. W tym zadaniu n=4 w wariantu rozszerzonego.",
+        "options": [
+          "q=4",
+          "q=2",
+          "q=1",
+          "q=3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jaki iloraz ma ciąg geometryczny, w którym pierwszy wyraz wynosi 4, a wyraz numer 4 jest równy -32? W tym zadaniu n=4 w serii A.",
+        "options": [
+          "q=-3",
+          "Wariant 343",
+          "q=-2",
+          "q=-1"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Oblicz iloraz q dla ciągu geometrycznego z warunków: pierwszy wyraz 38, wyraz numer 4 równy 4,75. W tym zadaniu n=4 w serii B.",
+        "options": [
+          "Wariant 344",
+          "q=1/2",
+          "q=2",
+          "q=1"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "W ciągu geometrycznym pierwszy wyraz wynosi 6, a wyraz numer 4 jest równy 48. Ile wynosi iloraz? W tym zadaniu n=4 w powtórki działu.",
+        "options": [
+          "q=2",
+          "q=3",
+          "q=1",
+          "Wariant 345"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Znajdź iloraz ciągu geometrycznego, jeśli pierwszy wyraz to 7, a wyraz numer 4 ma wartość 189. W tym zadaniu n=4 w szkolnej notatki.",
+        "options": [
+          "q=4",
+          "q=2",
+          "q=1",
+          "q=3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jaki iloraz ma ciąg geometryczny, w którym pierwszy wyraz wynosi 8, a wyraz numer 4 jest równy -64? W tym zadaniu n=4 w ćwiczenia z zeszytu.",
+        "options": [
+          "q=-3",
+          "Wariant 347",
+          "q=-2",
+          "q=-1"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Oblicz iloraz q dla ciągu geometrycznego z warunków: pierwszy wyraz 46, wyraz numer 4 równy 5,75. W tym zadaniu n=4 w próbnego zestawu.",
+        "options": [
+          "Wariant 348",
+          "q=1/2",
+          "q=2",
+          "q=1"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "W ciągu geometrycznym pierwszy wyraz wynosi 10, a wyraz numer 4 jest równy 80. Ile wynosi iloraz? W tym zadaniu n=4 w dodatkowego zadania.",
+        "options": [
+          "q=2",
+          "q=3",
+          "q=1",
+          "Wariant 349"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Znajdź iloraz ciągu geometrycznego, jeśli pierwszy wyraz to 11, a wyraz numer 4 ma wartość 297. W tym zadaniu n=4 w krótkiego quizu.",
+        "options": [
+          "q=4",
+          "q=2",
+          "q=1",
+          "q=3"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Ile wynosi suma pierwszych 4 wyrazów ciągu geometrycznego: 1, 2, 4, 8?",
+        "options": [
+          "suma 15",
+          "suma 18",
+          "suma 13",
+          "suma 8"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Oblicz sumę 5 początkowych wyrazów ciągu 2, 4, 8, 16, 32.",
+        "options": [
+          "suma 65",
+          "suma 60",
+          "suma 32",
+          "suma 62"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Wskaż sumę pierwszych 4 wyrazów ciągu geometrycznego 3, 6, 12, 24.",
+        "options": [
+          "suma 43",
+          "suma 24",
+          "suma 45",
+          "suma 48"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Suma pierwszych 5 wyrazów ciągu 1, 2, 4, 8, 16 jest równa",
+        "options": [
+          "suma 16",
+          "suma 31",
+          "suma 34",
+          "suma 29"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Ile wynosi suma pierwszych 4 wyrazów ciągu geometrycznego: 2, 4, 8, 16?",
+        "options": [
+          "suma 30",
+          "suma 33",
+          "suma 28",
+          "suma 16"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Oblicz sumę 5 początkowych wyrazów ciągu 3, 6, 12, 24, 48.",
+        "options": [
+          "suma 96",
+          "suma 91",
+          "suma 48",
+          "suma 93"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Wskaż sumę pierwszych 4 wyrazów ciągu geometrycznego 1, 2, 4, 8.",
+        "options": [
+          "suma 13",
+          "suma 8",
+          "suma 15",
+          "suma 18"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Suma pierwszych 5 wyrazów ciągu 2, 4, 8, 16, 32 jest równa",
+        "options": [
+          "suma 32",
+          "suma 62",
+          "suma 65",
+          "suma 60"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Ile wynosi suma pierwszych 4 wyrazów ciągu geometrycznego: 3, 6, 12, 24?",
+        "options": [
+          "suma 45",
+          "suma 48",
+          "suma 43",
+          "suma 24"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Oblicz sumę 5 początkowych wyrazów ciągu 1, 2, 4, 8, 16.",
+        "options": [
+          "suma 34",
+          "suma 29",
+          "suma 16",
+          "suma 31"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Który wzór opisuje n-ty wyraz ciągu arytmetycznego?",
+        "options": [
+          "a_n=a_1+(n-1)r",
+          "a_n=a_1*r^(n-1)",
+          "a_n=a_1+n*r",
+          "a_n=r^(n-1)"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Który wzór opisuje n-ty wyraz ciągu geometrycznego?",
+        "options": [
+          "a_n=a_1+(n-1)q",
+          "a_n=q^(n+a_1)",
+          "a_n=a_1*n*q",
+          "a_n=a_1*q^(n-1)"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jeżeli różnica ciągu arytmetycznego jest ujemna, to ciąg jest",
+        "options": [
+          "stały",
+          "okresowy",
+          "malejący",
+          "rosnący"
+        ],
+        "correctIndex": 2
+      },
+      {
+        "text": "Jeżeli iloraz ciągu geometrycznego jest równy 1, to ciąg jest",
+        "options": [
+          "naprzemienny",
+          "stały",
+          "malejący",
+          "rosnący"
+        ],
+        "correctIndex": 1
+      },
+      {
+        "text": "Który z podanych ciągów jest arytmetyczny?",
+        "options": [
+          "4, 7, 10, 13",
+          "2, 4, 8, 16",
+          "3, 5, 9, 17",
+          "1, 2, 4, 7"
+        ],
+        "correctIndex": 0
+      },
+      {
+        "text": "Który z podanych ciągów jest geometryczny?",
+        "options": [
+          "3, 6, 10, 15",
+          "4, 7, 10, 13",
+          "2, 5, 9, 14",
+          "2, 6, 18, 54"
+        ],
+        "correctIndex": 3
+      },
+      {
+        "text": "Jeżeli a4=11 i a6=19 w ciągu arytmetycznym, to a5 jest równe",
+        "options": [
+          "16",
+          "19",
+          "15",
           "14"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile wynosi 25% z 86 w zadaniu 154?",
+        "text": "Jeżeli a1=81 i q=1/3, to a3 w ciągu geometrycznym wynosi",
         "options": [
-          "29",
-          "22",
-          "26",
-          "11"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile wynosi 30% z 88 w zadaniu 155?",
-        "options": [
-          "26",
-          "21",
-          "27",
-          "18"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile wynosi 35% z 90 w zadaniu 156?",
-        "options": [
-          "38",
-          "30",
-          "41",
-          "32"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile wynosi 10% z 92 w zadaniu 157?",
-        "options": [
-          "12",
-          "00",
+          "81",
           "09",
-          "02"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile wynosi 15% z 94 w zadaniu 158?",
-        "options": [
-          "25",
-          "14",
-          "22",
-          "10"
+          "27",
+          "03"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile wynosi 20% z 96 w zadaniu 159?",
+        "text": "Jeżeli a2=6 i q=3, to pierwszy wyraz tego ciągu geometrycznego to",
         "options": [
-          "19",
-          "10",
-          "24",
+          "02",
+          "03",
+          "09",
           "18"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile wynosi 25% z 98 w zadaniu 160?",
+        "text": "Jeżeli a1=7 i r=-2, to szósty wyraz tego ciągu arytmetycznego wynosi",
         "options": [
-          "35",
-          "19",
-          "27",
-          "25"
+          "-1",
+          "03",
+          "05",
+          "-3"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile wynosi 30% z 100 w zadaniu 161?",
+        "text": "W ciągu arytmetycznym wyraz środkowy jest średnią arytmetyczną wyrazów sąsiednich. To zdanie jest",
         "options": [
-          "37",
-          "27",
-          "30",
-          "19"
+          "zależy od n",
+          "prawdziwe tylko dla q>1",
+          "prawdziwe",
+          "fałszywe"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Ile wynosi 35% z 102 w zadaniu 162?",
+        "text": "W ciągu geometrycznym każdy wyraz od drugiego powstaje przez mnożenie poprzedniego przez",
         "options": [
-          "40",
-          "36",
-          "37",
-          "28"
+          "sumę dwóch poprzednich",
+          "stały iloraz",
+          "stałą różnicę",
+          "numer wyrazu"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile wynosi 10% z 104 w zadaniu 163?",
+        "text": "Jeżeli q jest ujemne, to kolejne wyrazy ciągu geometrycznego zazwyczaj mają",
         "options": [
-          "10",
-          "08",
-          "19",
-          "05"
+          "naprzemienne znaki",
+          "zawsze ten sam znak",
+          "wyłącznie dodatnie wartości",
+          "różnicę równą zero"
         ],
         "correctIndex": 0
       },
       {
-        "text": "Ile wynosi 15% z 106 w zadaniu 164?",
+        "text": "Jeżeli r=0 w ciągu arytmetycznym, to wszystkie wyrazy są",
         "options": [
-          "19",
-          "06",
-          "22",
-          "16"
+          "rosnące",
+          "malejące",
+          "naprzemiennie dodatnie i ujemne",
+          "jednakowe"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Ile wynosi 20% z 108 w zadaniu 165?",
-        "options": [
-          "33",
-          "15",
-          "22",
-          "18"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile wynosi 25% z 110 w zadaniu 166?",
-        "options": [
-          "36",
-          "28",
-          "33",
-          "27"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile wynosi 30% z 112 w zadaniu 167?",
-        "options": [
-          "34",
-          "28",
-          "36",
-          "25"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile wynosi 35% z 114 w zadaniu 168?",
-        "options": [
-          "47",
-          "37",
-          "50",
-          "40"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile wynosi 10% z 116 w zadaniu 169?",
-        "options": [
-          "16",
-          "01",
-          "12",
-          "04"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile wynosi 15% z 118 w zadaniu 170?",
-        "options": [
-          "19",
-          "18",
-          "27",
-          "13"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile wynosi 20% z 120 w zadaniu 171?",
-        "options": [
-          "24",
-          "14",
-          "30",
-          "22"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile wynosi 25% z 122 w zadaniu 172?",
-        "options": [
-          "42",
-          "24",
-          "34",
-          "31"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile wynosi 30% z 124 w zadaniu 173?",
+        "text": "Suma pięciu początkowych wyrazów ciągu 2, 5, 8, 11, 14 jest równa",
         "options": [
           "45",
-          "33",
-          "37",
-          "36"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Ile wynosi 35% z 126 w zadaniu 174?",
-        "options": [
-          "49",
-          "44",
-          "46",
+          "14",
+          "40",
           "35"
         ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Ile wynosi 10% z 128 w zadaniu 175?",
-        "options": [
-          "13",
-          "10",
-          "23",
-          "07"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile wynosi 15% z 130 w zadaniu 176?",
-        "options": [
-          "24",
-          "09",
-          "27",
-          "20"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Ile wynosi 20% z 132 w zadaniu 177?",
-        "options": [
-          "27",
-          "18",
-          "26",
-          "21"
-        ],
         "correctIndex": 2
       },
       {
-        "text": "Ile wynosi 25% z 134 w zadaniu 178?",
+        "text": "Jeżeli a3=10 i a7=22 w ciągu arytmetycznym, to różnica r jest równa",
         "options": [
-          "43",
-          "34",
-          "40",
-          "32"
+          "12",
+          "03",
+          "02",
+          "04"
         ],
         "correctIndex": 1
       },
       {
-        "text": "Ile wynosi 30% z 136 w zadaniu 179?",
+        "text": "Jeżeli a1=3 i q=2, to a4 w ciągu geometrycznym jest równe",
         "options": [
-          "41",
-          "34",
-          "44",
-          "31"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Ile wynosi 35% z 138 w zadaniu 180?",
-        "options": [
-          "56",
-          "44",
-          "59",
+          "24",
+          "12",
+          "16",
           "48"
         ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Uzupełnij ciąg 2, 4, 6 i wskaż kolejną liczbę w zadaniu 181.",
-        "options": [
-          "08",
-          "00",
-          "12",
-          "15"
-        ],
         "correctIndex": 0
       },
       {
-        "text": "Uzupełnij ciąg 3, 6, 9 i wskaż kolejną liczbę w zadaniu 182.",
+        "text": "W ciągu arytmetycznym o a1=5 i r=3 czwarty wyraz jest równy",
         "options": [
-          "21",
-          "07",
-          "13",
-          "12"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Uzupełnij ciąg 4, 8, 12 i wskaż kolejną liczbę w zadaniu 183.",
-        "options": [
-          "22",
-          "14",
-          "16",
-          "06"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Uzupełnij ciąg 5, 10, 15 i wskaż kolejną liczbę w zadaniu 184.",
-        "options": [
-          "23",
-          "20",
-          "31",
-          "13"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Uzupełnij ciąg 6, 8, 10 i wskaż kolejną liczbę w zadaniu 185.",
-        "options": [
-          "12",
-          "11",
-          "20",
-          "08"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Uzupełnij ciąg 7, 10, 13 i wskaż kolejną liczbę w zadaniu 186.",
-        "options": [
-          "18",
-          "07",
-          "21",
-          "16"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Uzupełnij ciąg 8, 12, 16 i wskaż kolejną liczbę w zadaniu 187.",
-        "options": [
-          "30",
-          "14",
-          "20",
-          "17"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Uzupełnij ciąg 9, 14, 19 i wskaż kolejną liczbę w zadaniu 188.",
-        "options": [
-          "31",
-          "24",
-          "28",
-          "13"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Uzupełnij ciąg 10, 12, 14 i wskaż kolejną liczbę w zadaniu 189.",
-        "options": [
-          "16",
           "11",
           "17",
-          "08"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Uzupełnij ciąg 11, 14, 17 i wskaż kolejną liczbę w zadaniu 190.",
-        "options": [
-          "26",
-          "18",
-          "29",
-          "20"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Uzupełnij ciąg 12, 16, 20 i wskaż kolejną liczbę w zadaniu 191.",
-        "options": [
-          "27",
-          "14",
-          "24",
-          "17"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Uzupełnij ciąg 13, 18, 23 i wskaż kolejną liczbę w zadaniu 192.",
-        "options": [
-          "39",
-          "28",
-          "36",
-          "24"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Uzupełnij ciąg 14, 16, 18 i wskaż kolejną liczbę w zadaniu 193.",
-        "options": [
           "20",
-          "11",
-          "25",
-          "19"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Uzupełnij ciąg 15, 18, 21 i wskaż kolejną liczbę w zadaniu 194.",
-        "options": [
-          "34",
-          "18",
-          "26",
-          "24"
+          "14"
         ],
         "correctIndex": 3
       },
       {
-        "text": "Uzupełnij ciąg 16, 20, 24 i wskaż kolejną liczbę w zadaniu 195.",
+        "text": "W ciągu arytmetycznym a1=2, a5=18. Różnica r wynosi",
         "options": [
-          "35",
-          "25",
-          "28",
-          "17"
+          "05",
+          "16",
+          "04",
+          "03"
         ],
         "correctIndex": 2
       },
       {
-        "text": "Uzupełnij ciąg 17, 22, 27 i wskaż kolejną liczbę w zadaniu 196.",
+        "text": "Suma czterech początkowych wyrazów ciągu geometrycznego 1, 2, 4, 8 jest równa",
         "options": [
-          "36",
-          "32",
-          "33",
-          "24"
-        ],
-        "correctIndex": 1
-      },
-      {
-        "text": "Uzupełnij ciąg 18, 20, 22 i wskaż kolejną liczbę w zadaniu 197.",
-        "options": [
-          "24",
-          "22",
-          "33",
-          "19"
-        ],
-        "correctIndex": 0
-      },
-      {
-        "text": "Uzupełnij ciąg 19, 22, 25 i wskaż kolejną liczbę w zadaniu 198.",
-        "options": [
-          "31",
-          "18",
-          "34",
-          "28"
-        ],
-        "correctIndex": 3
-      },
-      {
-        "text": "Uzupełnij ciąg 20, 24, 28 i wskaż kolejną liczbę w zadaniu 199.",
-        "options": [
-          "43",
-          "25",
-          "32",
-          "28"
-        ],
-        "correctIndex": 2
-      },
-      {
-        "text": "Uzupełnij ciąg 21, 26, 31 i wskaż kolejną liczbę w zadaniu 200.",
-        "options": [
-          "44",
-          "36",
-          "41",
-          "35"
+          "08",
+          "15",
+          "14",
+          "16"
         ],
         "correctIndex": 1
       }

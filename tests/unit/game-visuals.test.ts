@@ -77,6 +77,7 @@ describe("game-visual mappers", () => {
     const visual = createScienceRoundVisual(reveal);
     expect(visual.decisions[0].choice).toBe("Woda");
     expect(visual.points[0].value).toBe("+1");
+    expect(visual.points[0].detail).toContain("poprawną odpowiedź");
     expect(visual.points[1].value).toBe("+0");
     expect(visual.points[2].value).toBe("+0/+0");
   });
@@ -103,7 +104,8 @@ describe("game-visual mappers", () => {
 
     const visual = createPrioritiesRoundVisual(reveal);
     expect(visual.decisions).toHaveLength(2);
-    expect(visual.points[0].value).toContain("2/4");
+    expect(visual.points[0].value).toBe("+2 dla obu");
+    expect(visual.points[0].detail).toContain("2 zgodne pozycje");
     expect(visual.points[1].value).toBe("+1");
     expect(visual.points[2].value).toBe("+1");
   });

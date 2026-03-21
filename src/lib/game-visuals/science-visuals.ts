@@ -9,7 +9,11 @@ import type {
 export function createScienceRoundVisual(reveal: ScienceQuizRoundReveal): GameRoundVisualState {
   const pointsSami = Number(reveal.correctByRole.Sami) + Number(reveal.bothCorrect);
   const pointsPatryk = Number(reveal.correctByRole.Patryk) + Number(reveal.bothCorrect);
-  const tone = reveal.bothCorrect ? "success" : reveal.correctByRole.Sami || reveal.correctByRole.Patryk ? "warning" : "danger";
+  const tone = reveal.bothCorrect
+    ? "success"
+    : reveal.correctByRole.Sami || reveal.correctByRole.Patryk
+      ? "warning"
+      : "danger";
 
   return {
     title: "Poprawna odpowiedź",
@@ -45,20 +49,31 @@ export function createScienceRoundVisual(reveal: ScienceQuizRoundReveal): GameRo
         value: `+${pointsSami}`,
         tone: pointsSami > 0 ? "success" : "danger",
         icon: pointsSami > 0 ? "✓" : "✕",
-        detail: `Poprawna: ${reveal.correctByRole.Sami ? "tak" : "nie"}`
+        detail: reveal.correctByRole.Sami
+          ? reveal.bothCorrect
+            ? "+1 za poprawną odpowiedź i +1 bonus za obie poprawne"
+            : "+1 za poprawną odpowiedź"
+          : "+0, bo odpowiedź była niepoprawna"
       },
       {
         label: "Patryk",
         value: `+${pointsPatryk}`,
         tone: pointsPatryk > 0 ? "success" : "danger",
         icon: pointsPatryk > 0 ? "✓" : "✕",
-        detail: `Poprawna: ${reveal.correctByRole.Patryk ? "tak" : "nie"}`
+        detail: reveal.correctByRole.Patryk
+          ? reveal.bothCorrect
+            ? "+1 za poprawną odpowiedź i +1 bonus za obie poprawne"
+            : "+1 za poprawną odpowiedź"
+          : "+0, bo odpowiedź była niepoprawna"
       },
       {
         label: "Bonus obie poprawne",
         value: reveal.bothCorrect ? "+1/+1" : "+0/+0",
         tone: reveal.bothCorrect ? "info" : "neutral",
-        icon: reveal.bothCorrect ? "★" : "•"
+        icon: reveal.bothCorrect ? "★" : "•",
+        detail: reveal.bothCorrect
+          ? "Obie osoby zaznaczyły poprawną odpowiedź"
+          : "Bonus nie wszedł, bo nie było dwóch poprawnych odpowiedzi"
       }
     ]
   };

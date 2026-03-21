@@ -12,7 +12,7 @@ import { fetchCountryCapitals } from "./sources/rest-countries";
 
 type OptionTuple = [string, string, string, string];
 
-const VERSION = "v1.10-question-pack-pl";
+const VERSION = "v1.10.1-question-pack-pl";
 
 async function main(): Promise<void> {
   const qaLightning = buildQaLightning();
@@ -191,75 +191,665 @@ async function buildScienceQuiz(): Promise<QuestionPack["scienceQuiz"]> {
 }
 
 function buildMathScience(count: number): ScienceQuestionPackItem[] {
-  const result: ScienceQuestionPackItem[] = [];
+  const result: ScienceQuestionPackItem[] = [
+    ...buildPolynomialQuestions(),
+    ...buildRationalExpressionQuestions(),
+    ...buildSequenceQuestions()
+  ];
 
-  for (let i = 0; i < 60; i += 1) {
-    const a = 17 + i;
-    const b = (i % 18) + 6;
-    const correct = a + b;
-    result.push(
-      asScience(
-        `Ile to ${a} + ${b} w zadaniu ${i + 1}?`,
-        ...makeNumericOptions(correct, i),
-        "matma"
-      )
-    );
-  }
-
-  for (let i = 0; i < 50; i += 1) {
-    const a = 80 + i;
-    const b = (i % 23) + 7;
-    const correct = a - b;
-    result.push(
-      asScience(
-        `Ile to ${a} - ${b} w zadaniu ${i + 61}?`,
-        ...makeNumericOptions(correct, i + 80),
-        "matma"
-      )
-    );
-  }
-
-  for (let i = 0; i < 40; i += 1) {
-    const a = 3 + (i % 8);
-    const b = 4 + Math.floor(i / 8);
-    const correct = a * b;
-    result.push(
-      asScience(
-        `Ile to ${a} × ${b} w zadaniu ${i + 111}?`,
-        ...makeNumericOptions(correct, i + 140),
-        "matma"
-      )
-    );
-  }
-
-  for (let i = 0; i < 30; i += 1) {
-    const value = 80 + i * 2;
-    const percent = 10 + (i % 6) * 5;
-    const correct = Math.round((value * percent) / 100);
-    result.push(
-      asScience(
-        `Ile wynosi ${percent}% z ${value} w zadaniu ${i + 151}?`,
-        ...makeNumericOptions(correct, i + 180),
-        "matma"
-      )
-    );
-  }
-
-  for (let i = 0; i < 20; i += 1) {
-    const start = 2 + i;
-    const step = (i % 4) + 2;
-    const sequence = [start, start + step, start + step * 2];
-    const correct = start + step * 3;
-    result.push(
-      asScience(
-        `Uzupełnij ciąg ${sequence.join(", ")} i wskaż kolejną liczbę w zadaniu ${i + 181}.`,
-        ...makeNumericOptions(correct, i + 220),
-        "matma"
-      )
-    );
+  if (result.length < count) {
+    throw new Error(`Za mało pytań z matematyki: ${result.length}/${count}`);
   }
 
   return result.slice(0, count);
+}
+
+function buildPolynomialQuestions(): ScienceQuestionPackItem[] {
+  const result: ScienceQuestionPackItem[] = [];
+  const degreeTemplates = [
+    "Jaki stopień ma wielomian W(x)={poly}?",
+    "Wskaż stopień wielomianu {poly}.",
+    "Ile wynosi stopień wielomianu P(x)={poly}?",
+    "Najwyższa potęga w wielomianie {poly} to"
+  ];
+  const valueTemplates = [
+    "Ile wynosi W({x}), jeśli W(x)={poly}?",
+    "Oblicz wartość wielomianu {poly} dla x={x}.",
+    "Podstaw x={x} do wielomianu {poly}. Jaki jest wynik?",
+    "Wartość wielomianu {poly} dla argumentu {x} to"
+  ];
+  const factorTemplates = [
+    "Który rozkład na czynniki jest poprawny dla {poly}?",
+    "Jak poprawnie rozłożyć na czynniki wielomian {poly}?",
+    "Wskaż prawidłowy rozkład na czynniki dla {poly}.",
+    "Poprawny rozkład wielomianu {poly} ma postać"
+  ];
+  const remainderTemplates = [
+    "Jaka jest reszta z dzielenia {poly} przez {divisor}?",
+    "Wskaż resztę z dzielenia wielomianu {poly} przez {divisor}.",
+    "Ile wynosi reszta po podzieleniu {poly} przez {divisor}?",
+    "Reszta z dzielenia wielomianu {poly} przez {divisor} to"
+  ];
+  const rootsTemplates = [
+    "Ile wynosi {metric} równania {poly}=0?",
+    "Wskaż {metric} równania {poly}=0.",
+    "Dla równania {poly}=0 oblicz {metric}.",
+    "Jaka jest wartość: {metric} dla równania {poly}=0?"
+  ];
+  const parameterTemplates = [
+    "Dla jakiego b liczba {x} jest miejscem zerowym wielomianu W(x)={poly}?",
+    "Wskaż b, dla którego {x} zeruje wielomian {poly}.",
+    "Jeśli {x} jest miejscem zerowym wielomianu {poly}, to b jest równe",
+    "Jaka wartość b sprawia, że {x} jest pierwiastkiem wielomianu {poly}?"
+  ];
+
+  for (let i = 0; i < 10; i += 1) {
+    const degree = 3 + (i % 4);
+    const poly = `${2 + (i % 3)}x^${degree}${formatSignedTerm(-(i % 5 + 1), degree - 1)}${formatSignedTerm(
+      i % 4 + 2,
+      Math.max(1, degree - 2)
+    )}${formatConstant(i % 7 + 1)}`;
+    const correct = `stopień ${degree}`;
+    pushScienceQuestion(
+      result,
+      degreeTemplates[i % degreeTemplates.length].replace("{poly}", poly),
+      correct,
+      [
+        `stopień ${degree - 1}`,
+        `stopień ${Math.max(1, degree - 2)}`,
+        `stopień ${degree + 1}`
+      ],
+      i
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const x = [-2, -1, 2, 3][i % 4];
+    const a = 2 + (i % 3);
+    const b = -5 + i;
+    const c = 3 + (i % 4);
+    const value = a * x * x + b * x + c;
+    const poly = `${a}x^2${formatLinearTerm(b)}${formatConstant(c)}`;
+    pushScienceQuestion(
+      result,
+      valueTemplates[i % valueTemplates.length]
+        .replaceAll("{poly}", poly)
+        .replaceAll("{x}", String(x)),
+      `wartość ${value}`,
+      [`wartość ${value + 1}`, `wartość ${value - 2}`, `wartość ${value + 3}`],
+      i + 20
+    );
+  }
+
+  const factorPairs: Array<[number, number]> = [
+    [1, 3],
+    [2, 5],
+    [3, 4],
+    [1, -2],
+    [2, -3],
+    [4, -1],
+    [5, 2],
+    [-1, -4],
+    [-2, -5],
+    [3, -1]
+  ];
+  for (let i = 0; i < factorPairs.length; i += 1) {
+    const [p, q] = factorPairs[i];
+    const sum = p + q;
+    const product = p * q;
+    const poly = `x^2${formatLinearTerm(-sum)}${formatConstant(product)}`;
+    const correct = `${factorTerm(p)}${factorTerm(q)}`;
+    pushScienceQuestion(
+      result,
+      factorTemplates[i % factorTemplates.length].replace("{poly}", poly),
+      correct,
+      [`${factorTerm(-p)}${factorTerm(q)}`, `${factorTerm(p)}${factorTerm(-q)}`, `${factorTerm(-p)}${factorTerm(-q)}`],
+      i + 40
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const r = [-2, -1, 1, 2, 3][i % 5];
+    const a = -3 + i;
+    const b = 2 + (i % 5);
+    const c = -4 + i;
+    const poly = `x^3${formatSignedTerm(a, 2)}${formatLinearTerm(b)}${formatConstant(c)}`;
+    const remainder = r ** 3 + a * r * r + b * r + c;
+    pushScienceQuestion(
+      result,
+      remainderTemplates[i % remainderTemplates.length]
+        .replace("{poly}", poly)
+        .replace("{divisor}", divisorLabel(r)),
+      `reszta ${remainder}`,
+      [`reszta ${remainder + 1}`, `reszta ${remainder - 2}`, `reszta ${remainder + 4}`],
+      i + 60
+    );
+  }
+
+  for (let i = 0; i < factorPairs.length; i += 1) {
+    const [p, q] = factorPairs[i];
+    const sum = p + q;
+    const product = p * q;
+    const metric = i % 2 === 0 ? "sumę pierwiastków" : "iloczyn pierwiastków";
+    const answer = i % 2 === 0 ? `suma ${sum}` : `iloczyn ${product}`;
+    const wrongA = i % 2 === 0 ? `suma ${product}` : `iloczyn ${sum}`;
+    const wrongB = i % 2 === 0 ? `suma ${sum + 1}` : `iloczyn ${product + 1}`;
+    const wrongC = i % 2 === 0 ? `suma ${sum - 2}` : `iloczyn ${product - 2}`;
+    pushScienceQuestion(
+      result,
+      rootsTemplates[i % rootsTemplates.length]
+        .replace("{metric}", metric)
+        .replace("{poly}", `x^2${formatLinearTerm(-sum)}${formatConstant(product)}`),
+      answer,
+      [wrongA, wrongB, wrongC],
+      i + 80
+    );
+  }
+
+  const parameterCases = [
+    { x: 1, c: -6, kind: "quad" },
+    { x: -1, c: 4, kind: "quad" },
+    { x: 2, c: -8, kind: "quad_even" },
+    { x: -2, c: 8, kind: "quad_even" },
+    { x: 1, c: -3, kind: "cubic" },
+    { x: -1, c: 5, kind: "cubic" },
+    { x: 2, c: -12, kind: "quad_even" },
+    { x: -1, c: -2, kind: "quad" },
+    { x: 1, c: 7, kind: "quad" },
+    { x: -2, c: -4, kind: "quad_even" }
+  ] as const;
+
+  for (let i = 0; i < parameterCases.length; i += 1) {
+    const item = parameterCases[i];
+    let poly = "";
+    let b = 0;
+    if (item.kind === "cubic") {
+      b = -(item.x ** 3 + item.c) / item.x;
+      poly = `x^3+bx${formatConstant(item.c)}`;
+    } else {
+      b = -((item.x ** 2) + item.c) / item.x;
+      poly = `x^2+bx${formatConstant(item.c)}`;
+    }
+
+    pushScienceQuestion(
+      result,
+      parameterTemplates[i % parameterTemplates.length]
+        .replaceAll("{x}", String(item.x))
+        .replace("{poly}", poly),
+      `b=${b}`,
+      [`b=${b + 1}`, `b=${b - 2}`, `b=${b + 3}`],
+      i + 100
+    );
+  }
+
+  return result;
+}
+
+function buildRationalExpressionQuestions(): ScienceQuestionPackItem[] {
+  const result: ScienceQuestionPackItem[] = [];
+  const domainTemplates = [
+    "Jaka jest dziedzina wyrażenia {expr}?",
+    "Wskaż dziedzinę wyrażenia {expr}.",
+    "Dla jakich x wyrażenie {expr} ma sens?",
+    "Które ograniczenie opisuje dziedzinę wyrażenia {expr}?"
+  ];
+  const simplifyTemplates = [
+    "Jak upraszcza się wyrażenie {expr}?",
+    "Wskaż uproszczoną postać wyrażenia {expr}.",
+    "Po skróceniu wyrażenia {expr} otrzymujemy",
+    "Jaka jest najprostsza postać wyrażenia {expr}?"
+  ];
+  const equationTemplates = [
+    "Rozwiąż równanie {expr}.",
+    "Wskaż rozwiązanie równania {expr}.",
+    "Jaka liczba spełnia równanie {expr}?",
+    "Rozwiązaniem równania {expr} jest"
+  ];
+
+  for (let i = 0; i < 10; i += 1) {
+    const k = 2 + i;
+    const expr = `(x+${k})/(x-${k - 1})`;
+    pushScienceQuestion(
+      result,
+      domainTemplates[i % domainTemplates.length].replace("{expr}", expr),
+      `x != ${k - 1}`,
+      [`x != ${k}`, `x != ${-(k - 1)}`, `x dowolne`],
+      i + 140
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const s = 2 + i;
+    const expr = `(x+${i + 1})/(x^2-${s * s})`;
+    pushScienceQuestion(
+      result,
+      domainTemplates[(i + 1) % domainTemplates.length].replace("{expr}", expr),
+      `x != ${s} i x != ${-s}`,
+      [`x != ${s}`, `x != ${-s}`, `x > ${-s}`],
+      i + 160
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const s = 2 + i;
+    const expr = `(x^2-${s * s})/(x-${s}) dla x != ${s}`;
+    pushScienceQuestion(
+      result,
+      simplifyTemplates[i % simplifyTemplates.length].replace("{expr}", expr),
+      `x+${s}`,
+      [`x-${s}`, `x^2-${s * s}`, `${2 * s}`],
+      i + 180
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const m = 2 + i;
+    const expr = `(x^2+${m}x)/x dla x != 0`;
+    pushScienceQuestion(
+      result,
+      `${simplifyTemplates[(i + 1) % simplifyTemplates.length].replace("{expr}", expr)} Współczynnik liniowy to ${m}.`,
+      `x+${m}`,
+      [`x-${m}`, `${m}x`, `x^2+${m}`],
+      i + 200
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const a = 1 + i;
+    const b = 2 + (i % 4);
+    const solution = a + 2 * b;
+    const expr = `(x+${a})/(x-${b})=2`;
+    pushScienceQuestion(
+      result,
+      equationTemplates[i % equationTemplates.length].replace("{expr}", expr),
+      `x=${solution}`,
+      [`x=${solution - 1}`, `x=${solution + 2}`, `x=${b}`],
+      i + 220
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const top = 4 + i;
+    const shift = 1 + (i % 5);
+    const solution = top - shift;
+    const expr = `${top}/(x+${shift})=1`;
+    pushScienceQuestion(
+      result,
+      equationTemplates[(i + 1) % equationTemplates.length].replace("{expr}", expr),
+      `x=${solution}`,
+      [`x=${solution + 1}`, `x=${solution - 2}`, `x=${-shift}`],
+      i + 240
+    );
+  }
+
+  return result;
+}
+
+function buildSequenceQuestions(): ScienceQuestionPackItem[] {
+  const result: ScienceQuestionPackItem[] = [];
+  const arithmeticTermTemplates = [
+    "W ciągu arytmetycznym pierwszy wyraz wynosi {a1}, a różnica {r}. Ile wynosi wyraz numer {n}?",
+    "Dany jest ciąg arytmetyczny o pierwszym wyrazie {a1} i różnicy {r}. Oblicz wyraz numer {n}.",
+    "Jeśli pierwszy wyraz ciągu arytmetycznego to {a1}, a różnica jest równa {r}, to ile wynosi wyraz numer {n}?",
+    "Która liczba jest wyrazem numer {n} ciągu arytmetycznego, gdy pierwszy wyraz to {a1}, a różnica {r}?"
+  ];
+  const arithmeticDiffTemplates = [
+    "W ciągu arytmetycznym pierwszy wyraz wynosi {a1}, a wyraz numer {n} jest równy {an}. Ile wynosi różnica?",
+    "Znajdź różnicę ciągu arytmetycznego, jeśli pierwszy wyraz to {a1}, a wyraz numer {n} ma wartość {an}.",
+    "Jaka jest różnica r w ciągu arytmetycznym, gdzie pierwszy wyraz wynosi {a1}, a wyraz numer {n} jest równy {an}?",
+    "Oblicz różnicę ciągu arytmetycznego z warunków: pierwszy wyraz {a1}, wyraz numer {n} równy {an}."
+  ];
+  const arithmeticSumTemplates = [
+    "Ile wynosi suma pierwszych {n} wyrazów ciągu arytmetycznego: {seq}?",
+    "Oblicz sumę {n} początkowych wyrazów ciągu {seq}.",
+    "Wskaż sumę pierwszych {n} wyrazów ciągu arytmetycznego {seq}.",
+    "Suma pierwszych {n} wyrazów ciągu {seq} jest równa"
+  ];
+  const geometricTermTemplates = [
+    "W ciągu geometrycznym pierwszy wyraz wynosi {a1}, a iloraz {q}. Ile wynosi wyraz numer {n}?",
+    "Dany jest ciąg geometryczny o pierwszym wyrazie {a1} i ilorazie {q}. Oblicz wyraz numer {n}.",
+    "Jeśli pierwszy wyraz ciągu geometrycznego to {a1}, a iloraz jest równy {q}, to ile wynosi wyraz numer {n}?",
+    "Która liczba jest wyrazem numer {n} ciągu geometrycznego, gdy pierwszy wyraz to {a1}, a iloraz {q}?"
+  ];
+  const geometricRatioTemplates = [
+    "W ciągu geometrycznym pierwszy wyraz wynosi {a1}, a wyraz numer {n} jest równy {an}. Ile wynosi iloraz?",
+    "Znajdź iloraz ciągu geometrycznego, jeśli pierwszy wyraz to {a1}, a wyraz numer {n} ma wartość {an}.",
+    "Jaki iloraz ma ciąg geometryczny, w którym pierwszy wyraz wynosi {a1}, a wyraz numer {n} jest równy {an}?",
+    "Oblicz iloraz q dla ciągu geometrycznego z warunków: pierwszy wyraz {a1}, wyraz numer {n} równy {an}."
+  ];
+  const geometricSumTemplates = [
+    "Ile wynosi suma pierwszych {n} wyrazów ciągu geometrycznego: {seq}?",
+    "Oblicz sumę {n} początkowych wyrazów ciągu {seq}.",
+    "Wskaż sumę pierwszych {n} wyrazów ciągu geometrycznego {seq}.",
+    "Suma pierwszych {n} wyrazów ciągu {seq} jest równa"
+  ];
+  const arithmeticTermContexts = [
+    "tabeli wartości",
+    "notatki klasowej",
+    "arkusza ćwiczeń",
+    "osi liczbowej",
+    "planu rat",
+    "zestawu powtórkowego",
+    "próbnego arkusza",
+    "analizy danych",
+    "szkolnego sprawdzianu",
+    "zadania domowego"
+  ];
+  const arithmeticDiffContexts = [
+    "pierwszej serii",
+    "drugiej serii",
+    "arkusza A",
+    "arkusza B",
+    "krótkiej powtórki",
+    "notatnika ucznia",
+    "wersji rozszerzonej",
+    "zestawu próbnego",
+    "zadania konkursowego",
+    "powtórzenia przed klasówką"
+  ];
+  const geometricTermContexts = [
+    "modelu wzrostu",
+    "zadania z potęgami",
+    "notatki o ilorazie",
+    "ćwiczenia z szeregiem",
+    "arkusza próbnego",
+    "powtórki do sprawdzianu",
+    "zadania domowego",
+    "przykładu z tablicy",
+    "zestawu maturalnego",
+    "karty pracy"
+  ];
+  const geometricRatioContexts = [
+    "wariantu podstawowego",
+    "wariantu rozszerzonego",
+    "serii A",
+    "serii B",
+    "powtórki działu",
+    "szkolnej notatki",
+    "ćwiczenia z zeszytu",
+    "próbnego zestawu",
+    "dodatkowego zadania",
+    "krótkiego quizu"
+  ];
+
+  for (let i = 0; i < 10; i += 1) {
+    const a1 = 4 + i;
+    const r = [-3, -2, 2, 3][i % 4];
+    const n = 4 + (i % 4);
+    const value = a1 + (n - 1) * r;
+    pushScienceQuestion(
+      result,
+      `${arithmeticTermTemplates[i % arithmeticTermTemplates.length]
+        .replaceAll("{a1}", String(a1))
+        .replaceAll("{r}", String(r))
+        .replaceAll("{n}", String(n))} Rozważ numer n=${n} w ${arithmeticTermContexts[i]}.`,
+      `a${n}=${value}`,
+      [`a${n}=${value + 2}`, `a${n}=${value - 3}`, `a${n}=${value + 4}`],
+      i + 260
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const a1 = 2 + i;
+    const r = [-2, 3, 4, -3][i % 4];
+    const n = 5 + (i % 3);
+    const an = a1 + (n - 1) * r;
+    pushScienceQuestion(
+      result,
+      `${arithmeticDiffTemplates[i % arithmeticDiffTemplates.length]
+        .replaceAll("{a1}", String(a1))
+        .replaceAll("{n}", String(n))
+        .replaceAll("{an}", String(an))} Tutaj n=${n} w ${arithmeticDiffContexts[i]}.`,
+      `r=${r}`,
+      [`r=${r + 1}`, `r=${r - 2}`, `r=${an - a1}`],
+      i + 280
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const a1 = 3 + i;
+    const r = 2 + (i % 3);
+    const n = 5;
+    const seq = [a1, a1 + r, a1 + 2 * r, a1 + 3 * r, a1 + 4 * r];
+    const sum = seq.reduce((total, value) => total + value, 0);
+    pushScienceQuestion(
+      result,
+      arithmeticSumTemplates[i % arithmeticSumTemplates.length]
+        .replaceAll("{n}", String(n))
+        .replace("{seq}", seq.join(", ")),
+      `suma ${sum}`,
+      [`suma ${sum + 5}`, `suma ${sum - 4}`, `suma ${seq[4]}`],
+      i + 300
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const a1 = 2 + (i % 4);
+    const q = [-2, 2, 3, 1 / 2][i % 4];
+    const qLabel = q === 1 / 2 ? "1/2" : String(q);
+    const n = 4 + (i % 3);
+    const value = a1 * q ** (n - 1);
+    pushScienceQuestion(
+      result,
+      `${geometricTermTemplates[i % geometricTermTemplates.length]
+        .replaceAll("{a1}", String(a1))
+        .replaceAll("{q}", qLabel)
+        .replaceAll("{n}", String(n))} Liczymy wyraz dla n=${n} w ${geometricTermContexts[i]}.`,
+      `a${n}=${formatNumericValue(value)}`,
+      [
+        `a${n}=${formatNumericValue(value * (q === 1 / 2 ? 2 : q))}`,
+        `a${n}=${formatNumericValue(value + 2)}`,
+        `a${n}=${formatNumericValue(value - 3)}`
+      ],
+      i + 320
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const q = [2, 3, -2, 1 / 2][i % 4];
+    const qLabel = q === 1 / 2 ? "1/2" : String(q);
+    const a1 = q === 1 / 2 ? 32 + i * 2 : 2 + i;
+    const n = 4;
+    const an = a1 * q ** (n - 1);
+    pushScienceQuestion(
+      result,
+      `${geometricRatioTemplates[i % geometricRatioTemplates.length]
+        .replaceAll("{a1}", String(a1))
+        .replaceAll("{n}", String(n))
+        .replaceAll("{an}", formatNumericValue(an))} W tym zadaniu n=${n} w ${geometricRatioContexts[i]}.`,
+      `q=${qLabel}`,
+      [`q=${q === 1 / 2 ? "2" : formatNumericValue(q + 1)}`, `q=${q === 1 / 2 ? "-1/2" : formatNumericValue(q - 1)}`, "q=1"],
+      i + 340
+    );
+  }
+
+  for (let i = 0; i < 10; i += 1) {
+    const a1 = 1 + (i % 3);
+    const q = 2;
+    const n = 4 + (i % 2);
+    const seq = Array.from({ length: n }, (_, index) => a1 * q ** index);
+    const sum = seq.reduce((total, value) => total + value, 0);
+    pushScienceQuestion(
+      result,
+      geometricSumTemplates[i % geometricSumTemplates.length]
+        .replaceAll("{n}", String(n))
+        .replace("{seq}", seq.join(", ")),
+      `suma ${sum}`,
+      [`suma ${sum + 3}`, `suma ${sum - 2}`, `suma ${seq[n - 1]}`],
+      i + 360
+    );
+  }
+
+  const theoryQuestions = [
+    {
+      text: "Który wzór opisuje n-ty wyraz ciągu arytmetycznego?",
+      correct: "a_n=a_1+(n-1)r",
+      wrong: ["a_n=a_1*r^(n-1)", "a_n=a_1+n*r", "a_n=r^(n-1)"]
+    },
+    {
+      text: "Który wzór opisuje n-ty wyraz ciągu geometrycznego?",
+      correct: "a_n=a_1*q^(n-1)",
+      wrong: ["a_n=a_1+(n-1)q", "a_n=q^(n+a_1)", "a_n=a_1*n*q"]
+    },
+    {
+      text: "Jeżeli różnica ciągu arytmetycznego jest ujemna, to ciąg jest",
+      correct: "malejący",
+      wrong: ["rosnący", "stały", "okresowy"]
+    },
+    {
+      text: "Jeżeli iloraz ciągu geometrycznego jest równy 1, to ciąg jest",
+      correct: "stały",
+      wrong: ["malejący", "rosnący", "naprzemienny"]
+    },
+    {
+      text: "Który z podanych ciągów jest arytmetyczny?",
+      correct: "4, 7, 10, 13",
+      wrong: ["2, 4, 8, 16", "3, 5, 9, 17", "1, 2, 4, 7"]
+    },
+    {
+      text: "Który z podanych ciągów jest geometryczny?",
+      correct: "2, 6, 18, 54",
+      wrong: ["3, 6, 10, 15", "4, 7, 10, 13", "2, 5, 9, 14"]
+    },
+    {
+      text: "Jeżeli a4=11 i a6=19 w ciągu arytmetycznym, to a5 jest równe",
+      correct: "15",
+      wrong: ["14", "16", "19"]
+    },
+    {
+      text: "Jeżeli a1=81 i q=1/3, to a3 w ciągu geometrycznym wynosi",
+      correct: "09",
+      wrong: ["27", "03", "81"]
+    },
+    {
+      text: "Jeżeli a2=6 i q=3, to pierwszy wyraz tego ciągu geometrycznego to",
+      correct: "02",
+      wrong: ["03", "09", "18"]
+    },
+    {
+      text: "Jeżeli a1=7 i r=-2, to szósty wyraz tego ciągu arytmetycznego wynosi",
+      correct: "-3",
+      wrong: ["-1", "03", "05"]
+    },
+    {
+      text: "W ciągu arytmetycznym wyraz środkowy jest średnią arytmetyczną wyrazów sąsiednich. To zdanie jest",
+      correct: "prawdziwe",
+      wrong: ["fałszywe", "zależy od n", "prawdziwe tylko dla q>1"]
+    },
+    {
+      text: "W ciągu geometrycznym każdy wyraz od drugiego powstaje przez mnożenie poprzedniego przez",
+      correct: "stały iloraz",
+      wrong: ["stałą różnicę", "numer wyrazu", "sumę dwóch poprzednich"]
+    },
+    {
+      text: "Jeżeli q jest ujemne, to kolejne wyrazy ciągu geometrycznego zazwyczaj mają",
+      correct: "naprzemienne znaki",
+      wrong: ["zawsze ten sam znak", "wyłącznie dodatnie wartości", "różnicę równą zero"]
+    },
+    {
+      text: "Jeżeli r=0 w ciągu arytmetycznym, to wszystkie wyrazy są",
+      correct: "jednakowe",
+      wrong: ["rosnące", "malejące", "naprzemiennie dodatnie i ujemne"]
+    },
+    {
+      text: "Suma pięciu początkowych wyrazów ciągu 2, 5, 8, 11, 14 jest równa",
+      correct: "40",
+      wrong: ["35", "45", "14"]
+    },
+    {
+      text: "Jeżeli a3=10 i a7=22 w ciągu arytmetycznym, to różnica r jest równa",
+      correct: "03",
+      wrong: ["02", "04", "12"]
+    },
+    {
+      text: "Jeżeli a1=3 i q=2, to a4 w ciągu geometrycznym jest równe",
+      correct: "24",
+      wrong: ["12", "16", "48"]
+    },
+    {
+      text: "W ciągu arytmetycznym o a1=5 i r=3 czwarty wyraz jest równy",
+      correct: "14",
+      wrong: ["11", "17", "20"]
+    },
+    {
+      text: "W ciągu arytmetycznym a1=2, a5=18. Różnica r wynosi",
+      correct: "04",
+      wrong: ["03", "05", "16"]
+    },
+    {
+      text: "Suma czterech początkowych wyrazów ciągu geometrycznego 1, 2, 4, 8 jest równa",
+      correct: "15",
+      wrong: ["14", "16", "08"]
+    }
+  ] as const;
+
+  for (let i = 0; i < theoryQuestions.length; i += 1) {
+    const item = theoryQuestions[i];
+    pushScienceQuestion(result, item.text, item.correct, [...item.wrong], i + 380);
+  }
+
+  return result;
+}
+
+function pushScienceQuestion(
+  target: ScienceQuestionPackItem[],
+  text: string,
+  correct: string,
+  wrong: [string, string, string] | string[],
+  seed: number
+): void {
+  const distractors = [wrong[0], wrong[1], wrong[2]] as [string, string, string];
+  target.push(asScience(text, ...rotateOptions(correct, distractors, seed), "matma"));
+}
+
+function formatSignedTerm(coefficient: number, degree: number): string {
+  if (coefficient === 0) {
+    return "";
+  }
+
+  const sign = coefficient > 0 ? "+" : "-";
+  const abs = Math.abs(coefficient);
+  const coeffLabel = abs === 1 ? "" : String(abs);
+  if (degree === 1) {
+    return `${sign}${coeffLabel}x`;
+  }
+
+  return `${sign}${coeffLabel}x^${degree}`;
+}
+
+function formatLinearTerm(coefficient: number): string {
+  if (coefficient === 0) {
+    return "";
+  }
+
+  const sign = coefficient > 0 ? "+" : "-";
+  const abs = Math.abs(coefficient);
+  const coeffLabel = abs === 1 ? "" : String(abs);
+  return `${sign}${coeffLabel}x`;
+}
+
+function formatConstant(value: number): string {
+  if (value === 0) {
+    return "";
+  }
+
+  return value > 0 ? `+${value}` : `${value}`;
+}
+
+function factorTerm(root: number): string {
+  return root >= 0 ? `(x-${root})` : `(x+${Math.abs(root)})`;
+}
+
+function divisorLabel(value: number): string {
+  return value >= 0 ? `x-${value}` : `x+${Math.abs(value)}`;
+}
+
+function formatNumericValue(value: number): string {
+  if (Number.isInteger(value)) {
+    return String(value);
+  }
+
+  return String(value).replace(".", ",");
 }
 
 async function buildGeographyScience(count: number): Promise<ScienceQuestionPackItem[]> {

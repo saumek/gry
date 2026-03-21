@@ -409,4 +409,162 @@ describe("game runtime", () => {
     },
     15000
   );
+
+  it(
+    "obu klientom pokazuje tego samego zwycięzcę po pełnej grze Better Half",
+    async () => {
+      const dbPath = path.join(os.tmpdir(), `duoplay-game-${Date.now()}-winner.db`);
+      const httpServer = http.createServer();
+
+      const runtime: SocketRuntime = createSocketRuntime({
+        httpServer,
+        roomPin: "1234",
+        heartbeatIntervalMs: 10000,
+        sessionTtlMs: 30000,
+        dbPath
+      });
+
+      await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+      const address = httpServer.address();
+      if (!address || typeof address === "string") {
+        throw new Error("Brak portu testowego");
+      }
+
+      const baseUrl = `http://127.0.0.1:${address.port}`;
+      resources.push(async () => runtime.close());
+      resources.push(async () => closeHttpServer(httpServer));
+
+      const a = createClient(baseUrl, { transports: ["websocket"] });
+      const b = createClient(baseUrl, { transports: ["websocket"] });
+
+      resources.push(async () => {
+        a.disconnect();
+      });
+      resources.push(async () => {
+        b.disconnect();
+      });
+
+      await waitForConnect(a);
+      await waitForConnect(b);
+
+      const authAPromise = waitForEvent(a, "auth:state");
+      a.emit("auth:join", { pin: "1234", deviceId: "device-winner-a", desiredRole: "Sami" });
+      await authAPromise;
+
+      const authBPromise = waitForEvent(b, "auth:state");
+      b.emit("auth:join", { pin: "1234", deviceId: "device-winner-b", desiredRole: "Patryk" });
+      await authBPromise;
+
+      a.emit("game:ready", { gameId: "better-half", ready: true });
+      b.emit("game:ready", { gameId: "better-half", ready: true });
+
+      await waitForState(
+        a,
+        (payload) => payload.readyByGame["better-half"].Sami && payload.readyByGame["better-half"].Patryk
+      );
+
+      const startedPromise = waitForState(
+        a,
+        (payload) => payload.activeGameId === "better-half" && payload.activeGame?.phase === "in_round"
+      );
+      a.emit("game:start", { gameId: "better-half" });
+      await startedPromise;
+
+      for (let round = 1; round <= 10; round += 1) {
+        const revealA = waitForState(
+          a,
+          (payload) =>
+            payload.activeGameId === "better-half" &&
+            payload.activeGame?.phase === "reveal" &&
+            payload.activeGame.gameId === "better-half" &&
+            payload.activeGame.reveal?.round === round
+        );
+        const revealB = waitForState(
+          b,
+          (payload) =>
+            payload.activeGameId === "better-half" &&
+            payload.activeGame?.phase === "reveal" &&
+            payload.activeGame.gameId === "better-half" &&
+            payload.activeGame.reveal?.round === round
+        );
+
+        a.emit("game:action", {
+          gameId: "better-half",
+          type: "submit",
+          selfAnswerIndex: 1,
+          guessPartnerIndex: 2
+        });
+        b.emit("game:action", {
+          gameId: "better-half",
+          type: "submit",
+          selfAnswerIndex: 2,
+          guessPartnerIndex: 0
+        });
+
+        const [stateA, stateB] = await Promise.all([revealA, revealB]);
+        if (stateA.activeGame?.gameId !== "better-half" || stateB.activeGame?.gameId !== "better-half") {
+          throw new Error("Brak stanu Better Half.");
+        }
+
+        expect(stateA.activeGame.scores.Sami).toBe(round);
+        expect(stateA.activeGame.scores.Patryk).toBe(0);
+        expect(stateB.activeGame.scores.Sami).toBe(round);
+        expect(stateB.activeGame.scores.Patryk).toBe(0);
+
+        if (round < 10) {
+          const nextRoundA = waitForState(
+            a,
+            (payload) =>
+              payload.activeGameId === "better-half" &&
+              payload.activeGame?.phase === "in_round" &&
+              payload.activeGame.gameId === "better-half" &&
+              payload.activeGame.round === round + 1
+          );
+          const nextRoundB = waitForState(
+            b,
+            (payload) =>
+              payload.activeGameId === "better-half" &&
+              payload.activeGame?.phase === "in_round" &&
+              payload.activeGame.gameId === "better-half" &&
+              payload.activeGame.round === round + 1
+          );
+          a.emit("game:action", { gameId: "better-half", type: "advance" });
+          await Promise.all([nextRoundA, nextRoundB]);
+        }
+      }
+
+      const finishedA = waitForState(
+        a,
+        (payload) =>
+          payload.activeGameId === "better-half" &&
+          payload.activeGame?.phase === "finished" &&
+          payload.activeGame.gameId === "better-half"
+      );
+      const finishedB = waitForState(
+        b,
+        (payload) =>
+          payload.activeGameId === "better-half" &&
+          payload.activeGame?.phase === "finished" &&
+          payload.activeGame.gameId === "better-half"
+      );
+      const resultEvent = waitForEvent<{ winnerRole?: string; scores: { Sami: number; Patryk: number } }>(
+        a,
+        "game:result"
+      );
+
+      a.emit("game:action", { gameId: "better-half", type: "advance" });
+
+      const [finalA, finalB, result] = await Promise.all([finishedA, finishedB, resultEvent]);
+      if (finalA.activeGame?.gameId !== "better-half" || finalB.activeGame?.gameId !== "better-half") {
+        throw new Error("Brak końcowego stanu Better Half.");
+      }
+
+      expect(finalA.activeGame.winnerRole).toBe("Sami");
+      expect(finalB.activeGame.winnerRole).toBe("Sami");
+      expect(result.winnerRole).toBe("Sami");
+      expect(finalA.activeGame.scores).toEqual({ Sami: 10, Patryk: 0 });
+      expect(finalB.activeGame.scores).toEqual({ Sami: 10, Patryk: 0 });
+    },
+    20000
+  );
 });

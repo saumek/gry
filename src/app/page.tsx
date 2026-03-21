@@ -506,10 +506,6 @@ export default function HomePage() {
     });
 
     socket.on("game:event", (payload: GameEventPayload) => {
-      if (payload?.message) {
-        pushFeedback(payload.message, resolveFeedbackTone("event"));
-      }
-
       const activeFeedback = actionFeedbackRef.current;
       if (!activeFeedback) {
         return;
@@ -535,13 +531,11 @@ export default function HomePage() {
     });
 
     socket.on("game:result", (payload: { summary?: string }) => {
-      if (payload?.summary) {
-        pushFeedback(payload.summary, resolveFeedbackTone("result"));
-      }
+      void payload;
     });
 
     socket.on("question:added", () => {
-      pushFeedback("Nowe pytanie zostało dodane do puli.", resolveFeedbackTone("question_added"));
+      return;
     });
 
     socket.on("error", (payload: { message?: string } | string) => {
@@ -782,18 +776,6 @@ export default function HomePage() {
 
           {phase === "lobby" && meRole ? (
             <>
-              {feedback ? (
-                <p
-                  className={`feedback-inline feedback-inline--${feedback.tone} ${
-                    isFeedbackLeaving ? "is-leaving" : "is-entering"
-                  }`}
-                  role="status"
-                  data-testid="feedback"
-                >
-                  {feedback.text}
-                </p>
-              ) : null}
-
               {activeTab === "game" ? (
                 <section className="tab-section motion-tab-switch" data-testid="tab-panel-game">
                   {gameState?.activeGame ? (
@@ -874,6 +856,18 @@ export default function HomePage() {
           historyCount={gameState?.history.length ?? 0}
           gameActive={Boolean(gameState?.activeGame)}
         />
+      ) : null}
+
+      {phase === "lobby" && feedback ? (
+        <p
+          className={`feedback-toast feedback-inline feedback-inline--${feedback.tone} ${
+            isFeedbackLeaving ? "is-leaving" : "is-entering"
+          }`}
+          role="status"
+          data-testid="feedback"
+        >
+          {feedback.text}
+        </p>
       ) : null}
     </main>
   );

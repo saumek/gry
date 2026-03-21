@@ -38,21 +38,24 @@ export function createPrioritiesRoundVisual(
     points: [
       {
         label: "Zgodność pozycji",
-        value: `+${reveal.alignmentPoints}/4 dla obu`,
-        tone: reveal.alignmentPoints >= 2 ? "success" : "warning",
-        icon: "≈"
+        value: `+${reveal.alignmentPoints} dla obu`,
+        tone: reveal.alignmentPoints >= 2 ? "success" : reveal.alignmentPoints === 1 ? "warning" : "danger",
+        icon: "≈",
+        detail: `${reveal.alignmentPoints} zgodne pozycje z 4 w obu rankingach`
       },
       {
         label: "Sami · trafienie top-1",
         value: reveal.guessHits.Sami ? "+1" : "+0",
         tone: reveal.guessHits.Sami ? "success" : "danger",
-        icon: reveal.guessHits.Sami ? "✓" : "✕"
+        icon: reveal.guessHits.Sami ? "✓" : "✕",
+        detail: `Patryk dał na #1: ${reveal.prompt.options[reveal.submissions.Patryk.ranking[0]]}`
       },
       {
         label: "Patryk · trafienie top-1",
         value: reveal.guessHits.Patryk ? "+1" : "+0",
         tone: reveal.guessHits.Patryk ? "success" : "danger",
-        icon: reveal.guessHits.Patryk ? "✓" : "✕"
+        icon: reveal.guessHits.Patryk ? "✓" : "✕",
+        detail: `Sami dał na #1: ${reveal.prompt.options[reveal.submissions.Sami.ranking[0]]}`
       }
     ]
   };

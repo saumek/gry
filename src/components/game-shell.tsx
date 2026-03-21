@@ -97,6 +97,17 @@ export function GameShell({
     latestResult.gameId === activeGame.gameId
       ? latestResult
       : null;
+  const displayGame = useMemo<ActiveGameState>(() => {
+    if (activeGame.phase !== "finished" || !resultForActiveSession) {
+      return activeGame;
+    }
+
+    return {
+      ...activeGame,
+      winnerRole: resultForActiveSession.winnerRole,
+      scores: resultForActiveSession.scores
+    };
+  }, [activeGame, resultForActiveSession]);
   const feedbackForGame =
     actionFeedback && actionFeedback.gameId === activeGame.gameId ? actionFeedback : null;
   const feedbackLabel =
@@ -149,9 +160,9 @@ export function GameShell({
     <section className="stack-lg" data-testid="game-shell">
       <WinCelebration
         visible={showCelebration}
-        winnerRole={activeGame.winnerRole}
+        winnerRole={resultForActiveSession?.winnerRole ?? displayGame.winnerRole}
         endReason={resultForActiveSession?.endReason ?? "normal"}
-        scores={activeGame.scores}
+        scores={resultForActiveSession?.scores ?? displayGame.scores}
       />
 
       <section className="game-headline sticky-game-header" data-testid="game-headline">
@@ -161,8 +172,8 @@ export function GameShell({
             <h2>{activeCatalog.title}</h2>
           </div>
           <div className="game-context-strip__meta">
-            <span className="chip chip--phase">{phaseShortLabel(activeGame.phase)}</span>
-            <span className="game-context-strip__score">{`${activeGame.scores.Sami}:${activeGame.scores.Patryk}`}</span>
+            <span className="chip chip--phase">{phaseShortLabel(displayGame.phase)}</span>
+            <span className="game-context-strip__score">{`${displayGame.scores.Sami}:${displayGame.scores.Patryk}`}</span>
             {resultForActiveSession ? (
               <a className="jump-link" href="#game-result-section">
                 Wynik
@@ -197,7 +208,7 @@ export function GameShell({
           />
         ) : null}
 
-        {activeGame.phase !== "finished" && !endRequest ? (
+        {displayGame.phase !== "finished" && !endRequest ? (
           <div className="game-context-actions">
             <button
               className="btn btn--ghost btn--small btn--inline"
@@ -255,34 +266,34 @@ export function GameShell({
         ) : null}
       </section>
 
-      {activeGame.gameId === "qa-lightning" ? (
+      {displayGame.gameId === "qa-lightning" ? (
         <QaGame
-          state={activeGame}
+          state={displayGame}
           meRole={meRole}
           onAction={onAction}
           onAddQuestion={onAddQuestion}
         />
       ) : null}
 
-      {activeGame.gameId === "better-half" ? (
+      {displayGame.gameId === "better-half" ? (
         <BetterHalfGame
-          state={activeGame}
+          state={displayGame}
           meRole={meRole}
           onAction={onAction}
           onAddQuestion={onAddQuestion}
         />
       ) : null}
 
-      {activeGame.gameId === "mini-battleship" ? (
-        <BattleshipGame state={activeGame} meRole={meRole} onAction={onAction} />
+      {displayGame.gameId === "mini-battleship" ? (
+        <BattleshipGame state={displayGame} meRole={meRole} onAction={onAction} />
       ) : null}
 
-      {activeGame.gameId === "science-quiz" ? (
-        <ScienceQuizGame state={activeGame} meRole={meRole} onAction={onAction} />
+      {displayGame.gameId === "science-quiz" ? (
+        <ScienceQuizGame state={displayGame} meRole={meRole} onAction={onAction} />
       ) : null}
 
-      {activeGame.gameId === "couple-priorities" ? (
-        <CouplePrioritiesGame state={activeGame} meRole={meRole} onAction={onAction} />
+      {displayGame.gameId === "couple-priorities" ? (
+        <CouplePrioritiesGame state={displayGame} meRole={meRole} onAction={onAction} />
       ) : null}
     </section>
   );

@@ -14,7 +14,7 @@ export function useRevealAutoAdvance({
   enabled,
   phase,
   roundKey,
-  durationMs = 1200,
+  durationMs = 5200,
   onAdvance
 }: UseRevealAutoAdvanceArgs): {
   isPaused: boolean;

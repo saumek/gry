@@ -104,9 +104,6 @@ test("dwie osoby łączą się, trzecia widzi pełny pokój i działa zakończen
   await expect(pageA.getByText("finished")).toHaveCount(0);
 
   await pageA.getByRole("button", { name: "Powrót do lobby" }).click();
-  const feedback = pageA.getByTestId("feedback");
-  await expect(feedback).toBeVisible();
-  await expect(feedback).toHaveClass(/feedback-inline--info/);
   await expect(pageA.getByTestId("tab-badge-history")).toBeVisible();
   await pageA.getByTestId("tab-history").click();
   await expect(pageA.getByTestId("settings-panel")).toBeVisible();
@@ -150,6 +147,8 @@ test("science-quiz: wybór kategorii i reveal po 2 odpowiedziach", async ({ brow
 
   await expect(pageA.getByRole("heading", { name: /Poprawna odpowiedź/ })).toBeVisible();
   await expect(pageB.getByRole("heading", { name: /Poprawna odpowiedź/ })).toBeVisible();
+  await pageA.waitForTimeout(2200);
+  await expect(pageA.getByRole("heading", { name: /Poprawna odpowiedź/ })).toBeVisible();
 
   await contextA.close();
   await contextB.close();

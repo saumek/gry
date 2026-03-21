@@ -62,7 +62,7 @@ describe("question selector", () => {
       recentSessionsWindow: 12
     });
 
-    expect(selected.map((entry) => entry.id)).toEqual([2, 3]);
+    expect(selected.map((entry) => entry.id).sort((a, b) => a - b)).toEqual([2, 3]);
     expect(selected.every((entry) => entry.smartMeta?.repeatRisk === "medium")).toBe(true);
   });
 

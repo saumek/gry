@@ -4,10 +4,10 @@ import { loadQuestionPack } from "../../src/server/game/content/load-question-pa
 import { validateQuestionPack } from "../../src/server/game/content/question-pack.schema";
 
 describe("question pack schema", () => {
-  it("ładuje pack v1.10 z kompletną liczbą pytań", () => {
+  it("ładuje aktualny pack pytań z kompletną liczbą rekordów", () => {
     const pack = loadQuestionPack();
 
-    expect(pack.version).toBe("v1.10-question-pack-pl");
+    expect(pack.version).toBe("v1.10.1-question-pack-pl");
     expect(pack.qaLightning).toHaveLength(300);
     expect(pack.betterHalf).toHaveLength(300);
     expect(pack.scienceQuiz.matma).toHaveLength(200);
