@@ -253,18 +253,18 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
                   size={state.boardSize}
                   mode="target"
                   myShotMap={myShotMap}
-                  onCellClick={(x, y) => {
-                    if (!myTurn) {
-                      return;
-                    }
-
-                    onAction({
-                      gameId: "mini-battleship",
-                      type: "fire",
-                      x,
-                      y
-                    });
-                  }}
+                  onCellClick={
+                    myTurn
+                      ? (x, y) => {
+                          onAction({
+                            gameId: "mini-battleship",
+                            type: "fire",
+                            x,
+                            y
+                          });
+                        }
+                      : undefined
+                  }
                 />
               </section>
             </div>
@@ -325,26 +325,57 @@ function BoardGrid({
         const x = index % size;
         const y = Math.floor(index / size);
         const key = `${x}:${y}`;
+        const coordinateLabel = `${x + 1}, ${y + 1}`;
 
         const mine = shipCells.has(key);
         const enemyShot = enemyShotMap.get(key);
         const myShot = myShotMap.get(key);
+        const interactive = Boolean(onCellClick) && mode === "target";
 
         const classes = ["board-cell"];
         let marker = "";
+        let ariaLabel = `Pole ${coordinateLabel}`;
+        let isDisabled = mode === "own" || (mode === "setup" && mine) || (mode === "target" && !interactive);
 
         if (mode !== "target" && mine) {
           classes.push("is-ship");
         }
 
+        if (mode === "setup") {
+          ariaLabel = mine
+            ? `Pole ${coordinateLabel}. Zajęte przez ustawiony statek.`
+            : `Pole ${coordinateLabel}. Dostępne do ustawienia statku.`;
+        }
+
+        if (mode === "own") {
+          if (enemyShot === "hit" || enemyShot === "sunk") {
+            ariaLabel = `Pole ${coordinateLabel}. Trafione przez przeciwnika.`;
+          } else if (enemyShot === "miss") {
+            ariaLabel = `Pole ${coordinateLabel}. Przeciwnik pudłował.`;
+          } else if (mine) {
+            ariaLabel = `Pole ${coordinateLabel}. Twój statek.`;
+          } else {
+            ariaLabel = `Pole ${coordinateLabel}. Puste pole.`;
+          }
+        }
+
         if (enemyShot) {
           classes.push(enemyShot === "miss" ? "is-miss" : "is-hit");
           marker = enemyShot === "miss" ? "o" : "x";
+          isDisabled = true;
         }
 
         if (myShot) {
           classes.push(myShot === "miss" ? "is-miss" : "is-hit");
           marker = myShot === "miss" ? "o" : "x";
+          ariaLabel = myShot === "miss"
+            ? `Pole ${coordinateLabel}. Pudło.`
+            : `Pole ${coordinateLabel}. Trafienie.`;
+          isDisabled = true;
+        } else if (mode === "target") {
+          ariaLabel = interactive
+            ? `Pole ${coordinateLabel}. Kliknij, aby oddać strzał.`
+            : `Pole ${coordinateLabel}. Czekasz na swoją turę.`;
         }
 
         return (
@@ -353,6 +384,9 @@ function BoardGrid({
             className={classes.join(" ")}
             type="button"
             onClick={() => onCellClick?.(x, y)}
+            disabled={isDisabled}
+            aria-label={ariaLabel}
+            title={ariaLabel}
             data-testid={`board-${mode}-${x}-${y}`}
           >
             {marker}

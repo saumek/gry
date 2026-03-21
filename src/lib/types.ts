@@ -415,6 +415,7 @@ export type GameActionPayload =
 export type GameEventPayload = {
   kind:
     | "ready_changed"
+    | "question_added"
     | "game_started"
     | "round_revealed"
     | "round_advanced"

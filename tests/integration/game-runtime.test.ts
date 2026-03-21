@@ -67,6 +67,12 @@ async function closeHttpServer(server: http.Server): Promise<void> {
   });
 }
 
+async function listenTestServer(server: http.Server): Promise<void> {
+  await new Promise<void>((resolve) => {
+    server.listen(0, "127.0.0.1", resolve);
+  });
+}
+
 describe("game runtime", () => {
   const resources: Array<() => Promise<void>> = [];
 
@@ -91,7 +97,7 @@ describe("game runtime", () => {
         dbPath
       });
 
-      await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+      await listenTestServer(httpServer);
       const address = httpServer.address();
       if (!address || typeof address === "string") {
         throw new Error("Brak portu testowego");
@@ -177,7 +183,7 @@ describe("game runtime", () => {
         dbPath
       });
 
-      await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+      await listenTestServer(httpServer);
       const address = httpServer.address();
       if (!address || typeof address === "string") {
         throw new Error("Brak portu testowego");
@@ -266,7 +272,7 @@ describe("game runtime", () => {
         dbPath
       });
 
-      await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+      await listenTestServer(httpServer);
       const address = httpServer.address();
       if (!address || typeof address === "string") {
         throw new Error("Brak portu testowego");
@@ -349,7 +355,7 @@ describe("game runtime", () => {
         dbPath
       });
 
-      await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+      await listenTestServer(httpServer);
       const address = httpServer.address();
       if (!address || typeof address === "string") {
         throw new Error("Brak portu testowego");
@@ -424,7 +430,7 @@ describe("game runtime", () => {
         dbPath
       });
 
-      await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+      await listenTestServer(httpServer);
       const address = httpServer.address();
       if (!address || typeof address === "string") {
         throw new Error("Brak portu testowego");

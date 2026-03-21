@@ -6,7 +6,8 @@ const envSchema = z.object({
   SESSION_TTL_MS: z.coerce.number().int().positive().default(30000),
   HEARTBEAT_INTERVAL_MS: z.coerce.number().int().positive().default(10000),
   DB_PATH: z.string().trim().default("./data/app.db"),
-  PORT: z.coerce.number().int().positive().max(65535).default(3000)
+  PORT: z.coerce.number().int().positive().max(65535).default(3000),
+  HOST: z.string().trim().min(1).default("0.0.0.0")
 });
 
 const fallbackPin = process.env.NODE_ENV !== "production" ? "1234" : undefined;
@@ -16,7 +17,8 @@ const parsed = envSchema.safeParse({
   SESSION_TTL_MS: process.env.SESSION_TTL_MS,
   HEARTBEAT_INTERVAL_MS: process.env.HEARTBEAT_INTERVAL_MS,
   DB_PATH: process.env.DB_PATH,
-  PORT: process.env.PORT
+  PORT: process.env.PORT,
+  HOST: process.env.HOST
 });
 
 if (!parsed.success) {

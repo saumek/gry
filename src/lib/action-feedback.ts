@@ -134,7 +134,7 @@ export function shouldResolveByEventKind(
   }
 
   if ("text" in payload && "options" in payload) {
-    return eventKind === "ready_changed";
+    return eventKind === "question_added";
   }
 
   return false;

@@ -67,6 +67,7 @@ export function GameReadyPanel({
             state.activeGame?.phase !== "finished";
           const thisGameActive = state.activeGameId === game.id;
           const readyCount = Number(ready.Sami) + Number(ready.Patryk);
+          const canStart = thisGameActive || (!activeElsewhere && ready.Sami && ready.Patryk);
 
           return (
             <article
@@ -131,7 +132,7 @@ export function GameReadyPanel({
                 <button
                   className="btn btn--small"
                   type="button"
-                  disabled={activeElsewhere || !ready.Sami || !ready.Patryk}
+                  disabled={!canStart}
                   onClick={() => onStart(toStartPayload(game.id, selectedCategory))}
                   data-testid={`start-${game.id}`}
                 >

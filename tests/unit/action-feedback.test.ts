@@ -46,5 +46,12 @@ describe("action feedback", () => {
     expect(shouldResolveByEventKind("round_revealed", submitPayload)).toBe(true);
     expect(shouldResolveByEventKind("round_advanced", submitPayload)).toBe(true);
     expect(shouldResolveByEventKind("round_advanced", advancePayload)).toBe(true);
+    expect(
+      shouldResolveByEventKind("question_added", {
+        gameId: "qa-lightning" as const,
+        text: "Jakie jest Twoje ulubione śniadanie?",
+        options: ["Jajka", "Owsianka", "Tosty", "Jogurt"]
+      })
+    ).toBe(true);
   });
 });

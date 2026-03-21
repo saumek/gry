@@ -266,11 +266,11 @@ export default function HomePage() {
   }, [actionFeedback?.state, soundCuesEnabled]);
 
   const emitTracked = useCallback(
-    (event: ActionEventName, payload: AnyTrackedPayload): void => {
+    (event: ActionEventName, payload: AnyTrackedPayload): boolean => {
       const socket = socketRef.current;
       if (!socket) {
         pushFeedback("Brak aktywnego połączenia z serwerem.", "error");
-        return;
+        return false;
       }
 
       const clientActionId = createClientActionId(event.replace(":", "_"));
@@ -313,6 +313,7 @@ export default function HomePage() {
       pendingActionTimeoutsRef.current.set(clientActionId, timeoutId);
 
       socket.emit(event, enrichedPayload);
+      return true;
     },
     [pushFeedback]
   );
@@ -600,7 +601,7 @@ export default function HomePage() {
     }
 
     const nextTab = resolveTab(activeTab, Boolean(gameState?.activeGame));
-    if (nextTab !== activeTab) {
+    if (!gameState?.activeGame && nextTab !== activeTab) {
       setActiveTab(nextTab);
     }
   }, [phase, gameState?.activeGame, activeTab]);
@@ -683,10 +684,15 @@ export default function HomePage() {
 
   const onStartGame = useCallback((payload: GameStartPayload): void => {
     if (gameState?.activeGameId === payload.gameId && gameState.activeGame) {
+      setActiveTab("game");
       return;
     }
 
-    emitTracked("game:start", payload);
+    if (!emitTracked("game:start", payload)) {
+      return;
+    }
+
+    setActiveTab("game");
   }, [emitTracked, gameState?.activeGame, gameState?.activeGameId]);
 
   const onGameAction = useCallback((payload: GameActionPayload): void => {

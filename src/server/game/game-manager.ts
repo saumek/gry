@@ -83,6 +83,13 @@ export class GameManager {
       };
     }
 
+    if (this.activeGame && this.activeGame.phase !== "finished") {
+      return {
+        ok: false,
+        errorMessage: "Konfigurację można zmieniać tylko w lobby."
+      };
+    }
+
     if (this.configByGame["science-quiz"]?.category === payload.category) {
       return { ok: true };
     }
@@ -177,7 +184,7 @@ export class GameManager {
       ok: true,
       questionAdded: added,
       event: {
-        kind: "ready_changed",
+        kind: "question_added",
         gameId: payload.gameId,
         message: `${role} dodał nowe pytanie.`
       }
@@ -220,7 +227,7 @@ export class GameManager {
       const endedGameId = this.activeGame.gameId;
       this.activeGame = null;
       this.activeEndRequest = null;
-      this.readyByGame[endedGameId] = { Sami: false, Patryk: false };
+      this.clearAllReadyStates();
       this.bumpStateRevision();
 
       return {
@@ -629,6 +636,15 @@ export class GameManager {
     }
 
     return initial;
+  }
+
+  private clearAllReadyStates(): void {
+    for (const gameId of activeGameIds) {
+      this.readyByGame[gameId] = {
+        Sami: false,
+        Patryk: false
+      };
+    }
   }
 
   private bumpStateRevision(): void {

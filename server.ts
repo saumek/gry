@@ -6,7 +6,7 @@ import { appConfig } from "./src/lib/config";
 import { createSocketRuntime } from "./src/server/socket/create-runtime";
 
 const isDev = process.env.NODE_ENV !== "production";
-const host = "0.0.0.0";
+const host = appConfig.HOST;
 const port = appConfig.PORT;
 
 const app = next({ dev: isDev, hostname: host, port });

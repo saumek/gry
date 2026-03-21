@@ -39,6 +39,12 @@ async function closeHttpServer(server: http.Server): Promise<void> {
   });
 }
 
+async function listenTestServer(server: http.Server): Promise<void> {
+  await new Promise<void>((resolve) => {
+    server.listen(0, "127.0.0.1", resolve);
+  });
+}
+
 describe("socket runtime", () => {
   const resources: Array<() => Promise<void>> = [];
 
@@ -61,7 +67,7 @@ describe("socket runtime", () => {
       dbPath
     });
 
-    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    await listenTestServer(httpServer);
     const address = httpServer.address();
     if (!address || typeof address === "string") {
       throw new Error("Nie udało się odczytać portu testowego");
@@ -142,7 +148,7 @@ describe("socket runtime", () => {
       dbPath
     });
 
-    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    await listenTestServer(httpServer);
     const address = httpServer.address();
     if (!address || typeof address === "string") {
       throw new Error("Nie udało się odczytać portu testowego");
@@ -198,7 +204,7 @@ describe("socket runtime", () => {
       dbPath
     });
 
-    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    await listenTestServer(httpServer);
     const address = httpServer.address();
     if (!address || typeof address === "string") {
       throw new Error("Nie udało się odczytać portu testowego");
@@ -257,7 +263,7 @@ describe("socket runtime", () => {
       dbPath
     });
 
-    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    await listenTestServer(httpServer);
     const address = httpServer.address();
     if (!address || typeof address === "string") {
       throw new Error("Nie udało się odczytać portu testowego");
@@ -359,7 +365,7 @@ describe("socket runtime", () => {
       dbPath
     });
 
-    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    await listenTestServer(httpServer);
     const address = httpServer.address();
     if (!address || typeof address === "string") {
       throw new Error("Nie udało się odczytać portu testowego");
@@ -399,7 +405,7 @@ describe("socket runtime", () => {
       dbPath
     });
 
-    await new Promise<void>((resolve) => httpServer.listen(0, resolve));
+    await listenTestServer(httpServer);
     const address = httpServer.address();
     if (!address || typeof address === "string") {
       throw new Error("Nie udało się odczytać portu testowego");

@@ -1,19 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Space_Grotesk } from "next/font/google";
+import type { ReactNode } from "react";
 
 import { PwaRegister } from "../components/pwa-register";
 
 import "./globals.css";
-
-const headingFont = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-heading"
-});
-
-const bodyFont = Newsreader({
-  subsets: ["latin"],
-  variable: "--font-body"
-});
 
 export const metadata: Metadata = {
   title: "DuoPlay",
@@ -44,10 +34,10 @@ export const viewport: Viewport = {
   viewportFit: "cover"
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pl" data-theme="light" suppressHydrationWarning>
-      <body className={`${headingFont.variable} ${bodyFont.variable}`}>
+      <body>
         <PwaRegister />
         {children}
       </body>

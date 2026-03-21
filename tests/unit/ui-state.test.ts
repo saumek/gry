@@ -50,7 +50,8 @@ describe("ui-state", () => {
   });
 
   it("przełącza aktywną zakładkę zgodnie ze stanem gry", () => {
-    expect(resolveTab("lobby", true)).toBe("game");
+    expect(resolveTab("lobby", true)).toBe("lobby");
+    expect(resolveTab("game", true)).toBe("game");
     expect(resolveTab("game", false)).toBe("lobby");
     expect(resolveTab("history", false)).toBe("history");
   });

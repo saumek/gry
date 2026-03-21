@@ -50,6 +50,7 @@ Następnie możesz wystawić port (np. `3000`) przez router (port forwarding).
 - `HEARTBEAT_INTERVAL_MS` - heartbeat klienta (domyślnie `10000`)
 - `DB_PATH` - ścieżka do pliku SQLite (domyślnie `./data/app.db`)
 - `PORT` - port HTTP (domyślnie `3000`)
+- `HOST` - host HTTP serwera (domyślnie `0.0.0.0`, do testów lokalnych można ustawić `127.0.0.1`)
 - `ALLOWED_DEV_ORIGINS` - dodatkowe hosty/originy dla deva przez LAN jako lista po przecinku (np. `192.168.100.110,192.168.100.111`)
 
 ## Testy

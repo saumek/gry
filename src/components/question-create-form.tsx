@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import type { GameId } from "../lib/types";
 
@@ -17,6 +17,7 @@ type QuestionCreateFormProps = {
 const initialOptions: [string, string, string, string] = ["", "", "", ""];
 
 export function QuestionCreateForm({ gameId, disabled, onAddQuestion }: QuestionCreateFormProps) {
+  const formId = useId();
   const [expanded, setExpanded] = useState(false);
   const [text, setText] = useState("");
   const [options, setOptions] = useState<[string, string, string, string]>(initialOptions);
@@ -65,11 +66,11 @@ export function QuestionCreateForm({ gameId, disabled, onAddQuestion }: Question
             setOptions(initialOptions);
           }}
         >
-          <label className="label" htmlFor="custom-question-text">
+          <label className="label" htmlFor={`${formId}-question-text`}>
             Treść pytania
           </label>
           <textarea
-            id="custom-question-text"
+            id={`${formId}-question-text`}
             className="input input--multiline"
             maxLength={220}
             value={text}
@@ -79,20 +80,23 @@ export function QuestionCreateForm({ gameId, disabled, onAddQuestion }: Question
           />
 
           {options.map((option, index) => (
-            <input
-              key={index}
-              className="input"
-              type="text"
-              maxLength={120}
-              value={option}
-              onChange={(event) => {
-                const next = [...options] as [string, string, string, string];
-                next[index] = event.target.value;
-                setOptions(next);
-              }}
-              placeholder={`Opcja ${index + 1}`}
-              disabled={disabled}
-            />
+            <label className="stack stack--spacious" key={index} htmlFor={`${formId}-option-${index}`}>
+              <span className="label">Opcja {index + 1}</span>
+              <input
+                id={`${formId}-option-${index}`}
+                className="input"
+                type="text"
+                maxLength={120}
+                value={option}
+                onChange={(event) => {
+                  const next = [...options] as [string, string, string, string];
+                  next[index] = event.target.value;
+                  setOptions(next);
+                }}
+                placeholder={`Opcja ${index + 1}`}
+                disabled={disabled}
+              />
+            </label>
           ))}
 
           <button className="btn" type="submit" disabled={disabled}>

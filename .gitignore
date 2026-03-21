@@ -4,5 +4,8 @@ coverage
 playwright-report
 test-results
 data/app.db
+data/*.db-shm
+data/*.db-wal
+*.tsbuildinfo
 .DS_Store
 .env

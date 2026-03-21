@@ -27,11 +27,12 @@ function formatDate(iso: string): string {
 }
 
 export function GameHistoryCards({ history }: GameHistoryCardsProps) {
+  const [expanded, setExpanded] = useState(false);
+
   if (history.length === 0) {
     return null;
   }
 
-  const [expanded, setExpanded] = useState(false);
   const canToggle = history.length > 6;
 
   return (

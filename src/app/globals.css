@@ -370,6 +370,7 @@ small {
 
 .top-status__line--sub {
   min-height: 16px;
+  align-items: center;
 }
 
 .top-status__brand {
@@ -381,6 +382,7 @@ small {
 .top-status__state {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 4px;
   min-width: 0;
   flex: 1;
@@ -395,9 +397,21 @@ small {
 }
 
 .top-status__summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+  margin-left: auto;
   font-size: 0.72rem;
   color: var(--text-1);
-  white-space: nowrap;
+  white-space: normal;
+}
+
+.top-status__game {
+  min-width: 0;
+  font-family: var(--font-heading);
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -566,7 +580,6 @@ small {
   background: linear-gradient(120deg, var(--accent), var(--accent-2));
 }
 
-.presence-grid,
 .game-list,
 .history-list {
   display: grid;
@@ -578,7 +591,6 @@ small {
   contain-intrinsic-size: 520px;
 }
 
-.presence-pill,
 .game-row,
 .history-row {
   min-height: 40px;
@@ -587,15 +599,6 @@ small {
   gap: 2px;
   padding: 4px 0;
   border-bottom: 1px solid color-mix(in srgb, var(--line-subtle) 88%, transparent);
-}
-
-.presence-pill {
-  grid-template-columns: 1fr auto;
-  align-items: center;
-}
-
-.presence-pill.is-online {
-  border-bottom-color: color-mix(in srgb, var(--success) 40%, var(--line-subtle));
 }
 
 .me-tag {
@@ -784,13 +787,6 @@ small {
   gap: 6px;
 }
 
-.round-strip {
-  display: grid;
-  gap: 4px;
-  border-left: 3px solid var(--accent);
-  padding-left: 6px;
-}
-
 .result-chip-row {
   display: flex;
   flex-wrap: wrap;
@@ -883,6 +879,10 @@ small {
   overflow: hidden;
 }
 
+.board-cell:disabled {
+  cursor: default;
+}
+
 .board-cell::after {
   content: "";
   position: absolute;
@@ -943,21 +943,6 @@ small {
   animation: fadeUp 240ms ease;
 }
 
-.section-divider {
-  border-top: 1px solid var(--line-subtle);
-  padding-top: 8px;
-  display: flex;
-  justify-content: center;
-}
-
-.section-divider > span {
-  font-family: var(--font-heading);
-  font-size: 0.7rem;
-  color: var(--text-1);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 input:focus-visible,
 textarea:focus-visible,
 button:focus-visible,
@@ -989,7 +974,6 @@ a:focus-visible {
     padding-right: 10px;
   }
 
-  .presence-grid,
   .game-list,
   .history-list {
     grid-template-columns: 1fr 1fr;
@@ -1176,8 +1160,7 @@ a:focus-visible {
 }
 
 .game-row,
-.history-row,
-.presence-pill {
+.history-row {
   padding: 6px 0;
   min-height: 42px;
 }

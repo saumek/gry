@@ -57,12 +57,8 @@ export function createTopBarModel(
 }
 
 export function resolveTab(current: AppTab, hasActiveGame: boolean): AppTab {
-  if (hasActiveGame) {
-    return "game";
-  }
-
   if (current === "game") {
-    return "lobby";
+    return hasActiveGame ? "game" : "lobby";
   }
 
   return current;
