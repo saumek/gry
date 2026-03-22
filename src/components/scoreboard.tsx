@@ -1,4 +1,5 @@
 import { createScoreCards, getLeadProgress, getLeader } from "../lib/score-visuals";
+import { displayRoleName } from "../lib/ui-state";
 import type { GameScore, Role } from "../lib/types";
 
 type ScoreboardProps = {
@@ -11,7 +12,7 @@ export function Scoreboard({ scores, subtitle, meRole }: ScoreboardProps) {
   const cards = createScoreCards(scores);
   const leader = getLeader(scores);
   const progress = getLeadProgress(scores);
-  const leadLabel = leader ? `Prowadzi ${leader}` : "Remis";
+  const leadLabel = leader ? `Prowadzi ${displayRoleName(leader)}` : "Remis";
 
   return (
     <section className="scoreboard" aria-label="Wynik gry" data-testid="scoreboard">
@@ -30,7 +31,7 @@ export function Scoreboard({ scores, subtitle, meRole }: ScoreboardProps) {
             data-testid={`score-${card.role}`}
           >
             <header className="score-inline__head">
-              <strong>{card.role}</strong>
+              <strong>{displayRoleName(card.role)}</strong>
               <small>{meRole === card.role ? "Ty" : "Partner"}</small>
             </header>
             <p className="score-inline__value score-inline__value--animated">{card.points}</p>

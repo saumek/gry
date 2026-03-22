@@ -1,4 +1,4 @@
-import { createTopBarModel } from "../lib/ui-state";
+import { createTopBarModel, displayRoleName } from "../lib/ui-state";
 import type { ActiveGameState, ConnectionStatus, ThemeMode, Role } from "../lib/types";
 
 type TopStatusBarProps = {
@@ -19,25 +19,30 @@ export function TopStatusBar({
   const model = createTopBarModel(meRole, activeGame, connectionStatus, connectionLabel);
   const gameSummary = activeGame
     ? [model.gameLabel, model.phaseLabel, model.scoreLabel].filter(Boolean).join(" · ")
-    : model.gameLabel;
+    : "Brak aktywnej gry";
 
   return (
     <header className="top-status" data-testid="top-status-bar">
-      <div className="top-status__line">
-        <strong className="top-status__brand">
-          <img src="/assets/icons/duoplay-mark.svg" alt="" aria-hidden="true" className="brand-mark" />
-          DuoPlay
-        </strong>
+      <div className="top-status__line top-status__line--brand">
+        <div className={`top-status__avatar ${meRole ? "is-ready" : ""}`} aria-hidden="true">
+          {meRole ? displayRoleName(meRole).slice(0, 1) : "?"}
+        </div>
+        <div className="top-status__brand-wrap">
+          <span className="top-status__eyebrow">Samuel + Patryk</span>
+          <strong className="top-status__brand">DUOPLAY</strong>
+        </div>
         <span className="top-status__theme" aria-hidden="true">
-          {themeMode === "system" ? "Auto" : themeMode === "light" ? "Jasny" : "Ciemny"}
+          {themeMode === "system" ? "AUTO" : themeMode === "light" ? "LIGHT" : "DARK"}
         </span>
       </div>
+
       <div className="top-status__line top-status__line--sub">
         <div className="top-status__state">
           <span className="top-status__item top-status__item--role">{model.roleLabel}</span>
-          <span className={`status-dot status-dot--${model.connectionStatus}`} aria-hidden="true" />
-          <span className="top-status__item">{model.connectionLabel}</span>
+          <span className={`status-dot status-dot--${connectionStatus}`} aria-hidden="true" />
+          <span className="top-status__item">{connectionLabel}</span>
         </div>
+
         <div className="top-status__summary" aria-label={gameSummary}>
           <span className="top-status__game">{gameSummary}</span>
           {model.jumpToResult ? (

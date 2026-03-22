@@ -11,7 +11,7 @@ type BottomNavProps = {
 const navItems: NavItemModel[] = [
   { id: "game", label: "Gra", icon: "/assets/icons/nav-game.svg" },
   { id: "lobby", label: "Lobby", icon: "/assets/icons/nav-lobby.svg" },
-  { id: "history", label: "Historia", icon: "/assets/icons/nav-history.svg" }
+  { id: "history", label: "Profil", icon: "/assets/icons/nav-history.svg" }
 ];
 
 export function BottomNav({ activeTab, onChange, historyCount, gameActive }: BottomNavProps) {
@@ -28,13 +28,12 @@ export function BottomNav({ activeTab, onChange, historyCount, gameActive }: Bot
             className={`bottom-nav__item ${isActive ? "is-active" : ""}`}
             onClick={() => onChange(item.id)}
             aria-pressed={isActive}
-            title={item.label}
             data-testid={`tab-${item.id}`}
           >
             <span className="bottom-nav__icon" aria-hidden="true">
               <AppIcon src={item.icon} />
             </span>
-            <span>{item.label}</span>
+            <span className="bottom-nav__label">{item.label.toUpperCase()}</span>
             {badge > 0 ? <span className="bottom-nav__badge" data-testid={`tab-badge-${item.id}`}>{badge}</span> : null}
             {gameActive && item.id === "game" && !isActive ? (
               <span className="bottom-nav__dot" aria-hidden="true" />

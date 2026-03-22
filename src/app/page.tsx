@@ -707,14 +707,6 @@ export default function HomePage() {
     emitTracked("question:add", payload);
   }, [emitTracked]);
 
-  const headerTitle = useMemo(() => {
-    if (!meRole) {
-      return "Pokój dwuosobowy";
-    }
-
-    return `Zalogowano jako ${meRole}`;
-  }, [meRole]);
-
   const connectionLabel = useMemo(() => {
     if (connectionStatus === "online") {
       return "Online";
@@ -732,7 +724,7 @@ export default function HomePage() {
   }, [connectionStatus]);
 
   return (
-    <main className="app-shell motion-app-enter" data-phase={phase}>
+    <main className="app-shell motion-app-enter" data-phase={phase} data-resolved-theme={resolvedTheme}>
       <TopStatusBar
         meRole={meRole}
         activeGame={gameState?.activeGame ?? null}
@@ -744,40 +736,21 @@ export default function HomePage() {
       <section className="main-viewport" data-testid="main-viewport">
         <div className="view-stack">
           {phase === "pin" ? (
-            <>
-              <section className="screen-title">
-                <h1>DuoPlay</h1>
-                <p>{headerTitle}</p>
-                <small>{`Motyw: ${resolvedTheme === "dark" ? "ciemny" : "jasny"}`}</small>
-              </section>
-              <PinEntry
-                pin={pin}
-                onPinChange={setPin}
-                onSubmit={onSubmitPin}
-                isBusy={isBusy}
-                message={feedback?.text}
-              />
-            </>
+            <PinEntry
+              pin={pin}
+              onPinChange={setPin}
+              onSubmit={onSubmitPin}
+              isBusy={isBusy}
+              message={feedback?.text}
+            />
           ) : null}
 
           {phase === "choose-role" ? (
-            <>
-              <section className="screen-title">
-                <h1>Wybór roli</h1>
-                <p>{headerTitle}</p>
-              </section>
-              <RolePicker availableRoles={availableRoles} onPick={onPickRole} />
-            </>
+            <RolePicker availableRoles={availableRoles} onPick={onPickRole} />
           ) : null}
 
           {phase === "room-full" ? (
-            <>
-              <section className="screen-title">
-                <h1>Pokój pełny</h1>
-                <p>Obie role są zajęte.</p>
-              </section>
-              <RoomFull />
-            </>
+            <RoomFull />
           ) : null}
 
           {phase === "lobby" && meRole ? (
@@ -796,11 +769,8 @@ export default function HomePage() {
                     />
                   ) : (
                     <>
-                      <section className="screen-title">
-                        <h1>Gra</h1>
-                        <p>Aktywna sesja i wynik na żywo.</p>
-                      </section>
-                      <section className="empty-state">
+                      <section className="screen-title screen-title--duel">
+                        <p className="section-kicker">No Active Duel</p>
                         <h2>Brak aktywnej gry</h2>
                         <p>Przejdź do Lobby i kliknij gotowość, aby wystartować.</p>
                       </section>
@@ -811,10 +781,6 @@ export default function HomePage() {
 
               {activeTab === "lobby" ? (
                 <section className="tab-section motion-tab-switch" data-testid="tab-panel-lobby">
-                  <section className="screen-title">
-                    <h1>Lobby</h1>
-                    <p>Szybki start, status duetu i wybór gry.</p>
-                  </section>
                   {gameState ? (
                     <GameReadyPanel
                       meRole={meRole}
@@ -830,9 +796,10 @@ export default function HomePage() {
 
               {activeTab === "history" ? (
                 <section className="tab-section motion-tab-switch" data-testid="tab-panel-history">
-                  <section className="screen-title">
+                  <section className="screen-title screen-title--duel">
+                    <p className="section-kicker">Archive Mode</p>
                     <h1>Historia</h1>
-                    <p>Wyniki, ustawienia i ostatnie sesje.</p>
+                    <p>Wyniki, ustawienia lokalne i zapis ostatnich pojedynków.</p>
                   </section>
                   <AppSettingsPanel
                     themeMode={themeMode}
@@ -843,7 +810,7 @@ export default function HomePage() {
                   {gameState?.history && gameState.history.length > 0 ? (
                     <GameHistoryCards history={gameState.history} />
                   ) : (
-                    <section className="empty-state">
+                    <section className="empty-state empty-state--duel">
                       <h2>Brak historii</h2>
                       <p>Pierwszy mecz zapisze się tutaj automatycznie.</p>
                     </section>

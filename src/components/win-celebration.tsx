@@ -1,4 +1,5 @@
 import type { GameEndReason, GameScore, Role } from "../lib/types";
+import { displayRoleName } from "../lib/ui-state";
 
 type WinCelebrationProps = {
   visible: boolean;
@@ -16,7 +17,7 @@ export function WinCelebration({ visible, winnerRole, endReason, scores }: WinCe
     endReason === "aborted"
       ? "Gra przerwana"
       : winnerRole
-        ? `Wygrywa ${winnerRole}`
+        ? `Wygrywa ${displayRoleName(winnerRole)}`
         : "Remis";
 
   return (
@@ -26,7 +27,7 @@ export function WinCelebration({ visible, winnerRole, endReason, scores }: WinCe
           {endReason === "aborted" ? "•" : winnerRole ? "★" : "≈"}
         </p>
         <h2>{title}</h2>
-        <p>{`Sami ${scores.Sami} : ${scores.Patryk} Patryk`}</p>
+        <p>{`Samuel ${scores.Sami} : ${scores.Patryk} Patryk`}</p>
       </div>
     </aside>
   );

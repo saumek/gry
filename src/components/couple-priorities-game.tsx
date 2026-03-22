@@ -168,7 +168,7 @@ export function CouplePrioritiesGame({ state, meRole, onAction }: CouplePrioriti
                   tone: roundVisual.tone,
                   icon: roundVisual.icon,
                   stats: [
-                    { label: "Sami", value: String(state.scores.Sami) },
+                    { label: "Samuel", value: String(state.scores.Sami) },
                     { label: "Patryk", value: String(state.scores.Patryk) }
                   ]
                 }}

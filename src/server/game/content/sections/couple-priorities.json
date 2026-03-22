@@ -1,0 +1,1982 @@
+[
+  {
+    "text": "Planujecie większy zakup i nie macie zgody co do kwoty. Co jest do zrobienia najpierw?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Wpada niespodziewany rachunek albo awaria, której nie było w planie. Co jest do zrobienia najpierw?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd. Co powinno dostać priorytet?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i telefon i praca wchodzą wam w środek wspólnego czasu, co trzeba zrobić od razu?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Gdy ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia, co bierze górę?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy. Co jest do zrobienia najpierw?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Gdy jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór, co bierze górę?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Jeśli obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić, od czego zaczynasz rozmowę?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Jeśli planujecie większy zakup i nie macie zgody co do kwoty, od czego zaczynasz rozmowę?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i w relacji pojawia się zazdrość albo potrzeba większej przejrzystości, co trzeba zrobić od razu?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Gdy jedna osoba jest po bardzo długim dniu i nie ma już energii na nic, co bierze górę?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy kalendarz pęka w szwach i trzeba coś wykreślić?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy telefon i praca wchodzą wam w środek wspólnego czasu?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "W mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować. Co powinno dostać priorytet?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej. Co jest do zrobienia najpierw?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Kiedy jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie, co ustawiasz wyżej od reszty?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Kiedy stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej, co ustawiasz wyżej od reszty?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy w relacji pojawia się zazdrość albo potrzeba większej przejrzystości?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "W mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować. Co jest do zrobienia najpierw?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Gdy w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować, co bierze górę?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Telefon i praca wchodzą wam w środek wspólnego czasu. Co jest do zrobienia najpierw?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli wpada niespodziewany rachunek albo awaria, której nie było w planie?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia, co trzeba zrobić od razu?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli w relacji pojawia się zazdrość albo potrzeba większej przejrzystości?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Jeśli jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie, od czego zaczynasz rozmowę?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu. Co powinno dostać priorytet?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "W relacji pojawia się zazdrość albo potrzeba większej przejrzystości. Co powinno dostać priorytet?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy telefon i praca wchodzą wam w środek wspólnego czasu?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie. Co powinno dostać priorytet?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Jeśli macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał, od czego zaczynasz rozmowę?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Planujecie większy zakup i nie macie zgody co do kwoty. Co powinno dostać priorytet?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Jeśli jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie, od czego zaczynasz rozmowę?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i wpada niespodziewany rachunek albo awaria, której nie było w planie, co trzeba zrobić od razu?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy wpada niespodziewany rachunek albo awaria, której nie było w planie?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli planujecie większy zakup i nie macie zgody co do kwoty?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał, co trzeba zrobić od razu?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu. Co jest do zrobienia najpierw?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Gdy telefon i praca wchodzą wam w środek wspólnego czasu, co bierze górę?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Kiedy rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy, co ustawiasz wyżej od reszty?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Gdy kalendarz pęka w szwach i trzeba coś wykreślić, co bierze górę?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd, co trzeba zrobić od razu?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór. Co powinno dostać priorytet?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli jedno z was choruje albo jest naprawdę wyłączone z obrotu?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie. Co jest do zrobienia najpierw?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli telefon i praca wchodzą wam w środek wspólnego czasu?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Kiedy wpada niespodziewany rachunek albo awaria, której nie było w planie, co ustawiasz wyżej od reszty?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie. Co powinno dostać priorytet?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach, co trzeba zrobić od razu?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Jeśli w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować, od czego zaczynasz rozmowę?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Gdy rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy, co bierze górę?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Gdy stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej, co bierze górę?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach. Co jest do zrobienia najpierw?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Jeśli jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór, od czego zaczynasz rozmowę?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Gdy wpada niespodziewany rachunek albo awaria, której nie było w planie, co bierze górę?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kiedy w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować, co ustawiasz wyżej od reszty?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli planujecie większy zakup i nie macie zgody co do kwoty?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy jedno z was choruje albo jest naprawdę wyłączone z obrotu?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Jeśli rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy, od czego zaczynasz rozmowę?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Kiedy rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu, co ustawiasz wyżej od reszty?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Gdy planujecie większy zakup i nie macie zgody co do kwoty, co bierze górę?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór, co trzeba zrobić od razu?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i jedna osoba jest po bardzo długim dniu i nie ma już energii na nic, co trzeba zrobić od razu?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić. Co powinno dostać priorytet?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Kiedy jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach, co ustawiasz wyżej od reszty?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Gdy jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie, co bierze górę?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie. Co jest do zrobienia najpierw?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Jeśli telefon i praca wchodzą wam w środek wspólnego czasu, od czego zaczynasz rozmowę?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Jeśli ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia, od czego zaczynasz rozmowę?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Gdy w relacji pojawia się zazdrość albo potrzeba większej przejrzystości, co bierze górę?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Kiedy planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd, co ustawiasz wyżej od reszty?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i kalendarz pęka w szwach i trzeba coś wykreślić, co trzeba zrobić od razu?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni, co trzeba zrobić od razu?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy wpada niespodziewany rachunek albo awaria, której nie było w planie?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór. Co jest do zrobienia najpierw?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Kiedy ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni, co ustawiasz wyżej od reszty?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Kalendarz pęka w szwach i trzeba coś wykreślić. Co jest do zrobienia najpierw?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia. Co powinno dostać priorytet?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy w relacji pojawia się zazdrość albo potrzeba większej przejrzystości?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli w relacji pojawia się zazdrość albo potrzeba większej przejrzystości?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Jeśli ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni, od czego zaczynasz rozmowę?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Jeśli jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach, od czego zaczynasz rozmowę?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Jeśli rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu, od czego zaczynasz rozmowę?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Kiedy w relacji pojawia się zazdrość albo potrzeba większej przejrzystości, co ustawiasz wyżej od reszty?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i jedno z was choruje albo jest naprawdę wyłączone z obrotu, co trzeba zrobić od razu?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Gdy jedno z was choruje albo jest naprawdę wyłączone z obrotu, co bierze górę?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić. Co jest do zrobienia najpierw?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia. Co jest do zrobienia najpierw?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy kalendarz pęka w szwach i trzeba coś wykreślić?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kalendarz pęka w szwach i trzeba coś wykreślić. Co powinno dostać priorytet?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy jedna osoba jest po bardzo długim dniu i nie ma już energii na nic?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie, co trzeba zrobić od razu?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Jeśli kalendarz pęka w szwach i trzeba coś wykreślić, od czego zaczynasz rozmowę?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kiedy planujecie większy zakup i nie macie zgody co do kwoty, co ustawiasz wyżej od reszty?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy w relacji pojawia się zazdrość albo potrzeba większej przejrzystości?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli wpada niespodziewany rachunek albo awaria, której nie było w planie?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Jeśli w relacji pojawia się zazdrość albo potrzeba większej przejrzystości, od czego zaczynasz rozmowę?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i planujecie większy zakup i nie macie zgody co do kwoty, co trzeba zrobić od razu?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "W relacji pojawia się zazdrość albo potrzeba większej przejrzystości. Co jest do zrobienia najpierw?",
+    "options": [
+      "porozmawiać wprost",
+      "większa transparentność",
+      "ustalenie granic",
+      "nie sprawdzać po cichu"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Kiedy telefon i praca wchodzą wam w środek wspólnego czasu, co ustawiasz wyżej od reszty?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej, co trzeba zrobić od razu?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy planujecie większy zakup i nie macie zgody co do kwoty?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Gdy jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie, co bierze górę?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli jedno z was choruje albo jest naprawdę wyłączone z obrotu?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli jedna osoba jest po bardzo długim dniu i nie ma już energii na nic?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować, co trzeba zrobić od razu?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Kiedy ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia, co ustawiasz wyżej od reszty?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy telefon i praca wchodzą wam w środek wspólnego czasu?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd. Co jest do zrobienia najpierw?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli telefon i praca wchodzą wam w środek wspólnego czasu?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Jeśli stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej, od czego zaczynasz rozmowę?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu, co trzeba zrobić od razu?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Kiedy jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie, co ustawiasz wyżej od reszty?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy planujecie większy zakup i nie macie zgody co do kwoty?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Kiedy kalendarz pęka w szwach i trzeba coś wykreślić, co ustawiasz wyżej od reszty?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Gdy planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd, co bierze górę?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy jedna osoba jest po bardzo długim dniu i nie ma już energii na nic?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Gdy ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni, co bierze górę?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Kiedy obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić, co ustawiasz wyżej od reszty?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli kalendarz pęka w szwach i trzeba coś wykreślić?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy, co trzeba zrobić od razu?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy jedno z was choruje albo jest naprawdę wyłączone z obrotu?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Kiedy macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał, co ustawiasz wyżej od reszty?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Gdy obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić, co bierze górę?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Jedno z was choruje albo jest naprawdę wyłączone z obrotu. Co jest do zrobienia najpierw?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej. Co powinno dostać priorytet?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  },
+  {
+    "text": "Jeśli jedno z was choruje albo jest naprawdę wyłączone z obrotu, od czego zaczynasz rozmowę?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Jeśli wpada niespodziewany rachunek albo awaria, której nie było w planie, od czego zaczynasz rozmowę?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kiedy jesteście po prostu zmęczeni i marzy się wam zwykły, cichy wieczór, co ustawiasz wyżej od reszty?",
+    "options": [
+      "zwykły spokojny wieczór",
+      "wcześniejszy sen",
+      "kolacja bez presji",
+      "telefon do minimum"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy w mieszkaniu narasta bałagan i obowiązki zaczynają się kumulować?",
+    "options": [
+      "podział zadań od razu",
+      "zrobienie tylko najpilniejszych rzeczy",
+      "odpuszczenie reszty na dziś",
+      "ustalenie, kto bierze co"
+    ]
+  },
+  {
+    "text": "Wpada niespodziewany rachunek albo awaria, której nie było w planie. Co powinno dostać priorytet?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie, co trzeba zrobić od razu?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Jedna osoba jest po bardzo długim dniu i nie ma już energii na nic. Co jest do zrobienia najpierw?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach. Co powinno dostać priorytet?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Jeśli planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd, od czego zaczynasz rozmowę?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Kiedy jedno z was choruje albo jest naprawdę wyłączone z obrotu, co ustawiasz wyżej od reszty?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli planujecie wakacje, ale każdy ma w głowie zupełnie inny wyjazd?",
+    "options": [
+      "sprawdzenie budżetu",
+      "wspólny punkt programu",
+      "miks odpoczynku i zwiedzania",
+      "zostawienie miejsca na spontan"
+    ]
+  },
+  {
+    "text": "Ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni. Co jest do zrobienia najpierw?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy kalendarz pęka w szwach i trzeba coś wykreślić?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli kalendarz pęka w szwach i trzeba coś wykreślić?",
+    "options": [
+      "wycięcie tego, co najmniej ważne",
+      "spisanie planu na dziś",
+      "niebranie już niczego nowego",
+      "ustalenie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Gdy jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach, co bierze górę?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Jedno z was choruje albo jest naprawdę wyłączone z obrotu. Co powinno dostać priorytet?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Kiedy jedna osoba jest po bardzo długim dniu i nie ma już energii na nic, co ustawiasz wyżej od reszty?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał. Co powinno dostać priorytet?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy jedno z was ma ochotę na bliskość, a drugie ledwo trzyma się na nogach?",
+    "options": [
+      "uszanować zmęczenie",
+      "krótki czuły kontakt bez nacisku",
+      "zapytać wprost, czego druga osoba potrzebuje",
+      "przełożyć wszystko na inny wieczór"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy jedna osoba jest po bardzo długim dniu i nie ma już energii na nic?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Telefon i praca wchodzą wam w środek wspólnego czasu. Co powinno dostać priorytet?",
+    "options": [
+      "odłożyć telefony",
+      "ustalić godzinę offline",
+      "dokończyć pilną sprawę i wrócić",
+      "nie wpuszczać pracy do rozmowy"
+    ]
+  },
+  {
+    "text": "Macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał. Co jest do zrobienia najpierw?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Co byłoby rozsądniejsze: rozmowa, oddech czy konkret, jeśli jedno z was wraca po ostrej kłótni i w domu dalej czuć napięcie?",
+    "options": [
+      "spokojna rozmowa o tym, co zabolało",
+      "chwila ciszy, zanim wrócicie do tematu",
+      "szczere przeprosiny",
+      "jedna konkretna zmiana na przyszłość"
+    ]
+  },
+  {
+    "text": "Kiedy wszystko się miesza i obie rodziny chcą was w ten sam weekend i nikt nie chce odpuścić, co trzeba zrobić od razu?",
+    "options": [
+      "ustawienie własnego planu jako para",
+      "uczciwy podział wizyt",
+      "jasne powiedzenie komuś nie",
+      "zostać u siebie i odpuścić część spotkań"
+    ]
+  },
+  {
+    "text": "Czego pilnujesz najbardziej, gdy planujecie większy zakup i nie macie zgody co do kwoty?",
+    "options": [
+      "sprawdzenie liczb",
+      "ustalenie limitu",
+      "odłożenie decyzji na chwilę",
+      "wybór bezpieczniejszej opcji"
+    ]
+  },
+  {
+    "text": "Jeśli jedna osoba jest po bardzo długim dniu i nie ma już energii na nic, od czego zaczynasz rozmowę?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Co nie może czekać, kiedy jedno z was choruje albo jest naprawdę wyłączone z obrotu?",
+    "options": [
+      "odpoczynek",
+      "jedzenie, leki i spokój",
+      "domowe minimum",
+      "przejęcie większości obowiązków"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy ktoś z was przechodzi gorszy okres i potrzebuje konkretnego wsparcia?",
+    "options": [
+      "być obok i słuchać",
+      "załatwić praktyczne rzeczy",
+      "mniej pytań, więcej ciszy",
+      "odciążyć z codziennych obowiązków"
+    ]
+  },
+  {
+    "text": "Gdy macie jeden wspólny wieczór, a cały tydzień już wam się rozjechał, co bierze górę?",
+    "options": [
+      "czas tylko we dwoje",
+      "odłożenie telefonów",
+      "krótki wspólny wypad",
+      "zostanie w domu i odpoczynek"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy jedno z was chce wyjść do ludzi, a drugie marzy tylko o kanapie?",
+    "options": [
+      "wyjść choć na chwilę",
+      "zostać w domu bez poczucia winy",
+      "pójść tylko na krótki wypad",
+      "ustalić limit czasu"
+    ]
+  },
+  {
+    "text": "Ktoś z was czeka na przeprosiny, a druga strona jeszcze się broni. Co powinno dostać priorytet?",
+    "options": [
+      "powiedzieć, co było nie tak",
+      "szczere przeprosiny",
+      "naprawa działaniem",
+      "przestrzeń na ochłonięcie"
+    ]
+  },
+  {
+    "text": "Masz tylko jeden ruch. Jaki wybierasz, jeśli jedna osoba jest po bardzo długim dniu i nie ma już energii na nic?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Jedna osoba jest po bardzo długim dniu i nie ma już energii na nic. Co powinno dostać priorytet?",
+    "options": [
+      "cisza i święty spokój",
+      "przejęcie obowiązków na ten wieczór",
+      "krótka wiadomość zamiast rozmowy",
+      "wcześniejsze pójście spać"
+    ]
+  },
+  {
+    "text": "Rodzina partnera zaczyna wchodzić wam za mocno w codzienne sprawy. Co powinno dostać priorytet?",
+    "options": [
+      "jasne granice",
+      "mniej tłumaczenia się, więcej konkretu",
+      "rozmowa między sobą przed odpowiedzią",
+      "ograniczenie kontaktu do minimum"
+    ]
+  },
+  {
+    "text": "Gdy rozmowa się rwie, bo jedno mówi szybko, a drugie potrzebuje czasu, co bierze górę?",
+    "options": [
+      "zwolnić tempo",
+      "przerwa i powrót później",
+      "krótko i wprost",
+      "ustalić, kiedy dokończyć temat"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy wpada niespodziewany rachunek albo awaria, której nie było w planie?",
+    "options": [
+      "sprawdzenie budżetu",
+      "odcięcie zbędnych wydatków",
+      "szukanie tańszej opcji",
+      "przegadanie, co może poczekać"
+    ]
+  },
+  {
+    "text": "Jak to rozgrywasz, gdy stoicie przed decyzją, czy zamieszkać razem albo przenieść się gdzieś indziej?",
+    "options": [
+      "spisanie kosztów i terminów",
+      "porównanie plusów i minusów",
+      "rozmowa o oczekiwaniach bez spiny",
+      "ustalenie wersji na próbę"
+    ]
+  }
+]

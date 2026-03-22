@@ -9,9 +9,7 @@ const bannedPatterns = [
   /\bseksual/i,
   /\bporno/i,
   /\berotycz/i,
-  /\bwulg/i,
-  /\bpolityk/i,
-  /\bparti(a|e)\b/i
+  /\bwulg/i
 ];
 
 export type RelationQuestionPackItem = {
@@ -115,7 +113,7 @@ function parseRelationQuestion(value: unknown, path: string): RelationQuestionPa
 
   return {
     text: readQuestionText(raw.text, `${path}.text`),
-    options: readOptions(raw.options, `${path}.options`)
+    options: readOptions(raw.options, `${path}.options`, OPTION_TEXT_MIN)
   };
 }
 
@@ -126,7 +124,8 @@ function parseScienceQuestion(
   const raw = expectRecord(value, path);
 
   return {
-    ...parseRelationQuestion(raw, path),
+    text: readQuestionText(raw.text, `${path}.text`),
+    options: readOptions(raw.options, `${path}.options`, 1),
     correctIndex: readCorrectIndex(raw.correctIndex, `${path}.correctIndex`)
   };
 }
@@ -152,28 +151,32 @@ function readText(value: unknown, path: string, minLength: number): string {
   return trimmed;
 }
 
-function readOptions(value: unknown, path: string): [string, string, string, string] {
+function readOptions(
+  value: unknown,
+  path: string,
+  minOptionLength: number
+): [string, string, string, string] {
   const options = expectArray(value, path);
   if (options.length !== 4) {
     throw new Error(`${path} musi zawierać dokładnie 4 opcje.`);
   }
 
   const parsed = [
-    readOptionText(options[0], `${path}[1]`),
-    readOptionText(options[1], `${path}[2]`),
-    readOptionText(options[2], `${path}[3]`),
-    readOptionText(options[3], `${path}[4]`)
+    readOptionText(options[0], `${path}[1]`, minOptionLength),
+    readOptionText(options[1], `${path}[2]`, minOptionLength),
+    readOptionText(options[2], `${path}[3]`, minOptionLength),
+    readOptionText(options[3], `${path}[4]`, minOptionLength)
   ] as [string, string, string, string];
 
-  if (new Set(parsed.map((entry) => normalizeText(entry))).size !== 4) {
+  if (new Set(parsed.map((entry) => normalizeOptionText(entry))).size !== 4) {
     throw new Error("Opcje odpowiedzi muszą być unikalne");
   }
 
   return parsed;
 }
 
-function readOptionText(value: unknown, path: string): string {
-  const text = readText(value, path, OPTION_TEXT_MIN);
+function readOptionText(value: unknown, path: string, minLength: number): string {
+  const text = readText(value, path, minLength);
   if (text.length > OPTION_TEXT_MAX) {
     throw new Error(`${path} przekracza maksymalną długość ${OPTION_TEXT_MAX}.`);
   }
@@ -247,6 +250,15 @@ export function normalizeText(text: string): string {
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
     .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeOptionText(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
     .replace(/\s+/g, " ")
     .trim();
 }

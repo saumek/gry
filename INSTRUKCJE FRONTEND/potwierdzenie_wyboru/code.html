@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Duel - Ready Up</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#0b0e14",
+              "surface-container": "#161a21",
+              "inverse-surface": "#f9f9ff",
+              "on-secondary-fixed": "#003a42",
+              "primary": "#cf96ff",
+              "secondary-container": "#006875",
+              "on-secondary": "#004d57",
+              "error-container": "#a70138",
+              "on-primary-container": "#37005f",
+              "on-tertiary-container": "#0b5800",
+              "on-surface": "#ecedf6",
+              "secondary-fixed-dim": "#00d7f0",
+              "error-dim": "#d73357",
+              "on-primary": "#480079",
+              "inverse-primary": "#8d00e6",
+              "surface-bright": "#282c36",
+              "surface-container-low": "#10131a",
+              "primary-container": "#c683ff",
+              "on-tertiary-fixed": "#064200",
+              "tertiary-fixed-dim": "#2be800",
+              "primary-dim": "#a533ff",
+              "on-error": "#490013",
+              "surface": "#0b0e14",
+              "primary-fixed": "#c683ff",
+              "tertiary-fixed": "#2ff801",
+              "surface-tint": "#cf96ff",
+              "surface-dim": "#0b0e14",
+              "tertiary": "#8eff71",
+              "outline-variant": "#45484f",
+              "error": "#ff6e84",
+              "on-background": "#ecedf6",
+              "on-error-container": "#ffb2b9",
+              "surface-container-highest": "#22262f",
+              "surface-container-high": "#1c2028",
+              "secondary-fixed": "#26e6ff",
+              "outline": "#73757d",
+              "surface-container-lowest": "#000000",
+              "primary-fixed-dim": "#bc6fff",
+              "on-tertiary-fixed-variant": "#0d6200",
+              "secondary": "#00e3fd",
+              "inverse-on-surface": "#52555c",
+              "on-secondary-container": "#e8fbff",
+              "on-primary-fixed": "#000000",
+              "on-tertiary": "#0d6100",
+              "on-primary-fixed-variant": "#450074",
+              "tertiary-container": "#2ff801",
+              "on-secondary-fixed-variant": "#005964",
+              "secondary-dim": "#00d4ec",
+              "on-surface-variant": "#a9abb3",
+              "tertiary-dim": "#2be800",
+              "surface-variant": "#22262f"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .bg-glass {
+        backdrop-filter: blur(20px);
+        background-color: rgba(40, 44, 54, 0.6);
+      }
+      .vs-gradient {
+        background: linear-gradient(135deg, #cf96ff 0%, #a533ff 100%);
+      }
+      .glow-tertiary {
+        box-shadow: 0 0 15px rgba(142, 255, 113, 0.4);
+      }
+      .glow-secondary {
+        box-shadow: 0 0 20px rgba(0, 227, 253, 0.2);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col overflow-hidden">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-[#0b0e14] dark:bg-[#0b0e14] shadow-[0_0_20px_rgba(207,150,255,0.1)] flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Cyberpunk style user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6xKKl27Kn-YeFnWedEOtpV2I6SGN3cHeYq22gfpvFbC_eV0No2h7WXA5PzcR4MZ7zG4HKYRhyghei6pDax6enzqoINY-LN-HCvqyqxmaLOHpXcfEWe5zOdbUs-liiDpf27QafDu9xb6A4tV89rETrxKY4K4TDZ0w7NyFHARoMFqAYO6z_72NKGI96js5OVMnJTKCgeVnNrGibgpE8S7VCrM9fEZ3QJoJTVl478ocj0X_3-k3gCcY1s7EnHgpf2zwT04Vee1WqCQ"/>
+</div>
+<h1 class="text-2xl font-bold tracking-widest text-[#cf96ff] font-['Space_Grotesk'] uppercase tracking-tighter">THE DUEL</h1>
+</div>
+<button class="hover:scale-105 hover:text-[#00e3fd] transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#cf96ff]" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col pt-16 pb-20 relative">
+<!-- Game Header Section -->
+<section class="px-6 py-8 text-center">
+<p class="font-label text-secondary tracking-[0.2em] text-[12px] mb-2 uppercase">CHALLENGE ACCEPTED</p>
+<h2 class="font-headline font-bold text-4xl text-on-surface uppercase tracking-tight">CYBER STRIKE</h2>
+<div class="flex justify-center mt-4">
+<span class="px-3 py-1 bg-surface-container-high rounded-full font-label text-[10px] text-on-surface-variant flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_8px_#8eff71]"></span>
+                    MATCHMAKING STABLE
+                </span>
+</div>
+</section>
+<!-- Split Screen Players -->
+<div class="flex-1 flex flex-col md:flex-row gap-0.5 px-4 pb-4">
+<!-- Player 1 Container -->
+<div class="flex-1 bg-surface-container-high rounded-xl relative overflow-hidden flex flex-col items-center justify-center p-8 transition-all border-l-4 border-tertiary glow-tertiary">
+<div class="absolute top-4 left-4">
+<span class="px-2 py-0.5 bg-tertiary/10 text-tertiary font-label text-[10px] rounded border border-tertiary/20">READY</span>
+</div>
+<div class="w-24 h-24 rounded-full border-4 border-tertiary p-1 mb-4 shadow-[0_0_30px_rgba(142,255,113,0.3)]">
+<img alt="Player 1" class="w-full h-full rounded-full bg-surface-container-low" data-alt="Gamer avatar with neon headset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyZWaQ5EKux9mH9-sK3wj-XTBIvZbNRNfUPSkOpPhP4z1yp-beOgdrr1BGoYCoTSOLDBk3VEr_Dd7wcETsyr73-9I1B1miVnCh-xNwMVLzscSvQ4scfUXMWjJNR3RLWb4ROz57bXa5n5ug7roHOJig29Dnqzda-VkeM3JVlmSjAJWnO1LCmX2iiPozAE8slN474YN54bChtkJhAONPhkB1Np48FpQ_9MZ-kFhZx0SZZNc16oeQOOvy77w5hhM1enZ6DKZqtzP7gQ"/>
+</div>
+<h3 class="font-headline text-xl text-on-surface font-bold uppercase tracking-wide">VORTEX_NEO</h3>
+<p class="font-label text-on-surface-variant text-[12px] mt-1 uppercase tracking-widest">LVL 42 PRO</p>
+<!-- Success Indicator -->
+<div class="mt-6 flex flex-col items-center">
+<span class="material-symbols-outlined text-tertiary text-4xl" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label text-tertiary text-[10px] mt-1 font-bold tracking-tighter">PLAYER 1 READY</span>
+</div>
+</div>
+<!-- Vs Badge Overlap -->
+<div class="h-12 w-12 md:h-20 md:w-20 bg-background absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 rounded-full flex items-center justify-center border-4 border-surface-container">
+<span class="font-headline font-extrabold italic text-2xl md:text-4xl text-primary tracking-tighter">VS</span>
+</div>
+<!-- Player 2 Container -->
+<div class="flex-1 bg-surface-container-high rounded-xl relative overflow-hidden flex flex-col items-center justify-center p-8 transition-all opacity-80 border-l-4 border-outline-variant">
+<div class="absolute top-4 right-4">
+<span class="px-2 py-0.5 bg-surface-container-lowest text-on-surface-variant font-label text-[10px] rounded border border-outline-variant/30">WAITING</span>
+</div>
+<div class="w-24 h-24 rounded-full border-4 border-outline-variant p-1 mb-4 opacity-50">
+<img alt="Player 2" class="w-full h-full rounded-full bg-surface-container-low" data-alt="Stealthy ninja style gamer avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOxVpOzj3SgDhARkv52PD5RxUe9GMAB-hJPBDgJiGyhgcHeeL3v-toNTKwQW0w86ixUoOkzn3Q8aHGgce53g-JJAM1WuSr6M2Q99ULOJZ8heRC9ofdvNYA-9T7gsNT4WOVhtyamAdZFyhpxmEIBxvs1ERU8PN2mF1bc07EK6D45-svuFQNg0uI-Gmy_WsZsKN4rwoGvCQ1dCDd-l7TgbDMU9l3LOIj2ySH2twn8ISXFupENzuqiwYCHhb5FuQNna1swXjPEdSqUQ"/>
+</div>
+<h3 class="font-headline text-xl text-on-surface font-bold uppercase tracking-wide">GHOST_KILLER</h3>
+<p class="font-label text-on-surface-variant text-[12px] mt-1 uppercase tracking-widest">LVL 38 ELITE</p>
+<!-- Waiting Indicator -->
+<div class="mt-6 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full border-2 border-dashed border-on-surface-variant animate-spin-slow flex items-center justify-center">
+<span class="w-1 h-1 bg-on-surface-variant rounded-full"></span>
+</div>
+<span class="font-label text-on-surface-variant text-[10px] mt-2 font-bold tracking-tighter">AWAITING PLAYER 2</span>
+</div>
+</div>
+</div>
+<!-- Call to Action Section -->
+<div class="px-6 py-6 bg-surface-container-lowest/50 backdrop-blur-md">
+<div class="flex flex-col gap-4">
+<!-- Action Progress Bar (Fictive) -->
+<div class="h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full w-1/2 vs-gradient rounded-full shadow-[0_0_10px_rgba(207,150,255,0.5)]"></div>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 py-4 px-6 rounded-full border border-outline-variant hover:bg-surface-container-high transition-all font-label text-on-surface-variant text-sm tracking-widest font-bold">
+                        LEAVE DUEL
+                    </button>
+<!-- Deactivated state shown by styling - user asked for active when both ready, visual simulation of nearly ready -->
+<button class="flex-[2] py-4 px-6 rounded-full vs-gradient text-on-primary font-label text-sm tracking-widest font-extrabold uppercase shadow-[0_0_30px_rgba(207,150,255,0.4)] hover:scale-[1.02] active:scale-95 transition-all">
+                        START GAME
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full h-20 flex justify-around items-center px-4 pb-safe bg-[#10131a] dark:bg-[#10131a] rounded-t-3xl shadow-[0_-4px_20px_rgba(0,227,253,0.1)] z-50">
+<div class="flex flex-col items-center justify-center text-[#ecedf6] opacity-60 hover:opacity-100 hover:text-[#00e3fd] transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] tracking-widest">HOME</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#00e3fd] bg-[#1c2028] rounded-full px-6 py-2 scale-110 shadow-[0_0_15px_rgba(0,227,253,0.3)] cursor-pointer">
+<span class="material-symbols-outlined" data-icon="sports_esports" style="font-variation-settings: 'FILL' 1;">sports_esports</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] tracking-widest">GAMES</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#ecedf6] opacity-60 hover:opacity-100 hover:text-[#00e3fd] transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] tracking-widest">PROFILE</span>
+</div>
+</nav>
+<style>
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 3s linear infinite;
+        }
+    </style>
+</body></html>

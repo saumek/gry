@@ -64,7 +64,7 @@ export function BattleshipGame({ state, meRole, onAction }: BattleshipGameProps)
     tone: state.winnerRole ? "info" : "neutral",
     icon: state.winnerRole ? "🏆" : "≈",
     stats: [
-      { label: "Sami", value: String(state.scores.Sami) },
+      { label: "Samuel", value: String(state.scores.Sami) },
       { label: "Patryk", value: String(state.scores.Patryk) },
       { label: "Ruchy", value: String(state.history.length) }
     ]

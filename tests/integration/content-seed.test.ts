@@ -10,7 +10,7 @@ import { seedBuiltinQuestions as seedPackQuestions } from "../../src/server/game
 
 const META_KEY = "question_pack_version";
 
-describe("content seed v1.10", () => {
+describe("content seed curated pack", () => {
   it("wymienia builtin po zmianie wersji i zachowuje custom", () => {
     const dbPath = path.join(os.tmpdir(), `duoplay-seed-${Date.now()}-${Math.random()}.db`);
 

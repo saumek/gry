@@ -106,7 +106,7 @@ export function QaGame({ state, onAction, onAddQuestion, meRole }: QaGameProps) 
                   tone: roundVisual.tone,
                   icon: roundVisual.icon,
                   stats: [
-                    { label: "Sami", value: String(state.scores.Sami) },
+                    { label: "Samuel", value: String(state.scores.Sami) },
                     { label: "Patryk", value: String(state.scores.Patryk) }
                   ]
                 }}

@@ -5,6 +5,7 @@ import type {
   ResultHeroModel,
   RoundTimelineItem
 } from "../types";
+import { displayRoleName } from "../ui-state";
 
 export function createBetterHalfRoundVisual(reveal: BetterHalfRoundReveal): GameRoundVisualState {
   const hitsCount = Number(reveal.hits.Sami) + Number(reveal.hits.Patryk);
@@ -18,7 +19,7 @@ export function createBetterHalfRoundVisual(reveal: BetterHalfRoundReveal): Game
     decisions: [
       {
         actor: "Sami",
-        title: "Sami · odpowiedź",
+        title: "Samuel · odpowiedź",
         choice: reveal.question.options[reveal.answers.Sami.selfAnswer],
         tone: "info",
         icon: "S",
@@ -34,7 +35,7 @@ export function createBetterHalfRoundVisual(reveal: BetterHalfRoundReveal): Game
       },
       {
         actor: "Sami",
-        title: "Sami · trafienie",
+        title: "Samuel · trafienie",
         choice: reveal.hits.Sami ? "Trafione" : "Nietrafione",
         tone: reveal.hits.Sami ? "success" : "danger",
         icon: reveal.hits.Sami ? "✓" : "✕"
@@ -49,13 +50,13 @@ export function createBetterHalfRoundVisual(reveal: BetterHalfRoundReveal): Game
     ],
     points: [
       {
-        label: "Punkty Sami",
+        label: "Punkty Samuel",
         value: reveal.hits.Sami ? "+1" : "+0",
         tone: reveal.hits.Sami ? "success" : "danger",
         icon: reveal.hits.Sami ? "✓" : "✕",
         detail: reveal.hits.Sami
-          ? "Sami dobrze przewidział odpowiedź Patryka"
-          : "Sami nie trafił odpowiedzi Patryka"
+          ? "Samuel dobrze przewidział odpowiedź Patryka"
+          : "Samuel nie trafił odpowiedzi Patryka"
       },
       {
         label: "Punkty Patryk",
@@ -63,8 +64,8 @@ export function createBetterHalfRoundVisual(reveal: BetterHalfRoundReveal): Game
         tone: reveal.hits.Patryk ? "success" : "danger",
         icon: reveal.hits.Patryk ? "✓" : "✕",
         detail: reveal.hits.Patryk
-          ? "Patryk dobrze przewidział odpowiedź Sami"
-          : "Patryk nie trafił odpowiedzi Sami"
+          ? "Patryk dobrze przewidział odpowiedź Samuela"
+          : "Patryk nie trafił odpowiedzi Samuela"
       }
     ]
   };
@@ -83,12 +84,12 @@ export function createBetterHalfTimeline(history: BetterHalfRoundReveal[]): Roun
 
 export function createBetterHalfResultHero(state: BetterHalfGameState): ResultHeroModel {
   return {
-    title: state.winnerRole ? `Wygrywa ${state.winnerRole}` : "Remis",
+    title: state.winnerRole ? `Wygrywa ${displayRoleName(state.winnerRole)}` : "Remis",
     subtitle: "Kto lepiej przewidywał odpowiedzi partnera",
     tone: state.winnerRole ? "info" : "neutral",
     icon: state.winnerRole ? "🏆" : "≈",
     stats: [
-      { label: "Sami", value: String(state.scores.Sami) },
+      { label: "Samuel", value: String(state.scores.Sami) },
       { label: "Patryk", value: String(state.scores.Patryk) },
       { label: "Rundy", value: `${state.history.length}/${state.totalRounds}` }
     ]

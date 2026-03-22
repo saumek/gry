@@ -8,7 +8,6 @@
     "dev": "tsx watch --clear-screen=false server.ts",
     "build": "next build",
     "start": "NODE_ENV=production tsx server.ts",
-    "build:question-pack": "tsx tools/question-bank/build-pack.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",

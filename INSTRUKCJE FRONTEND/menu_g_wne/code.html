@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Duel - Game Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#0b0e14",
+                        "surface-container": "#161a21",
+                        "inverse-surface": "#f9f9ff",
+                        "on-secondary-fixed": "#003a42",
+                        "primary": "#cf96ff",
+                        "secondary-container": "#006875",
+                        "on-secondary": "#004d57",
+                        "error-container": "#a70138",
+                        "on-primary-container": "#37005f",
+                        "on-tertiary-container": "#0b5800",
+                        "on-surface": "#ecedf6",
+                        "secondary-fixed-dim": "#00d7f0",
+                        "error-dim": "#d73357",
+                        "on-primary": "#480079",
+                        "inverse-primary": "#8d00e6",
+                        "surface-bright": "#282c36",
+                        "surface-container-low": "#10131a",
+                        "primary-container": "#c683ff",
+                        "on-tertiary-fixed": "#064200",
+                        "tertiary-fixed-dim": "#2be800",
+                        "primary-dim": "#a533ff",
+                        "on-error": "#490013",
+                        "surface": "#0b0e14",
+                        "primary-fixed": "#c683ff",
+                        "tertiary-fixed": "#2ff801",
+                        "surface-tint": "#cf96ff",
+                        "surface-dim": "#0b0e14",
+                        "tertiary": "#8eff71",
+                        "outline-variant": "#45484f",
+                        "error": "#ff6e84",
+                        "on-background": "#ecedf6",
+                        "on-error-container": "#ffb2b9",
+                        "surface-container-highest": "#22262f",
+                        "surface-container-high": "#1c2028",
+                        "secondary-fixed": "#26e6ff",
+                        "outline": "#73757d",
+                        "surface-container-lowest": "#000000",
+                        "primary-fixed-dim": "#bc6fff",
+                        "on-tertiary-fixed-variant": "#0d6200",
+                        "secondary": "#00e3fd",
+                        "inverse-on-surface": "#52555c",
+                        "on-secondary-container": "#e8fbff",
+                        "on-primary-fixed": "#000000",
+                        "on-tertiary": "#0d6100",
+                        "on-primary-fixed-variant": "#450074",
+                        "tertiary-container": "#2ff801",
+                        "on-secondary-fixed-variant": "#005964",
+                        "secondary-dim": "#00d4ec",
+                        "on-surface-variant": "#a9abb3",
+                        "tertiary-dim": "#2be800",
+                        "surface-variant": "#22262f"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0e14;
+            color: #ecedf6;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(40, 44, 54, 0.6);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0b0e14] dark:bg-[#0b0e14] shadow-[0_0_20px_rgba(207,150,255,0.1)]">
+<div class="flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border-2 border-primary overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Cyberpunk style user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQh-zBnPRs8n-YNHQiNjR8zKlylTSa0Tg8gi-0Ak1XeCn11F_5pDdyEPrJx8VNWfyDkzkSGqOykN40g8pWM3YZQURuyOrv3i_dkY1bt_SU5XYSaILjIATqvsrry7AI3qqDwF5LpXOsrIMWcFJRvBejWKCbfHNCZeELjtO4u7U9ECJBNz-RYdYqRiQHq6ozUcwpcv3uM-M-doZbtQJ7hVfJXkvQ9Hi5o4hAocf5Lfhk5UZRYsFTI42_gyhNJ9Doyhl9hBXdGOfnRw"/>
+</div>
+</div>
+<h1 class="text-2xl font-bold tracking-widest text-[#cf96ff] font-['Space_Grotesk'] uppercase tracking-tighter">THE DUEL</h1>
+<button class="hover:scale-105 hover:text-[#00e3fd] transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#cf96ff]">settings</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-28 px-4 max-w-md mx-auto">
+<!-- Hero Section / Featured -->
+<section class="mb-10 relative overflow-hidden rounded-3xl group">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+<img alt="Featured Game" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-700" data-alt="Abstract colorful gaming background with neon lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0CScknq8ZXQ7J6ajRdZGo614i4HtCy1lRex0Uz4Nu5NKWOSq-7BsplnhA4Z4M3x3O6vBK5LULVWjxM0lJE3EoouQR3K86gd0VNiGA2z9FXvS2bLc6R7rQy9XnQ5BwhiLoa9MfrFREru6lqJUoPDbfE3KlFTQlQhfPmDh0eVzzX0lUrTPn7odXFDIAEAJTZjHVBg7ug9o0bKIEO4W5-rkPVoegfpi71bUojDrfWqfk2iCbZC03M750rrTLwx24aRQsge4C2fYzsQ"/>
+<div class="absolute bottom-4 left-4 z-20">
+<span class="bg-tertiary text-on-tertiary text-[10px] font-bold px-3 py-1 rounded-full mb-2 inline-block font-label tracking-widest shadow-[0_0_10px_rgba(142,255,113,0.5)]">TRENDING NOW</span>
+<h2 class="text-4xl font-headline font-extrabold uppercase tracking-tighter text-on-surface leading-none mb-1">CYBER<br/>CHESS</h2>
+<div class="flex items-center gap-2 text-secondary text-sm font-label font-bold">
+<span>2,401 ONLINE</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+</div>
+</div>
+</section>
+<!-- Game Categories Horizontal Scroll -->
+<div class="flex gap-4 overflow-x-auto hide-scrollbar mb-8 pb-2">
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-primary-dim text-on-primary font-label font-bold text-xs tracking-widest shadow-[0_0_15px_rgba(165,51,255,0.4)]">ALL GAMES</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label font-bold text-xs tracking-widest border border-outline-variant/20">ARCADE</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label font-bold text-xs tracking-widest border border-outline-variant/20">STRATEGY</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label font-bold text-xs tracking-widest border border-outline-variant/20">TRIVIA</button>
+</div>
+<!-- Vertically Scrolling Game List -->
+<div class="space-y-6">
+<!-- Chess Card -->
+<div class="bg-surface-container rounded-3xl p-4 flex items-center gap-4 group hover:bg-surface-container-high transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-12 -mt-12 group-hover:bg-primary/10 transition-all"></div>
+<div class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 border border-outline-variant/20">
+<img alt="Chess" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Close up of a wooden chess set" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrnHKMWBH3YynyArdn5OuvOoREFKjrXbsUnuHTWDw6fNgBK9Dy6nc4gem7ArOID7B3nrMx_yprgONlG2QtezFI9TqOy85dSDoh6EfMie2MKKM-oeY5AhlFnxWyv9lJJsywumCplq4Rzp3ft3rtpUzoaCLcOGaa3C3FjLWB_AjQmw5haIKyLqnVn4NT76YmEnUpVpXRyrUxgFvtmg8-q1k18I73AEwaSoNckxJXfe4239d2rGfHuKJvghaEvrbhp-YslkaJQz-4JQ"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline font-bold text-xl text-on-surface tracking-tight mb-1">CHESS</h3>
+<p class="text-on-surface-variant text-xs font-medium mb-3">Master the classic duel of wits.</p>
+<button class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-2 rounded-xl font-label font-bold text-xs tracking-widest shadow-[0_4px_15px_rgba(165,51,255,0.3)] active:scale-95 transition-transform uppercase">PLAY</button>
+</div>
+</div>
+<!-- Ping Pong Card -->
+<div class="bg-surface-container-high rounded-3xl p-4 flex items-center gap-4 group hover:bg-surface-bright transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-full blur-2xl -mr-12 -mt-12 group-hover:bg-secondary/10 transition-all"></div>
+<div class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 border border-outline-variant/20">
+<img alt="Ping Pong" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Ping pong paddle and ball on a table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTlndNFsVU2dq73rVmM2B2tPN771KZKsVahTguFjubJHo79Zfo6BMs2pjkZteFROUz1tqZETkxlunHY7zy-z5xj0TF-tV2srT9M1E4cV0lxSMsq3MJEdng9qBM0rchVWf2IxmEVMuF_YGvo3KncqN1J92S1kcD4-DreIDJBm7nYoX_bX1-agGv84WHvuCr6fdBjSRQmUFKefv8hvxO6k_udZc392fOdNt4OQSLlFRRfN4BLeIJUz9-JtpUuegHoZYLuebkiuTNEA"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline font-bold text-xl text-on-surface tracking-tight mb-1">PING PONG</h3>
+<p class="text-on-surface-variant text-xs font-medium mb-3">High-speed kinetic reactions.</p>
+<button class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-2 rounded-xl font-label font-bold text-xs tracking-widest shadow-[0_4px_15px_rgba(165,51,255,0.3)] active:scale-95 transition-transform uppercase">PLAY</button>
+</div>
+</div>
+<!-- Trivia Card -->
+<div class="bg-surface-container rounded-3xl p-4 flex items-center gap-4 group hover:bg-surface-container-high transition-all duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-tertiary/5 rounded-full blur-2xl -mr-12 -mt-12 group-hover:bg-tertiary/10 transition-all"></div>
+<div class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 border border-outline-variant/20">
+<img alt="Trivia" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Colorful light bulbs and neon signs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsmmwMU0gOn9g3HrE_Nc_QpJmC3psTzFiWGKkx6iT804tJm8yGmL0vHjMXvinKKdWygfM1XVLTaFMFfjecaP1aXQou6QpDHEhIdLvzkRN5WBPyIiU36Ldx9kYulemJPNjVw_XNp3_N5Cp8U37mL1Zfyb62jQ8ew0x3lKNNe8L1RB9i-pkzSbhUzhfCQlGzEYuUr419u6F64mZBekrJBjRlX6YxzbbmsWoPy8tpGrSDs6l6M9E0e7QJL7H02YaK4lpkGxbfCaBSig"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline font-bold text-xl text-on-surface tracking-tight mb-1">TRIVIA</h3>
+<p class="text-on-surface-variant text-xs font-medium mb-3">Knowledge is your only weapon.</p>
+<button class="w-full bg-gradient-to-r from-primary to-primary-dim text-on-primary py-2 rounded-xl font-label font-bold text-xs tracking-widest shadow-[0_4px_15px_rgba(165,51,255,0.3)] active:scale-95 transition-transform uppercase">PLAY</button>
+</div>
+</div>
+<!-- More Games Teaser -->
+<div class="bg-surface-container-lowest border-2 border-dashed border-outline-variant/30 rounded-3xl p-8 flex flex-col items-center justify-center text-center opacity-60">
+<span class="material-symbols-outlined text-4xl mb-2 text-outline">add_circle</span>
+<p class="font-label font-bold text-xs tracking-widest text-outline uppercase">New Games Every Week</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-[#10131a] dark:bg-[#10131a] flex justify-around items-center px-4 pb-safe z-50 rounded-t-3xl shadow-[0_-4px_20px_rgba(0,227,253,0.1)]">
+<!-- HOME (Inactive) -->
+<a class="flex flex-col items-center justify-center text-[#ecedf6] opacity-60 hover:opacity-100 hover:text-[#00e3fd] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] tracking-widest">HOME</span>
+</a>
+<!-- GAMES (Active) -->
+<a class="flex flex-col items-center justify-center text-[#00e3fd] bg-[#1c2028] rounded-full px-6 py-2 scale-110 shadow-[0_0_15px_rgba(0,227,253,0.3)] active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined mb-1">sports_esports</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] tracking-widest">GAMES</span>
+</a>
+<!-- PROFILE (Inactive) -->
+<a class="flex flex-col items-center justify-center text-[#ecedf6] opacity-60 hover:opacity-100 hover:text-[#00e3fd] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-['Space_Grotesk'] font-bold text-[10px] tracking-widest">PROFILE</span>
+</a>
+</nav>
+</body></html>

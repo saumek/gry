@@ -1,6 +1,10 @@
 import { getGameCatalogItem } from "./game-catalog";
 import type { ActiveGameState, AppTab, ConnectionStatus, Role, TopBarModel } from "./types";
 
+export function displayRoleName(role: Role): string {
+  return role === "Sami" ? "Samuel" : "Patryk";
+}
+
 export function gameShortLabel(gameId: ActiveGameState["gameId"]): string {
   return getGameCatalogItem(gameId).shortTitle;
 }
@@ -37,7 +41,7 @@ export function createTopBarModel(
 ): TopBarModel {
   if (!activeGame) {
     return {
-      roleLabel: meRole ? `Ty: ${meRole}` : "Gość",
+      roleLabel: meRole ? `Ty: ${displayRoleName(meRole)}` : "Gość",
       connectionStatus,
       connectionLabel,
       gameLabel: "Brak aktywnej gry",
@@ -46,7 +50,7 @@ export function createTopBarModel(
   }
 
   return {
-    roleLabel: meRole ? `Ty: ${meRole}` : "Gość",
+    roleLabel: meRole ? `Ty: ${displayRoleName(meRole)}` : "Gość",
     connectionStatus,
     connectionLabel,
     gameLabel: gameShortLabel(activeGame.gameId),

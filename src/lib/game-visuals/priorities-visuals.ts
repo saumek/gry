@@ -5,6 +5,7 @@ import type {
   ResultHeroModel,
   RoundTimelineItem
 } from "../types";
+import { displayRoleName } from "../ui-state";
 
 export function createPrioritiesRoundVisual(
   reveal: CouplePrioritiesRoundReveal
@@ -20,7 +21,7 @@ export function createPrioritiesRoundVisual(
     decisions: [
       {
         actor: "Sami",
-        title: "Ranking Sami",
+        title: "Ranking Samuela",
         choice: formatRanking(reveal.submissions.Sami.ranking, reveal.prompt.options),
         tone: "info",
         icon: "S",
@@ -44,7 +45,7 @@ export function createPrioritiesRoundVisual(
         detail: `${reveal.alignmentPoints} zgodne pozycje z 4 w obu rankingach`
       },
       {
-        label: "Sami · trafienie top-1",
+        label: "Samuel · trafienie top-1",
         value: reveal.guessHits.Sami ? "+1" : "+0",
         tone: reveal.guessHits.Sami ? "success" : "danger",
         icon: reveal.guessHits.Sami ? "✓" : "✕",
@@ -55,7 +56,7 @@ export function createPrioritiesRoundVisual(
         value: reveal.guessHits.Patryk ? "+1" : "+0",
         tone: reveal.guessHits.Patryk ? "success" : "danger",
         icon: reveal.guessHits.Patryk ? "✓" : "✕",
-        detail: `Sami dał na #1: ${reveal.prompt.options[reveal.submissions.Sami.ranking[0]]}`
+        detail: `Samuel dał na #1: ${reveal.prompt.options[reveal.submissions.Sami.ranking[0]]}`
       }
     ]
   };
@@ -74,12 +75,12 @@ export function createPrioritiesTimeline(history: CouplePrioritiesRoundReveal[])
 
 export function createPrioritiesResultHero(state: CouplePrioritiesGameState): ResultHeroModel {
   return {
-    title: state.winnerRole ? `Wygrywa ${state.winnerRole}` : "Remis",
+    title: state.winnerRole ? `Wygrywa ${displayRoleName(state.winnerRole)}` : "Remis",
     subtitle: "Zgranie rankingów i trafienie top-1 partnera",
     tone: state.winnerRole ? "info" : "neutral",
     icon: state.winnerRole ? "🏆" : "≈",
     stats: [
-      { label: "Sami", value: String(state.scores.Sami) },
+      { label: "Samuel", value: String(state.scores.Sami) },
       { label: "Patryk", value: String(state.scores.Patryk) },
       { label: "Rundy", value: `${state.history.length}/${state.totalRounds}` }
     ]

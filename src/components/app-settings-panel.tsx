@@ -17,16 +17,19 @@ export function AppSettingsPanel({
   onToggleSoundCues
 }: AppSettingsPanelProps) {
   return (
-    <section className="section-block settings-panel" data-testid="settings-panel">
-      <div className="section-header">
-        <h2>Ustawienia</h2>
+    <section className="section-block settings-panel settings-panel--duel" data-testid="settings-panel">
+      <div className="section-header section-header--duel">
+        <div>
+          <p className="section-kicker">Control Deck</p>
+          <h2>Ustawienia</h2>
+        </div>
         <span className="chip chip--soft">Lokalne</span>
       </div>
 
       <div className="settings-row">
         <div className="settings-row__copy">
           <strong>Motyw</strong>
-          <p className="muted">Przełącz widok systemowy, jasny albo ciemny.</p>
+          <p className="muted">Przełącz wariant interfejsu bez zmiany układu gry.</p>
         </div>
         <ThemeToggle value={themeMode} onChange={onThemeChange} />
       </div>
@@ -34,7 +37,7 @@ export function AppSettingsPanel({
       <div className="settings-row">
         <div className="settings-row__copy">
           <strong>Dźwięki akcji</strong>
-          <p className="muted">Krótki sygnał po potwierdzeniu lub błędzie akcji.</p>
+          <p className="muted">Krótki sygnał po zapisaniu ruchu albo po błędzie.</p>
         </div>
         <button
           type="button"

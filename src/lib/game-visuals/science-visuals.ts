@@ -5,6 +5,7 @@ import type {
   ScienceQuizRoundReveal,
   GameRoundVisualState
 } from "../types";
+import { displayRoleName } from "../ui-state";
 
 export function createScienceRoundVisual(reveal: ScienceQuizRoundReveal): GameRoundVisualState {
   const pointsSami = Number(reveal.correctByRole.Sami) + Number(reveal.bothCorrect);
@@ -30,7 +31,7 @@ export function createScienceRoundVisual(reveal: ScienceQuizRoundReveal): GameRo
       },
       {
         actor: "Sami",
-        title: "Wybór Sami",
+        title: "Wybór Samuela",
         choice: reveal.question.options[reveal.answers.Sami],
         tone: reveal.correctByRole.Sami ? "success" : "danger",
         icon: reveal.correctByRole.Sami ? "✓" : "✕"
@@ -45,7 +46,7 @@ export function createScienceRoundVisual(reveal: ScienceQuizRoundReveal): GameRo
     ],
     points: [
       {
-        label: "Sami",
+        label: "Samuel",
         value: `+${pointsSami}`,
         tone: pointsSami > 0 ? "success" : "danger",
         icon: pointsSami > 0 ? "✓" : "✕",
@@ -92,12 +93,12 @@ export function createScienceTimeline(history: ScienceQuizRoundReveal[]): RoundT
 
 export function createScienceResultHero(state: ScienceQuizGameState): ResultHeroModel {
   return {
-    title: state.winnerRole ? `Wygrywa ${state.winnerRole}` : "Remis",
+    title: state.winnerRole ? `Wygrywa ${displayRoleName(state.winnerRole)}` : "Remis",
     subtitle: `Kategoria: ${categoryLabel(state.category)}`,
     tone: state.winnerRole ? "info" : "neutral",
     icon: state.winnerRole ? "🏆" : "≈",
     stats: [
-      { label: "Sami", value: String(state.scores.Sami) },
+      { label: "Samuel", value: String(state.scores.Sami) },
       { label: "Patryk", value: String(state.scores.Patryk) },
       { label: "Rundy", value: `${state.history.length}/${state.totalRounds}` }
     ]

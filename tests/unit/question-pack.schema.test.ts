@@ -7,7 +7,7 @@ describe("question pack schema", () => {
   it("ładuje aktualny pack pytań z kompletną liczbą rekordów", () => {
     const pack = loadQuestionPack();
 
-    expect(pack.version).toBe("v1.10.1-question-pack-pl");
+    expect(pack.version).toBe("v2.0.0-curated-content-pl");
     expect(pack.qaLightning).toHaveLength(300);
     expect(pack.betterHalf).toHaveLength(300);
     expect(pack.scienceQuiz.matma).toHaveLength(200);

@@ -71,24 +71,15 @@ npm run test:e2e
 - Duplikaty akcji po reconnect są ignorowane idempotentnie po `clientActionId`.
 - W reveal działa auto-advance `1.2s` z opcją `Zostań`; timer pauzuje się, gdy karta jest ukryta.
 
-## Pakiet pytań v1.10 (PL)
+## Pakiet pytań v2.0 (PL)
 
-- Aplikacja używa wersjonowanego pakietu pytań: `v1.10.1-question-pack-pl`.
-- Pakiet jest trzymany lokalnie w pliku:
-  - `src/server/game/content/question-pack.v1_10.pl.json`
+- Aplikacja używa wersjonowanego pakietu pytań: `v2.0.0-curated-content-pl`.
+- Content jest rozbity na sekcyjne pliki do ręcznej edycji w:
+  - `src/server/game/content/sections/`
+- Loader składa całość w runtime przez:
+  - `src/server/game/content/load-question-pack.ts`
 - Przy starcie serwera seed jest aktualizowany automatycznie po zmianie wersji w `content_seed_meta`.
 - Pytania `source='custom'` pozostają bez zmian.
-
-Budowanie pakietu lokalnie:
-
-```bash
-npm run build:question-pack
-```
-
-Pipeline generatora:
-- `tools/question-bank/build-pack.ts`
-- `tools/question-bank/sources/rest-countries.ts`
-- `tools/question-bank/sources/jgoralcz-trivia.ts` (adapter źródła trivia)
 
 ## iPhone / LAN w trybie dev
 

@@ -7,7 +7,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DuoPlay",
-  description: "Mobilna platforma gier dla Sami i Patryka",
+  description: "Mobilna platforma gier dla Samuela i Patryka",
   manifest: "/manifest.json",
   applicationName: "DuoPlay",
   icons: {

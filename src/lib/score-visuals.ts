@@ -8,6 +8,7 @@ import type {
   ScienceQuizRoundReveal,
   ScoreCardModel
 } from "./types";
+import { displayRoleName } from "./ui-state";
 
 export function createScoreCards(scores: GameScore): ScoreCardModel[] {
   const delta = Math.abs(scores.Sami - scores.Patryk);
@@ -49,13 +50,13 @@ export function getLeadProgress(scores: GameScore): number {
 export function qaRevealBadges(reveal: QaRoundReveal): RoundBadgeModel[] {
   if (reveal.matched) {
     return [
-      { icon: "✓", label: "Sami: zgodność", tone: "success" },
+      { icon: "✓", label: "Samuel: zgodność", tone: "success" },
       { icon: "✓", label: "Patryk: zgodność", tone: "success" }
     ];
   }
 
   return [
-    { icon: "✕", label: "Sami: brak zgodności", tone: "danger" },
+    { icon: "✕", label: "Samuel: brak zgodności", tone: "danger" },
     { icon: "✕", label: "Patryk: brak zgodności", tone: "danger" }
   ];
 }
@@ -64,7 +65,7 @@ export function betterHalfRevealBadges(reveal: BetterHalfRoundReveal): RoundBadg
   return [
     {
       icon: reveal.hits.Sami ? "✓" : "✕",
-      label: `Sami: ${reveal.hits.Sami ? "trafione" : "nietrafione"}`,
+      label: `Samuel: ${reveal.hits.Sami ? "trafione" : "nietrafione"}`,
       tone: reveal.hits.Sami ? "success" : "danger"
     },
     {
@@ -79,7 +80,7 @@ export function scienceQuizRevealBadges(reveal: ScienceQuizRoundReveal): RoundBa
   const badges: RoundBadgeModel[] = [
     {
       icon: reveal.correctByRole.Sami ? "✓" : "✕",
-      label: `Sami: ${reveal.correctByRole.Sami ? "poprawnie" : "błędnie"}`,
+      label: `Samuel: ${reveal.correctByRole.Sami ? "poprawnie" : "błędnie"}`,
       tone: reveal.correctByRole.Sami ? "success" : "danger"
     },
     {
@@ -111,7 +112,7 @@ export function couplePrioritiesRevealBadges(
     },
     {
       icon: reveal.guessHits.Sami ? "✓" : "✕",
-      label: `Sami top-1: ${reveal.guessHits.Sami ? "trafione" : "nietrafione"}`,
+      label: `Samuel top-1: ${reveal.guessHits.Sami ? "trafione" : "nietrafione"}`,
       tone: reveal.guessHits.Sami ? "success" : "danger"
     },
     {
@@ -133,7 +134,7 @@ export function winnerBadge(scores: GameScore, winnerRole?: Role): RoundBadgeMod
 
   return {
     icon: "★",
-    label: `Wygrana: ${winnerRole}`,
+    label: `Wygrana: ${displayRoleName(winnerRole)}`,
     tone: "info"
   };
 }

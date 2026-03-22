@@ -22,7 +22,7 @@ describe("ui-state", () => {
   it("buduje model top bara dla lobby bez aktywnej gry", () => {
     const model = createTopBarModel("Sami", null, "online", "Online");
 
-    expect(model.roleLabel).toBe("Ty: Sami");
+    expect(model.roleLabel).toBe("Ty: Samuel");
     expect(model.connectionStatus).toBe("online");
     expect(model.gameLabel).toBe("Brak aktywnej gry");
     expect(model.jumpToResult).toBe(false);

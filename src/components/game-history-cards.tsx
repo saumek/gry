@@ -36,9 +36,12 @@ export function GameHistoryCards({ history }: GameHistoryCardsProps) {
   const canToggle = history.length > 6;
 
   return (
-    <section className="section-block" data-testid="history-list">
-      <div className="section-header">
-        <h2>Historia gier</h2>
+    <section className="section-block history-panel" data-testid="history-list">
+      <div className="section-header section-header--duel">
+        <div>
+          <p className="section-kicker">Match Archive</p>
+          <h2>Historia gier</h2>
+        </div>
         <span className="chip chip--soft">{history.length} zapisów</span>
       </div>
 
